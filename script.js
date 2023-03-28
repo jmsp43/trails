@@ -37,11 +37,22 @@ function loadImgs() {
   //console.log(areImgsLoaded);
 }
 loadImgs();
+
+
+http://127.0.0.1:5500/Week6/trails/"
+
+
 function drawImgs() {
-  let xMiddle = width / 2;
-  let yMiddle = height / 2;
-  for (let i = 0; i < imgs.length; i++) {
-    boardContext.drawImage(imgs[i], xMiddle, yMiddle, 10, 10);
+    let x
+    for (let i = 0; i < imgs.length; i++) {
+        if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/stone.png') {
+            x = 25
+        } else if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/leaf.png') {
+            x = 86
+        } else if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/acorn.png') {
+            x = 147
+        }
+        boardContext.drawImage(imgs[i], x, 130, 10, 10);
   }
 }
 
