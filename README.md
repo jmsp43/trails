@@ -1,6 +1,9 @@
 Based on this game: https://keymastergames.com/products/trails
 
 
+
+//make a landing page with rules and explanation of game
+
 TRAILS rules and components
 
 
@@ -83,3 +86,9 @@ How to play your game.
 What Technologies you used (in this case HTML, CSS, and JavaScript).
 How you built your game (a few paragraphs about your code)
 Any thank yous or acknowledgements (especially if one of your classmates helped you out!)
+
+
+
+//thank you to drew for the great idea of a landing page
+//thank you to kasper for all your canvas help
+//thank you to imani for general support

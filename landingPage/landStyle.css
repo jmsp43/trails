@@ -1,0 +1,15 @@
+*{
+    text-align: center;
+    background: url('./mountainHike.jpg') no-repeat center fixed;
+    background-size: cover;
+    font-family: fantasy;
+}
+
+a{
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 10px 10px 10px 10px;
+    text-decoration: none;
+    background-color: rgb(24, 50, 104);
+    color:chocolate;
+}

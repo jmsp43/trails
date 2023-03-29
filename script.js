@@ -6,20 +6,24 @@ const boardContext = board.getContext("2d");
 const width = board.width;
 const height = board.height;
 
-///////////////////////////////////////////////
-///////////////Functions/////////////////
-///////////////////////////////////////////////
-// let acornImg = new Image();
-// acornImg.src = "./images/acorn.png";
-// let stoneImg = new Image();
-// stoneImg.src = "./images/stone.png";
-// let leafImg = new Image();
-// leafImg.src = "./images/leaf.png";
 let areImgsLoaded = false;
 let imgs = [];
 let imgUrls = ["./images/acorn.png", "./images/stone.png", "./images/leaf.png"];
 
 const rollBtn = document.querySelector("#rollDiceBtn");
+const canteenBtn = document.querySelector('#canteenBtn')
+
+let dx = 50;
+let changingDirection = false;
+
+//set keycodes that already exist for pressing arrow keys
+const left = 37;
+const right = 39;
+
+let extraSteps = 0
+///////////////////////////////////////////////
+///////////////Functions/////////////////
+///////////////////////////////////////////////
 
 function loadImgs() {
   let count = 0;
@@ -40,19 +44,21 @@ function loadImgs() {
 }
 loadImgs();
 
-
-
 function drawImgs() {
-    let x
-    for (let i = 0; i < imgs.length; i++) {
-        if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/stone.png') {
-            x = 25
-        } else if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/leaf.png') {
-            x = 86
-        } else if (imgs[i].src === 'http://127.0.0.1:5500/Week6/trails/images/acorn.png') {
-            x = 147
-        }
-        boardContext.drawImage(imgs[i], x, 130, 10, 10);
+  let x;
+  for (let i = 0; i < imgs.length; i++) {
+    if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/stone.png") {
+      x = 25;
+    } else if (
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/leaf.png"
+    ) {
+      x = 86;
+    } else if (
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/acorn.png"
+    ) {
+      x = 147;
+    }
+    boardContext.drawImage(imgs[i], x, 130, 10, 10);
   }
 }
 
@@ -76,7 +82,7 @@ function drawSun() {
   boardContext.fillStyle = "yellow";
   boardContext.fill();
 }
-drawSun()
+drawSun();
 const diceResults = document.querySelector("#diceResults");
 
 function rollDice() {
@@ -102,6 +108,49 @@ function rollDice() {
   }
 }
 
+function drawHiker(hiker) {
+  boardContext.fillStyle = hiker.color;
+  boardContext.strokeStyle = "chartreuse";
+  boardContext.fillRect(hiker.x, hiker.y, 10, 10);
+  boardContext.strokeRect(hiker.x, hiker.y, 10, 10);
+}
+
+let hiker1 = new Hiker(25, 80, 0, "black");
+let hiker2 = new Hiker(25, 100, 0, "white");
+hiker2.isComputer = true;
+
+drawHiker(hiker1);
+drawHiker(hiker2);
+
+function activateCanteen(hiker) {
+    hiker.canteenActivated === true
+    extraSteps = 2
+    //setting this to 2 for now
+}
+
+function moveHiker(hiker, event) {
+  if (changingDirection) return;
+  changingDirection = true;
+
+  const keyPressed = event.keyCode;
+
+  const goingLeft = dx === -50;
+  const goingRight = dx === 50;
+    if (hiker.canteenActivated === true){
+        if (keyPressed === left && goingRight === false) {
+            dx = -50 * extraSteps;
+          }
+          if (keyPressed === right && goingLeft === false) {
+            dx = 50 * extraSteps;
+          }
+}
+  if (keyPressed === left && goingRight === false) {
+    dx = -50 * extraSteps;
+  }
+  if (keyPressed === right && goingLeft === false) {
+    dx = 50 * extraSteps;
+  }
+}
 
 // //this works but isn't feasible for all the images i need to load
 // acornImg.onload = function () {
@@ -140,27 +189,17 @@ class Hiker {
   }
 }
 
-function drawHiker(hiker) {
-    boardContext.fillStyle = hiker.color
-    boardContext.strokeStyle = 'chartreuse'
-    boardContext.fillRect(hiker.x, hiker.y, 10,10)
-    boardContext.strokeRect(hiker.x, hiker.y, 10, 10)
-}
-
-let hiker1 = new Hiker(25, 80, 0, "black");
-let hiker2 = new Hiker(25, 100, 0, "white");
-hiker2.isComputer = true;
-
-drawHiker(hiker1)
-drawHiker(hiker2)
-
 ///////////////////////////////////////////////
 ///////////////Event Listeners/////////////////
 ///////////////////////////////////////////////
 
-
 rollBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  rollDice();
+});
+
+canteenBtn.addEventListener('click', function (event){
     event.preventDefault();
-    rollDice();
-  });
-  
+
+})
+
