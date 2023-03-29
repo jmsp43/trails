@@ -6,10 +6,17 @@
 }
 
 a{
-    border: 2px solid black;
     padding: 5px;
     border-radius: 10px 10px 10px 10px;
     text-decoration: none;
-    background-color: rgb(24, 50, 104);
-    color:chocolate;
+}
+
+#play{
+    border: 2px solid black;
+
+}
+
+a:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 2px blue;
 }
