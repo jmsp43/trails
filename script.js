@@ -19,6 +19,8 @@ let areImgsLoaded = false;
 let imgs = [];
 let imgUrls = ["./images/acorn.png", "./images/stone.png", "./images/leaf.png"];
 
+const rollBtn = document.querySelector("#rollDiceBtn");
+
 function loadImgs() {
   let count = 0;
   for (let i = 0; i < imgUrls.length; i++) {
@@ -38,8 +40,6 @@ function loadImgs() {
 }
 loadImgs();
 
-
-http://127.0.0.1:5500/Week6/trails/"
 
 
 function drawImgs() {
@@ -101,11 +101,7 @@ function rollDice() {
     return;
   }
 }
-const rollBtn = document.querySelector("#rollDiceBtn");
-rollBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-  rollDice();
-});
+
 
 // //this works but isn't feasible for all the images i need to load
 // acornImg.onload = function () {
@@ -144,10 +140,27 @@ class Hiker {
   }
 }
 
-let hiker1 = new Hiker(20, 20, 0, "black");
-let hiker2 = new Hiker(20, 40, 0, "white");
+function drawHiker(hiker) {
+    boardContext.fillStyle = hiker.color
+    boardContext.strokeStyle = 'chartreuse'
+    boardContext.fillRect(hiker.x, hiker.y, 10,10)
+    boardContext.strokeRect(hiker.x, hiker.y, 10, 10)
+}
+
+let hiker1 = new Hiker(25, 80, 0, "black");
+let hiker2 = new Hiker(25, 100, 0, "white");
 hiker2.isComputer = true;
+
+drawHiker(hiker1)
+drawHiker(hiker2)
 
 ///////////////////////////////////////////////
 ///////////////Event Listeners/////////////////
 ///////////////////////////////////////////////
+
+
+rollBtn.addEventListener("click", function (event) {
+    event.preventDefault();
+    rollDice();
+  });
+  

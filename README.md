@@ -76,3 +76,10 @@ Recommended Features
 A way to reset the board and play again
 CSS to give your game a personal and fun style
 Responsive mobile design
+
+needs to include:
+A summary of your project. (and any info about your game, if applicable)
+How to play your game.
+What Technologies you used (in this case HTML, CSS, and JavaScript).
+How you built your game (a few paragraphs about your code)
+Any thank yous or acknowledgements (especially if one of your classmates helped you out!)

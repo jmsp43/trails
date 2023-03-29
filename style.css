@@ -1,6 +1,24 @@
+
+body{
+    text-align: center;
+    font-family: fantasy;
+}
+
+#title{
+    color:chocolate
+}
+
 #gameCanvas{
     width:700px;
     height: 600px;
     background: url('./images/mountains.jpg') no-repeat center fixed;
     background-size: cover;
 }
+
+button{
+    font-family: fantasy;
+    border-radius: 5px 5px 5px;
+    background-color:chocolate;
+}
+
+
