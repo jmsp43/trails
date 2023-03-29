@@ -20,7 +20,43 @@ let changingDirection = false;
 const left = 37;
 const right = 39;
 
+const goingLeft = dx === -50;
+const goingRight = dx === 50;
+
 let extraSteps = 0
+
+const diceResults = document.querySelector("#diceResults");
+
+///////////////////////////////////////////////
+///////////////Classes/////////////////
+///////////////////////////////////////////////
+
+class Hiker {
+    constructor(x, y, player, color) {
+      this.x = x;
+      this.y = y;
+        this.player = player;
+        this.color = color
+        this.acorns = 1
+        this.stones = 1
+        this.leafs = 1
+        this.photos = 0
+        this.badges = 0
+      this.isComputer = false;
+      this.canteenActivated = false;
+    }
+      gatherResources() {
+      //choose resource
+    }
+    takePhoto() {
+      //collect photo card
+    }
+    collectBadge() {
+      //collect badge card
+    }
+  }
+  
+
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
 ///////////////////////////////////////////////
@@ -58,7 +94,7 @@ function drawImgs() {
     ) {
       x = 147;
     }
-    boardContext.drawImage(imgs[i], x, 130, 10, 10);
+    boardContext.drawImage(imgs[i], x, 130, 7, 7);
   }
 }
 
@@ -77,13 +113,13 @@ for (let i = 0; i < width; i += width / 5) {
 
 function drawSun() {
   boardContext.beginPath();
-  boardContext.arc(30, 60, 10, 3.1, 2 * Math.PI);
+  boardContext.arc(30, 60, 7, 3.1, 2 * Math.PI);
   boardContext.closePath();
   boardContext.fillStyle = "yellow";
   boardContext.fill();
 }
 drawSun();
-const diceResults = document.querySelector("#diceResults");
+
 
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
@@ -110,84 +146,45 @@ function rollDice() {
 
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
-  boardContext.strokeStyle = "chartreuse";
-  boardContext.fillRect(hiker.x, hiker.y, 10, 10);
-  boardContext.strokeRect(hiker.x, hiker.y, 10, 10);
+//   boardContext.strokeStyle = "chartreuse";
+  boardContext.fillRect(hiker.x, hiker.y, 7, 7);
+  boardContext.strokeRect(hiker.x, hiker.y, 7, 7);
 }
 
-let hiker1 = new Hiker(25, 80, 0, "black");
-let hiker2 = new Hiker(25, 100, 0, "white");
+let hiker1 = new Hiker(25, 80, 0, 'chocolate');
+let hiker2 = new Hiker(25, 100, 1, 'black');
 hiker2.isComputer = true;
-
 drawHiker(hiker1);
 drawHiker(hiker2);
 
-function activateCanteen(hiker) {
-    hiker.canteenActivated === true
+function activateCanteen() {
+    Hiker.canteenActivated === true
     extraSteps = 2
     //setting this to 2 for now
 }
 
-function moveHiker(hiker, event) {
-  if (changingDirection) return;
-  changingDirection = true;
-
-  const keyPressed = event.keyCode;
-
-  const goingLeft = dx === -50;
-  const goingRight = dx === 50;
-    if (hiker.canteenActivated === true){
+function moveHiker() {
+    if (Hiker.canteenActivated === true){
         if (keyPressed === left && goingRight === false) {
             dx = -50 * extraSteps;
+            Hiker.x += dx
           }
           if (keyPressed === right && goingLeft === false) {
-            dx = 50 * extraSteps;
+              dx = 50 * extraSteps;
+              Hiker.x += dx
           }
-}
+        return
+    }
   if (keyPressed === left && goingRight === false) {
-    dx = -50 * extraSteps;
+      dx = -50;
+      Hiker.x += dx
   }
   if (keyPressed === right && goingLeft === false) {
-    dx = 50 * extraSteps;
+      dx = 50;
+      Hiker.x += dx
   }
 }
 
-// //this works but isn't feasible for all the images i need to load
-// acornImg.onload = function () {
-//   boardContext.drawImage(acornImg, 5, 5, 20, 20);
-// //   boardContext.drawImage(stoneImg, 5, 5, 5, 5);
-// //   boardContext.drawImage(leafImg, 5, 5, 5, 5);
-// }
-
-///////////////////////////////////////////////
-///////////////Classes/////////////////
-///////////////////////////////////////////////
-
-class Hiker {
-  constructor(x, y, player, color) {
-    this.x = x;
-    this.y = y;
-    this.player = player;
-    this.color = color;
-    this.isComputer = false;
-    this.canteenActivated = false;
-  }
-  move1() {
-    //move one space to the right
-  }
-  activateCanteen() {
-    //move more than 1 space
-  }
-  gatherResources() {
-    //choose resource
-  }
-  takePhoto() {
-    //collect photo card
-  }
-  collectBadge() {
-    //collect badge card
-  }
-}
 
 ///////////////////////////////////////////////
 ///////////////Event Listeners/////////////////
@@ -200,6 +197,10 @@ rollBtn.addEventListener("click", function (event) {
 
 canteenBtn.addEventListener('click', function (event){
     event.preventDefault();
-
+    activateCanteen()
 })
 
+board.addEventListener('keypress', function (event) {
+    event.preventDefault()
+    moveHiker()
+})

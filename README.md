@@ -1,45 +1,7 @@
 Based on this game: https://keymastergames.com/products/trails
 
 
-
 //make a landing page with rules and explanation of game
-
-TRAILS rules and components
-
-
-5 trail sites
-    -1 start (trail head)
-    -1 end (trail end)
-
-1 dice with 6 sides showing wildlife
-1 bear token
-2 hiker tokens
-1 sun token
-
-20 Badge cards
-25 Photo cards
-
-Resources:
-    15 acorns
-    15 leafs
-    15 rocks
-    2 canteens
-
-CONCEPT
-
-    -Hikers (players) hike back and forth across trail sites (that make up the board) 
-    -Each turn, you gather resources and/or take photos
-    -Random possibility of collecting bonuses from encountering wildlife
-    -At space 1 or space 5 (aka trail head or trail end) you may trade in resources in exchange for badges
-    -Each time a player visits the trail end, the sun sets further (aka moves towards trail end by 1 space)
-    -Each time sun moves, resoucres/photo cards gained at trail sites increase by 1
-    -Gameplay ends when Sun reaches trail end
-    -You win by collecting the most photos and badges worth the most points
-
-EACH PLAYER
-
-    -each player is represented by a hiker. 
-    -starts out with 1 acorn, 1 rock, 1 stone, and a canteen
 
 
 Your dom project must meet these requirements:
@@ -92,3 +54,4 @@ Any thank yous or acknowledgements (especially if one of your classmates helped 
 //thank you to drew for the great idea of a landing page
 //thank you to kasper for all your canvas help
 //thank you to imani for general support
+//thank you to unsplash for having cool, free, downloadable photos for every category one could possibly want
