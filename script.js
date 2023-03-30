@@ -6,9 +6,17 @@ const boardContext = board.getContext("2d");
 const width = board.width;
 const height = board.height;
 
+//boardContext.imageSmoothingEnabled = false
+
 let areImgsLoaded = false;
 let imgs = [];
-let imgUrls = ["./images/acorn.png", "./images/stone.png", "./images/leaf.png", './images/bear.png', './images/camera.png'];
+let imgUrls = [
+  "./images/acorn.png",
+  "./images/stone.png",
+  "./images/leaf.png",
+  "./images/bear.png",
+  "./images/camera.png",
+];
 
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
@@ -23,7 +31,6 @@ const goingRight = dx === 60;
 let extraSteps = 0;
 
 const diceResults = document.querySelector("#diceResults");
-
 
 let sunX = 30;
 
@@ -197,9 +204,10 @@ class Hiker {
     this.color = color;
     this.acorns = 1;
     this.stones = 1;
-    this.leafs = 1;
+    this.leaves = 1;
     this.photos = 0;
-    this.badges = 0;
+    this.badgesInHand = [];
+    this.badgesEarned = [];
     this.isComputer = false;
     this.canteenActivated = false;
   }
@@ -217,6 +225,40 @@ class Hiker {
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
 ///////////////////////////////////////////////
+let backgroundImgs = [];
+let backgroundUrls = [
+//   { url: "./images/mountains.jpg", points: 0 },
+    { url: "./parks/caddoLake.jpg", points: 2 },
+    { url: "./parks/cathedralGorge.jpg", points: 2 },
+    { url: "./parks/deadHorsePoint.jpg", points: 2 },
+    { url: "./parks/eldorado.jpg", points: 3 },
+    { url: "./parks/smokyMountains.jpg", points: 5 },
+    { url: "./parks/iaoValley.jpg", points: 4 },
+    { url: "./parks/kachemakBay.jpg", points: 2 },
+    { url: "./parks/paloDuro.jpg", points: 3 },
+    { url: "./parks/letchworth.jpg", points: 3 },
+    { url: "./parks/watkinsGlen.jpg", points: 2 },
+    { url: "./parks/acadia.avif", points: 4 }
+];
+let backgroundImgsLoaded = false;
+
+function loadBackgroundImgs() {
+  let count = 0;
+  for (let i = 0; i < backgroundUrls.length; i++) {
+    const img = new Image();
+    img.src = backgroundUrls[i].url;
+    //will only run when the img loads
+    img.onload = () => {
+      backgroundImgs.push(img);
+      count++;
+      if (count >= backgroundUrls.length) {
+        backgroundImgsLoaded = true;
+        drawBackgroundImgs();
+      }
+    };
+  }
+}
+loadBackgroundImgs();
 
 function loadImgs() {
   let count = 0;
@@ -230,6 +272,7 @@ function loadImgs() {
       if (count >= imgUrls.length) {
         areImgsLoaded = true;
         drawImgs();
+        clearBoard();
       }
     };
   }
@@ -250,10 +293,14 @@ function drawImgs() {
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/acorn.png"
     ) {
       x = 145;
-    } else if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/bear.png") {
-        x = 205
-    } else if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/camera.png") {
-        x = 265
+    } else if (
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/bear.png"
+    ) {
+      x = 205;
+    } else if (
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/camera.png"
+    ) {
+      x = 265;
     }
     boardContext.drawImage(imgs[i], x, 130, 10, 10);
   }
@@ -281,35 +328,32 @@ function drawSun() {
 }
 drawSun();
 
-
-
-// function whereIsSun() {
-//     if (sunX === 30) {
-//         sunPosition = 0
-//     } else if (sunX = 90) {
-//         sunPosition = 1
-//     }
-// }
-
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
     diceResults.innerHTML = "You get an acorn!";
+    currentHiker.acorns++;
     return;
   } else if (diceNum === 2) {
     diceResults.innerHTML = "You get a stone!";
+    currentHiker.stones++;
     return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
+    currentHiker.leaves++;
     return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
+    currentHiker.photos++;
+    clearBoard()
     return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
+    getBadgeCard();
     return;
   } else {
     diceResults.innerHTML = "You get a bear!";
+    console.log("figure out what bear means in this game");
     return;
   }
 }
@@ -321,14 +365,26 @@ function drawHiker(hiker) {
   boardContext.strokeRect(hiker.x, hiker.y, 7, 7);
 }
 
-let hiker1 = new Hiker(25, 80, 0, "chocolate");
+let hiker1 = new Hiker(25, 80, 0, "gray");
 let hiker2 = new Hiker(25, 100, 1, "black");
 hiker2.isComputer = true;
+let currentHiker = hiker2;
 drawHiker(hiker1);
 drawHiker(hiker2);
 
+function drawBackgroundImgs() {
+  //console.log(currentHiker.photos)
+  boardContext.drawImage(
+    backgroundImgs[currentHiker.photos],
+    0,
+    0,
+    width,
+    height
+  );
+}
+
 function activateCanteen() {
-  Hiker.canteenActivated === true;
+  currentHiker.canteenActivated === true;
   extraSteps = 2;
   //setting this to 2 for now
 }
@@ -337,54 +393,52 @@ function moveHiker(event) {
   let keyPressed = event.key;
 
   //wrap entire following in an if and call moveSun if thats true
-  if (Hiker.canteenActivated === true) {
-    if (keyPressed === left ) {
-        //&& goingRight === false
+  if (currentHiker.canteenActivated === true) {
+    if (keyPressed === left) {
+      //&& goingRight === false
       dx = -60 * extraSteps;
-      Hiker.x += dx;
+      currentHiker.x += dx;
     }
-    if (keyPressed === right ) {
-        //&& goingLeft === false
+    if (keyPressed === right) {
+      //&& goingLeft === false
       dx = 60 * extraSteps;
-      Hiker.x += dx;
+      currentHiker.x += dx;
     }
     return;
   }
-    if (keyPressed === "ArrowLeft" ) {
-        //&& goingRight === false
+  if (keyPressed === "ArrowLeft") {
+    //&& goingRight === false
     dx = -60;
-    hiker1.x += dx;
+    currentHiker.x += dx;
     clearBoard();
-    drawHiker(hiker1);
+    drawHiker(currentHiker);
   }
-    if (keyPressed === "ArrowRight") {
-      //&& goingLeft === false
+  if (keyPressed === "ArrowRight") {
+    //&& goingLeft === false
     dx = 60;
-    hiker1.x += dx;
+    currentHiker.x += dx;
     clearBoard();
-    drawHiker(hiker1);
-    }
-    if (hiker1.x === 265 || hiker1.x === 25) {
-        moveSun()
+    drawHiker(currentHiker);
   }
-    gainResources()
+  if (currentHiker.x === 265 || currentHiker.x === 25) {
+    moveSun();
+  }
+  gainResources();
 }
 
 function moveSun() {
-    if (sunPosition <= 4) {
-        sunPosition++;
-        sunX += 60;
-        clearBoard();
-    }
-    //trying to make it go backwards
-    if (sunPosition >= 5) {
-        sunPosition++;
-        sunX -= 60;
-        clearBoard();
-    }
-
+  if (sunPosition <= 4) {
+    sunPosition++;
+    sunX += 60;
+    clearBoard();
+  }
+  //trying to make it go backwards
+  if (sunPosition >= 5) {
+    sunPosition++;
+    sunX -= 60;
+    clearBoard();
+  }
 }
-
 
 function whoseTurn() {
   //function to find out which hikers turn it is
@@ -394,33 +448,53 @@ function clearBoard() {
   //redraw everything
   //clearRect deletes while fill rect only draws
   boardContext.clearRect(0, 0, width, height);
+  drawBackgroundImgs();
   for (let i = 0; i < width; i += width / 5) {
-      draw(i, 75, i, width);
+    draw(i, 75, i, width);
   }
-    drawSun()
-    drawHiker(hiker1)
-    drawHiker(hiker2)
-    drawImgs()
+  drawSun();
+  drawHiker(hiker1);
+  drawHiker(hiker2);
+  drawImgs();
 }
 
-//25 is stone, 86 is leaf, 147 is acorn
 function gainResources() {
-  if (hiker1.x == 25) {
-    hiker1.stones++;
-  } else if (hiker1.x == 85) {
-    hiker1.leafs++;
-  } else if (hiker1.x == 145) {
-    hiker1.acorns++;
+  if (currentHiker.x == 25) {
+    currentHiker.stones++;
+  } else if (currentHiker.x == 85) {
+    currentHiker.leafs++;
+  } else if (currentHiker.x == 145) {
+    currentHiker.acorns++;
+  } else if (currentHiker.x == 205) {
+    console.log("user rolls dice at bear spot");
+  } else if (currentHiker.x == 265) {
+    console.log("reached 265");
+    currentHiker.photos++;
+    clearBoard();
+  }
+}
+
+function getBadgeCard() {
+  if (
+    currentHiker.x === 265 ||
+    currentHiker.x === 25 ||
+    (diceResults.innerHTML = "You get a badge card!")
+  ) {
+    //(Math.random()*21)+1
+    //give user random badge card (push to badgesInHand array property)
+    //take used badge card and push it to in-play badge card deck and take out from initial badge card deck
+    //if user wants to pay for it on the spot, they can if they have the resources (if resource needed is greater than or equal to what they have, payforBadge)
   }
 }
 
 function payForBadge() {
-  //
+  //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
 }
 
-function calculateScore() { }
+function calculateScore() {}
 
-function runGame(){}
+function runGame() {}
+console.log(currentHiker);
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 ///////////////Event Listeners/////////////////
