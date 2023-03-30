@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trails</title>
     <link href = 'style.css' rel = 'stylesheet'>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
 </head>
 <body>
     <div id = 'title'><h1>Digital Trails</h1></div>
@@ -19,8 +23,18 @@
     <div class = 'buttons'>
         <button id = 'rollDiceBtn'>Roll Dice</button>
         <button id = 'canteenBtn'>Activate Canteen</button>
+        <button id = 'payForBadge'>Earn Badge</button>
     </div>
     <div id = 'diceResults'></div>
+    <div id = 'badgeListIcon'>
+        <i class="fa fa-solid fa-clipboard"></i>
+        <div id = 'badgeInHandList'>badges in hand go here</div>
+        <div id = 'badgesEarnedList'>badges earned go here</div>
+    </div>
+    <div id = 'statsIcon'>
+        <!-- <i class = 'fa fa-solid fa-question'></i> -->
+        <div id = 'stats'>current hiker stats go here</div>
+    </div>
     <script src = 'script.js'></script>
 </body>
 </html>

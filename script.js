@@ -22,6 +22,7 @@ let imgUrls = [
 
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
+const earnBadgeBtn = document.querySelector('#payForBadge')
 
 let dx = 140;
 let sunPosition = 0;
@@ -197,6 +198,13 @@ const leafBadgeDeck = [
 
 let badgeDeck = [];
 badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
+
+const badgeListBtn = document.querySelector('#badgeListIcon')
+const badgeInHandList = document.querySelector('#badgeInHandList')
+const badgeEarnedList = document.querySelector('#badgeEarnedList')
+
+
+const stats = document.querySelector("#stats")
 ///////////////////////////////////////////////
 ///////////////Classes/////////////////
 ///////////////////////////////////////////////
@@ -331,41 +339,40 @@ function drawSun() {
 }
 drawSun();
 
-
-
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
       diceResults.innerHTML = "You get an acorn!";
       currentHiker.resources[0].acorns++
-    return;
+    // return;
   } else if (diceNum === 2) {
       diceResults.innerHTML = "You get a stone!";
       currentHiker.resources[1].stones++
-    return;
+    // return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
-    currentHiker.resources[1].leaves++
-    return;
+    currentHiker.resources[2].leaves++
+    // return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
     clearBoard()
-    return;
+    // return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
     getBadgeCard();
-    return;
+    // return;
   } else {
     diceResults.innerHTML = "You get a bear!";
     console.log("figure out what bear means in this game");
-    return;
+    // return;
   }
+    return;
 }
 
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
-  //   boardContext.strokeStyle = "chartreuse";
+  boardContext.strokeStyle = "chartreuse";
   boardContext.fillRect(hiker.x, hiker.y, 20, 20);
   boardContext.strokeRect(hiker.x, hiker.y, 20, 20);
 }
@@ -427,12 +434,14 @@ function moveHiker(event) {
     drawHiker(currentHiker);
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
-    moveSun();
+      moveSun();
+      getBadgeCard()
   }
     gainResources();
+
+    stats.innerText = JSON.stringify(currentHiker.resources)
     console.log(currentHiker.x)
 }
-
 
 function moveSun() {
   if (sunPosition <= 4) {
@@ -500,9 +509,10 @@ function getBadgeCard() {
   }
 }
 
-//console.log(currentHiker.resources[0].acorns)
-
 function payForBadge() {
+    for (let i = 0; i < currentHiker.resources.length; i++){
+        
+    }
   //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
 }
 
@@ -530,6 +540,20 @@ document.addEventListener("keydown", function (event) {
   moveHiker(event);
 });
 
+earnBadgeBtn.addEventListener("click", function (event) {
+    event.preventDefault()
+    payForBadge()
+})
+
+
+badgeListBtn.addEventListener("click", function (event) {
+    event.preventDefault()
+
+    badgeInHandList.innerText = JSON.stringify(currentHiker.badgesInHand)
+    badgeEarnedList.innerHTML = JSON.stringify(currentHiker.badgesEarned)
+    //clear results shown onscreen at end of turn somehow
+
+})
 
 
 // const acornBadgeDeck = [
