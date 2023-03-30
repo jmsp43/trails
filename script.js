@@ -3,8 +3,10 @@
 ///////////////////////////////////////////////
 const board = document.querySelector("#gameCanvas");
 const boardContext = board.getContext("2d");
-const width = board.width;
-const height = board.height;
+const width = 700
+const height = 500
+board.width = width
+board.height = height
 
 //boardContext.imageSmoothingEnabled = false
 
@@ -40,21 +42,25 @@ const acornBadgeDeck = [
     cost: 5,
     costType: "acorns",
     badgeType: "acorn",
-    reward: `6 Victory Points`,
+        rewardPoints: 6,
+    otherRewards: null
   },
   {
     name: "The Collector",
     cost: 3,
     costType: "acorns",
     badgeType: "acorn",
-    reward: `1 Victory Point for every ${this.badgeType} badge card earned by game end`,
+    rewardPoints: 1,
+          //* currentHiker.badgesEarned[].badgeType = 'acorn'
+    otherRewards: null
   },
   {
     name: "The Navigator",
     cost: 4,
     costType: "acorns/stones",
     badgeType: "acorn",
-    reward: `3 Victory Points and 2 leafs`,
+      rewardPoints: 3,
+    // otherRewards: currentHiker.resources[2].leaves+=2
   },
   {
     name: "The Astronomer",
@@ -201,10 +207,8 @@ class Hiker {
     this.x = x;
     this.y = y;
     this.player = player;
-    this.color = color;
-    this.acorns = 1;
-    this.stones = 1;
-    this.leaves = 1;
+      this.color = color;
+      this.resources = [{acorns: 1}, {stones: 1}, {leaves: 1}]
     this.photos = 0;
     this.badgesInHand = [];
     this.badgesEarned = [];
@@ -328,19 +332,21 @@ function drawSun() {
 }
 drawSun();
 
+
+
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
-    diceResults.innerHTML = "You get an acorn!";
-    currentHiker.acorns++;
+      diceResults.innerHTML = "You get an acorn!";
+      currentHiker.resources[0].acorns++
     return;
   } else if (diceNum === 2) {
-    diceResults.innerHTML = "You get a stone!";
-    currentHiker.stones++;
+      diceResults.innerHTML = "You get a stone!";
+      currentHiker.resources[1].stones++
     return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
-    currentHiker.leaves++;
+    currentHiker.resources[1].leaves++
     return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
@@ -460,19 +466,19 @@ function clearBoard() {
 
 function gainResources() {
   if (currentHiker.x == 25) {
-    currentHiker.stones++;
+    currentHiker.resources[1].stones++
   } else if (currentHiker.x == 85) {
-    currentHiker.leafs++;
+    currentHiker.resources[2].leaves++
   } else if (currentHiker.x == 145) {
-    currentHiker.acorns++;
+    currentHiker.resources[0].acorns++
   } else if (currentHiker.x == 205) {
     console.log("user rolls dice at bear spot");
   } else if (currentHiker.x == 265) {
-    console.log("reached 265");
     currentHiker.photos++;
     clearBoard();
   }
 }
+
 
 function getBadgeCard() {
   if (
@@ -480,12 +486,20 @@ function getBadgeCard() {
     currentHiker.x === 25 ||
     (diceResults.innerHTML = "You get a badge card!")
   ) {
-    //(Math.random()*21)+1
-    //give user random badge card (push to badgesInHand array property)
-    //take used badge card and push it to in-play badge card deck and take out from initial badge card deck
+      let pickedCard = badgeDeck[Math.floor((Math.random() * 21))]
+   //give user random badge card (push to badgesInHand array property)
+      currentHiker.badgesInHand.push(pickedCard)
+      let pickedCardIndex = badgeDeck.indexOf(pickedCard)
+      badgeDeck.splice(pickedCardIndex, 1)
+      console.log(badgeDeck.length)
+      console.log(currentHiker.badgesInHand)
+    //take used badge card and take out from initial badge card deck
+      
     //if user wants to pay for it on the spot, they can if they have the resources (if resource needed is greater than or equal to what they have, payforBadge)
   }
 }
+
+//console.log(currentHiker.resources[0].acorns)
 
 function payForBadge() {
   //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
@@ -514,3 +528,61 @@ document.addEventListener("keydown", function (event) {
   event.preventDefault();
   moveHiker(event);
 });
+
+
+
+// const acornBadgeDeck = [
+//     {
+//       name: "The Climber",
+//       cost: 5,
+//       costType: "acorns",
+//       badgeType: "acorn",
+//           rewardPoints: 6,
+//       otherRewards: null
+//     },
+//     {
+//       name: "The Collector",
+//       cost: 3,
+//       costType: "acorns",
+//       badgeType: "acorn",
+//       rewardPoints: 1,
+//             //* currentHiker.badgesEarned[].badgeType = 'acorn'
+//       otherRewards: null
+//     },
+//     {
+//       name: "The Navigator",
+//       cost: 4,
+//       costType: "acorns/stones",
+//       badgeType: "acorn",
+//         rewardPoints: 3,
+//       otherRewards: currentHiker.resources[2].leaves+=2
+//     },
+//     {
+//       name: "The Astronomer",
+//       cost: 4,
+//       costType: "acorns",
+//       badgeType: "acorn",
+//       reward: `1 Victory Point and you get to earn another random badge card plus it's reward at no cost!`,
+//     },
+//     {
+//       name: "The Cartographer",
+//       cost: 4,
+//       costType: "acorns/leaves",
+//       badgeType: "acorn",
+//       reward: `3 Victory Points and 2 stones`,
+//     },
+//     {
+//       name: "The Photographer",
+//       cost: 5,
+//       costType: "acorns/stones",
+//       badgeType: "acorn",
+//       reward: `4 Victory Points and you get to take a new photo!`,
+//     },
+//     {
+//       name: "First Aid",
+//       cost: 2,
+//       costType: "acorns",
+//       badgeType: "acorn",
+//       reward: `1 Victory Point and 1 resource of your choosing (any type)`,
+//     },
+//   ];

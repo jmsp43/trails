@@ -10,8 +10,8 @@ body{
 }
 
 #gameCanvas{
-    width:900px;
-    height: 700px;
+    /* width:900px;
+    height: 700px; */
     /* background: url('./images/mountains.jpg') no-repeat center fixed;
     background-size: cover; */
     border-radius: 15px;
