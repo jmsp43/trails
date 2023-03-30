@@ -9,11 +9,12 @@ body{
     color:chocolate
 }
 
+#updatesBox{
+    border: 2px solid red;
+    padding:10px;
+}
+
 #gameCanvas{
-    /* width:900px;
-    height: 700px; */
-    /* background: url('./images/mountains.jpg') no-repeat center fixed;
-    background-size: cover; */
     border-radius: 15px;
 }
 

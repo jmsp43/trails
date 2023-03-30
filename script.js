@@ -23,18 +23,17 @@ let imgUrls = [
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
 
-let dx = 60;
-let changingDirection = false;
+let dx = 140;
 let sunPosition = 0;
 
-const goingLeft = dx === -60;
-const goingRight = dx === 60;
+const goingLeft = dx === -140;
+const goingRight = dx === 140;
 
 let extraSteps = 0;
 
 const diceResults = document.querySelector("#diceResults");
 
-let sunX = 30;
+let sunX = 70;
 
 const acornBadgeDeck = [
   {
@@ -288,25 +287,25 @@ function drawImgs() {
   let x;
   for (let i = 0; i < imgs.length; i++) {
     if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/stone.png") {
-      x = 25;
+      x = 40;
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/leaf.png"
     ) {
-      x = 85;
+      x = 180;
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/acorn.png"
     ) {
-      x = 145;
+      x = 320;
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/bear.png"
     ) {
-      x = 205;
+      x = 460;
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/camera.png"
     ) {
-      x = 265;
+      x = 600;
     }
-    boardContext.drawImage(imgs[i], x, 130, 10, 10);
+    boardContext.drawImage(imgs[i], x, 400, 70, 70);
   }
 }
 
@@ -320,12 +319,12 @@ function draw(X, Y, x, y) {
 }
 //creating 5 sections on board with line drawings
 for (let i = 0; i < width; i += width / 5) {
-  draw(i, 75, i, width);
+    draw(i, 75, i, width);
 }
 
 function drawSun() {
   boardContext.beginPath();
-  boardContext.arc(sunX, 60, 7, 3.1, 2 * Math.PI);
+  boardContext.arc(sunX, 75, 20, 3.15, 2 * Math.PI);
   boardContext.closePath();
   boardContext.fillStyle = "yellow";
   boardContext.fill();
@@ -367,16 +366,17 @@ function rollDice() {
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
   //   boardContext.strokeStyle = "chartreuse";
-  boardContext.fillRect(hiker.x, hiker.y, 7, 7);
-  boardContext.strokeRect(hiker.x, hiker.y, 7, 7);
+  boardContext.fillRect(hiker.x, hiker.y, 20, 20);
+  boardContext.strokeRect(hiker.x, hiker.y, 20, 20);
 }
 
-let hiker1 = new Hiker(25, 80, 0, "gray");
-let hiker2 = new Hiker(25, 100, 1, "black");
+let hiker1 = new Hiker(60, 200, 1, "gray");
+let hiker2 = new Hiker(60, 300, 2, "black");
 hiker2.isComputer = true;
 let currentHiker = hiker2;
 drawHiker(hiker1);
 drawHiker(hiker2);
+console.log(currentHiker.x)
 
 function drawBackgroundImgs() {
   //console.log(currentHiker.photos)
@@ -402,46 +402,48 @@ function moveHiker(event) {
   if (currentHiker.canteenActivated === true) {
     if (keyPressed === left) {
       //&& goingRight === false
-      dx = -60 * extraSteps;
+      dx = -140 * extraSteps;
       currentHiker.x += dx;
     }
     if (keyPressed === right) {
       //&& goingLeft === false
-      dx = 60 * extraSteps;
+      dx = 140 * extraSteps;
       currentHiker.x += dx;
     }
     return;
   }
   if (keyPressed === "ArrowLeft") {
     //&& goingRight === false
-    dx = -60;
+    dx = -140;
     currentHiker.x += dx;
     clearBoard();
     drawHiker(currentHiker);
   }
   if (keyPressed === "ArrowRight") {
     //&& goingLeft === false
-    dx = 60;
+    dx = 140;
     currentHiker.x += dx;
     clearBoard();
     drawHiker(currentHiker);
   }
-  if (currentHiker.x === 265 || currentHiker.x === 25) {
+  if (currentHiker.x === 620 || currentHiker.x === 60) {
     moveSun();
   }
-  gainResources();
+    gainResources();
+    console.log(currentHiker.x)
 }
+
 
 function moveSun() {
   if (sunPosition <= 4) {
     sunPosition++;
-    sunX += 60;
+    sunX += 140;
     clearBoard();
   }
   //trying to make it go backwards
   if (sunPosition >= 5) {
     sunPosition++;
-    sunX -= 60;
+    sunX -= 140;
     clearBoard();
   }
 }
@@ -465,25 +467,24 @@ function clearBoard() {
 }
 
 function gainResources() {
-  if (currentHiker.x == 25) {
+  if (currentHiker.x == 60) {
     currentHiker.resources[1].stones++
-  } else if (currentHiker.x == 85) {
+  } else if (currentHiker.x == 200) {
     currentHiker.resources[2].leaves++
-  } else if (currentHiker.x == 145) {
+  } else if (currentHiker.x == 340) {
     currentHiker.resources[0].acorns++
-  } else if (currentHiker.x == 205) {
+  } else if (currentHiker.x == 480) {
     console.log("user rolls dice at bear spot");
-  } else if (currentHiker.x == 265) {
+  } else if (currentHiker.x == 620) {
     currentHiker.photos++;
     clearBoard();
   }
 }
 
-
 function getBadgeCard() {
   if (
-    currentHiker.x === 265 ||
-    currentHiker.x === 25 ||
+    currentHiker.x === 620 ||
+    currentHiker.x === 60 ||
     (diceResults.innerHTML = "You get a badge card!")
   ) {
       let pickedCard = badgeDeck[Math.floor((Math.random() * 21))]
