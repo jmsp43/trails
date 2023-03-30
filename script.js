@@ -8,21 +8,22 @@ const height = board.height;
 
 let areImgsLoaded = false;
 let imgs = [];
-let imgUrls = ["./images/acorn.png", "./images/stone.png", "./images/leaf.png"];
+let imgUrls = ["./images/acorn.png", "./images/stone.png", "./images/leaf.png", './images/bear.png', './images/camera.png'];
 
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
 
-let dx = 50;
+let dx = 60;
 let changingDirection = false;
 let sunPosition = 0;
 
-const goingLeft = dx === -50;
-const goingRight = dx === 50;
+const goingLeft = dx === -60;
+const goingRight = dx === 60;
 
 let extraSteps = 0;
 
 const diceResults = document.querySelector("#diceResults");
+
 
 let sunX = 30;
 
@@ -244,16 +245,19 @@ function drawImgs() {
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/leaf.png"
     ) {
-      x = 86;
+      x = 85;
     } else if (
       imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/acorn.png"
     ) {
-      x = 147;
+      x = 145;
+    } else if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/bear.png") {
+        x = 205
+    } else if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/camera.png") {
+        x = 265
     }
-    boardContext.drawImage(imgs[i], x, 130, 7, 7);
+    boardContext.drawImage(imgs[i], x, 130, 10, 10);
   }
 }
-//25 is stone, 86 is leaf, 147 is acorn
 
 //drawing a line
 function draw(X, Y, x, y) {
@@ -277,14 +281,7 @@ function drawSun() {
 }
 drawSun();
 
-function moveSun() {
-  if (hiker1.x === 265) {
-    sunPosition++;
-    sunX += 60;
-    // clearBoard();
-    drawSun();
-  }
-}
+
 
 // function whereIsSun() {
 //     if (sunX === 30) {
@@ -339,30 +336,55 @@ function activateCanteen() {
 function moveHiker(event) {
   let keyPressed = event.key;
 
+  //wrap entire following in an if and call moveSun if thats true
   if (Hiker.canteenActivated === true) {
-    if (keyPressed === left && goingRight === false) {
+    if (keyPressed === left ) {
+        //&& goingRight === false
       dx = -60 * extraSteps;
       Hiker.x += dx;
     }
-    if (keyPressed === right && goingLeft === false) {
+    if (keyPressed === right ) {
+        //&& goingLeft === false
       dx = 60 * extraSteps;
       Hiker.x += dx;
     }
     return;
   }
-  if (keyPressed === "ArrowLeft" && goingRight === false) {
+    if (keyPressed === "ArrowLeft" ) {
+        //&& goingRight === false
     dx = -60;
     hiker1.x += dx;
     clearBoard();
     drawHiker(hiker1);
   }
-  if (keyPressed === "ArrowRight" && goingLeft === false) {
+    if (keyPressed === "ArrowRight") {
+      //&& goingLeft === false
     dx = 60;
     hiker1.x += dx;
     clearBoard();
     drawHiker(hiker1);
+    }
+    if (hiker1.x === 265 || hiker1.x === 25) {
+        moveSun()
   }
+    gainResources()
 }
+
+function moveSun() {
+    if (sunPosition <= 4) {
+        sunPosition++;
+        sunX += 60;
+        clearBoard();
+    }
+    //trying to make it go backwards
+    if (sunPosition >= 5) {
+        sunPosition++;
+        sunX -= 60;
+        clearBoard();
+    }
+
+}
+
 
 function whoseTurn() {
   //function to find out which hikers turn it is
@@ -383,12 +405,12 @@ function clearBoard() {
 
 //25 is stone, 86 is leaf, 147 is acorn
 function gainResources() {
-  if (Hiker.x === 25) {
-    Hiker.stones++;
-  } else if (Hiker.x === 85) {
-    Hiker.leafs++;
-  } else if (Hiker.x === 146) {
-    Hiker.acorns++;
+  if (hiker1.x == 25) {
+    hiker1.stones++;
+  } else if (hiker1.x == 85) {
+    hiker1.leafs++;
+  } else if (hiker1.x == 145) {
+    hiker1.acorns++;
   }
 }
 
