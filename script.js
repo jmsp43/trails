@@ -2,22 +2,23 @@
 ///////////////Global Variables/////////////////
 ///////////////////////////////////////////////
 const board = document.querySelector("#gameCanvas");
+const startBtn = document.querySelector("#startBtn");
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
-const earnBadgeBtn = document.querySelector('#payForBadge')
+const earnBadgeBtn = document.querySelector("#payForBadge");
 const diceResults = document.querySelector("#diceResults");
-const badgeListBtn = document.querySelector('#badgeListIcon')
-const badgeInHandList = document.querySelector('#badgeInHandList')
-const badgeEarnedList = document.querySelector('#badgeEarnedList')
-const stats = document.querySelector("#stats")
-const updateInfo = document.querySelector('#updatesInfo')
-const finishTurnBtn = document.querySelector('#finishedTurn')
+const badgeListBtn = document.querySelector("#badgeListIcon");
+const badgeInHandList = document.querySelector("#badgeInHandList");
+const badgesEarnedList = document.querySelector("#badgesEarnedList");
+const stats = document.querySelector("#stats");
+const updateInfo = document.querySelector("#updatesInfo");
+const finishTurnBtn = document.querySelector("#finishedTurn");
 
 const boardContext = board.getContext("2d");
-const width = 700
-const height = 500
-board.width = width
-board.height = height
+const width = 700;
+const height = 500;
+board.width = width;
+board.height = height;
 //boardContext.imageSmoothingEnabled = false
 
 let areImgsLoaded = false;
@@ -37,9 +38,11 @@ const goingRight = dx === 140;
 let extraSteps = 0;
 let sunX = 70;
 let backgroundImgsLoaded = false;
-let compTurnFinished = false
+let compTurnFinished = false;
 
-
+badgeInHandList.style.display = 'none'
+badgesEarnedList.style.display = 'none'
+stats.style.display = "none";
 ///////////////////////////////////////////////
 ///////////////Classes/////////////////
 ///////////////////////////////////////////////
@@ -50,10 +53,10 @@ class Hiker {
     this.x = x;
     this.y = y;
     this.player = player;
-      this.color = color;
-      this.resources = [{acorns: 1}, {stones: 1}, {leaves: 1}]
-      this.photos = 0;
-      this.victoryPoints = 0
+    this.color = color;
+    this.resources = [{ acorns: 1 }, { stones: 1 }, { leaves: 1 }];
+    this.photos = 0;
+    this.victoryPoints = 0;
     this.badgesInHand = [];
     this.badgesEarned = [];
     this.isComputer = false;
@@ -73,218 +76,283 @@ class Hiker {
 let hiker1 = new Hiker(60, 200, 1, "gray");
 let hiker2 = new Hiker(60, 300, 2, "black");
 hiker2.isComputer = true;
-let currentHiker = hiker2;
+let currentHiker = hiker1;
 //acorn, stone, leaf
 
 const acornBadgeDeck = [
-    {
-      name: "The Climber",
-      cost: 5,
-      costType: "acorns",
-      badgeType: "acorn",
-      rewardPoints: 6,
-      otherRewards: null
-    },
-    {
-      name: "The Collector",
-      cost: 3,
-      costType: "acorns",
-      badgeType: "acorn",
-        rewardPoints: 1,
-          //   * currentHiker.badgesEarned.badgeType === 'acorn',
-      otherRewards: null
-    },
-    {
-      name: "The Navigator",
-      cost: 4,
-      costType: "acorns/stones",
-      badgeType: "acorn",
-        rewardPoints: 3,
-        otherRewards: null
-      // otherRewards: currentHiker.resources[2].leaves+=2
-    },
-    {
-      name: "The Astronomer",
-      cost: 4,
-      costType: "acorns",
-      badgeType: "acorn",
-        rewardPoints: 1,
-      otherRewards: `Earn another random badge card plus it's reward at no cost!`
-    },
-    {
-      name: "The Cartographer",
-      cost: 4,
-      costType: "acorns/leaves",
-      badgeType: "acorn",
-        rewardPoints: 3, 
-      //otherRewards: currentHiker.resources[0].stones+=2
-    },
-    {
-      name: "The Photographer",
-      cost: 5,
-      costType: "acorns/stones",
-      badgeType: "acorn",
-      rewardPoints: 4,
-      //otherRewards: currentHiker.photos++
-    },
-    {
-      name: "First Aid",
-      cost: 2,
-      costType: "acorns",
-      badgeType: "acorn",
-        rewardPoints: 1,
-      otherRewards: 'Roll the dice three times!'
-    },
-  ];
-  
-  const stoneBadgeDeck = [
-    {
-      name: "Rappeling",
-      cost: 4,
-      costType: "stones",
-      badgeType: "stone",
-      rewardPoints: 1 * currentHiker.badgesEarned.length,
-      otherRewards: null
-    },
-    {
-      name: "First Aid",
-      cost: 2,
-      costType: "stones",
-      badgeType: "stone",
-        rewardPoints: 1,
-      otherRewards: 'Roll the dice three times!'
-    },
-    {
-      name: "The Photographer",
-      cost: 5,
-      costType: "stones/leaves",
-      badgeType: "stone",
-        rewardPoints: 4,
-        otherRewards: null
-    //   otherRewards: currentHiker.photos++
-    },
-    {
-      name: "The Collector",
-      cost: 3,
-      costType: "stones",
-        badgeType: "stone",
-      rewardPoints: 1,
-      // for every ${this.badgeType} badge card earned by game end`,
-      otherRewards: null
-    },
-    {
-      name: "The Climber",
-      cost: 5,
-      costType: "stones",
-      badgeType: "stone",
-      rewardPoints: 6,
-        otherRewards: null
-    },
-    {
-      name: "The Cartographer",
-      cost: 4,
-      costType: "stones/acorns",
-      badgeType: "stone",
-      rewardPoints: 3,
-      otherRewards: null
+  {
+    name: "The Climber",
+    cost: 5,
+    costType: "acorns",
+    badgeType: "acorn",
+    rewardPoints: 6,
+    otherRewards: null,
+  },
+  {
+    name: "The Collector",
+    cost: 3,
+    costType: "acorns",
+    badgeType: "acorn",
+    rewardPoints: 1,
+    //   * currentHiker.badgesEarned.badgeType === 'acorn',
+    otherRewards: null,
+  },
+  {
+    name: "The Navigator",
+    cost: 4,
+    costType: "acorns/stones",
+    badgeType: "acorn",
+    rewardPoints: 3,
+    otherRewards: null,
+    // otherRewards: currentHiker.resources[2].leaves+=2
+  },
+  {
+    name: "The Astronomer",
+    cost: 4,
+    costType: "acorns",
+    badgeType: "acorn",
+    rewardPoints: 1,
+    otherRewards: null,
+    //   otherRewards: `Earn another random badge card plus it's reward at no cost!`
+  },
+  {
+    name: "The Cartographer",
+    cost: 4,
+    costType: "acorns/leaves",
+    badgeType: "acorn",
+    rewardPoints: 3,
+    otherRewards: null,
+    //otherRewards: currentHiker.resources[0].stones+=2
+  },
+  {
+    name: "The Photographer",
+    cost: 5,
+    costType: "acorns/stones",
+    badgeType: "acorn",
+    rewardPoints: 4,
+    otherRewards: null,
+    //otherRewards: currentHiker.photos++
+  },
+  {
+    name: "First Aid",
+    cost: 2,
+    costType: "acorns",
+    badgeType: "acorn",
+    rewardPoints: 1,
+    otherRewards: null,
+    //   otherRewards: 'Roll the dice three times!'
+  },
+];
+
+const stoneBadgeDeck = [
+  {
+    name: "Rappeling",
+    cost: 4,
+    costType: "stones",
+    badgeType: "stone",
+    rewardPoints: 1 * currentHiker.badgesEarned.length,
+    otherRewards: null,
+  },
+  {
+    name: "First Aid",
+    cost: 2,
+    costType: "stones",
+    badgeType: "stone",
+    rewardPoints: 1,
+    otherRewards: null,
+    //   otherRewards: 'Roll the dice three times!'
+  },
+  {
+    name: "The Photographer",
+    cost: 5,
+    costType: "stones/leaves",
+    badgeType: "stone",
+    rewardPoints: 4,
+    otherRewards: null,
+    // otherRewards: currentHiker.photos++
+  },
+  {
+    name: "The Collector",
+    cost: 3,
+    costType: "stones",
+    badgeType: "stone",
+    rewardPoints: 1,
+    // for every ${this.badgeType} badge card earned by game end`,
+    otherRewards: null,
+  },
+  {
+    name: "The Climber",
+    cost: 5,
+    costType: "stones",
+    badgeType: "stone",
+    rewardPoints: 6,
+    otherRewards: null,
+  },
+  {
+    name: "The Cartographer",
+    cost: 4,
+    costType: "stones/acorns",
+    badgeType: "stone",
+    rewardPoints: 3,
+    otherRewards: null,
     //   otherRewards: currentHiker.resources[2].leaves+=2
-    },
-    {
-      name: "The Navigator",
-      cost: 4,
-      costType: "stones/leaves",
-      badgeType: "stone",
-        rewardPoints: 3,
-      otherRewards: null
+  },
+  {
+    name: "The Navigator",
+    cost: 4,
+    costType: "stones/leaves",
+    badgeType: "stone",
+    rewardPoints: 3,
+    otherRewards: null,
     //   otherRewards: currentHiker.resources[0].acorns+=2
-    },
-  ];
-  
-  const leafBadgeDeck = [
-    {
-      name: "The ShutterBug",
-      cost: 4,
-      costType: "leaves",
-      badgeType: "leaf",
-          rewardPoints: 2,
-          otherRewards: null
-        //   otherRewards: currentHiker.photos+=2
-    },
-    {
-      name: "First Aid",
-      cost: 2,
-      costType: "leaves",
-      badgeType: "leaf",
-        rewardPoints: 1,
-      otherRewards: 'Roll the dice three times!'
-    },
-    {
-      name: "The Photographer",
-      cost: 5,
-      costType: "leaves/acorns",
-      badgeType: "leaf",
-        rewardPoints: 4,
-        otherRewards: null
-        // otherRewards: currentHiker.photos++
-    },
-    {
-      name: "The Collector",
-      cost: 3,
-      costType: "leaves",
-      badgeType: "leaf",
-      rewardPoints: 1,
-      //Victory Point for every ${this.badgeType} badge card earned by game end`,
-      otherRewards: null
-    },
-    {
-      name: "The Climber",
-      cost: 5,
-      costType: "leaves",
-      badgeType: "leaf",
-      rewardPoints: 6,
-      otherRewards: null
-    },
-    {
-      name: "The Cartographer",
-      cost: 4,
-      costType: "leaves/stones",
-      badgeType: "leaf",
-      rewardPoints: 3,
-      otherRewards: null
+  },
+];
+
+const leafBadgeDeck = [
+  {
+    name: "The ShutterBug",
+    cost: 4,
+    costType: "leaves",
+    badgeType: "leaf",
+    rewardPoints: 2,
+    otherRewards: null,
+    //   otherRewards: currentHiker.photos+=2
+  },
+  {
+    name: "First Aid",
+    cost: 2,
+    costType: "leaves",
+    badgeType: "leaf",
+    rewardPoints: 1,
+    otherRewards: null,
+    //   otherRewards: 'Roll the dice three times!'
+  },
+  {
+    name: "The Photographer",
+    cost: 5,
+    costType: "leaves/acorns",
+    badgeType: "leaf",
+    rewardPoints: 4,
+    otherRewards: null,
+    // otherRewards: currentHiker.photos++
+  },
+  {
+    name: "The Collector",
+    cost: 3,
+    costType: "leaves",
+    badgeType: "leaf",
+    rewardPoints: 1,
+    //Victory Point for every ${this.badgeType} badge card earned by game end`,
+    otherRewards: null,
+  },
+  {
+    name: "The Climber",
+    cost: 5,
+    costType: "leaves",
+    badgeType: "leaf",
+    rewardPoints: 6,
+    otherRewards: null,
+  },
+  {
+    name: "The Cartographer",
+    cost: 4,
+    costType: "leaves/stones",
+    badgeType: "leaf",
+    rewardPoints: 3,
+    otherRewards: null,
     //   otherRewards: currentHiker.resources[0].acorns+=2
-    },
-    {
-      name: "The Navigator",
-      cost: 4,
-      costType: "leaves/acorns",
-      badgeType: "leaf",
-        rewardPoints: 3,
-      otherRewards: null
+  },
+  {
+    name: "The Navigator",
+    cost: 4,
+    costType: "leaves/acorns",
+    badgeType: "leaf",
+    rewardPoints: 3,
+    otherRewards: null,
     //   otherRewards: currentHiker.resources[1].stones+=2
-    },
-  ];
-  
-  let badgeDeck = [];
-  badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
+  },
+];
 
-  let backgroundImgs = [];
-  let backgroundUrls = [
-  //   { url: "./images/mountains.jpg", points: 0 },
-      { url: "./parks/caddoLake.jpg", points: 2, description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas. This photo is worth 2 points!` },
-      { url: "./parks/cathedralGorge.jpg", points: 2, description : `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires. This photo is worth ${this.points} points!`},
-      { url: "./parks/deadHorsePoint.jpg", points: 2, description : `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo is worth ${this.points} points!`},
-      { url: "./parks/eldorado.jpg", points: 3, description : `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California. This photo is worth ${this.points} points!` },
-      { url: "./parks/smokyMountains.jpg", points: 5, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/iaoValley.jpg", points: 4, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/kachemakBay.jpg", points: 2, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/paloDuro.jpg", points: 3, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/letchworth.jpg", points: 3, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/watkinsGlen.jpg", points: 2, description : `This photo is worth ${this.points} points!` },
-      { url: "./parks/acadia.avif", points: 4, description : `This photo is worth ${this.points} points!` }
-  ];
+//otherRewards need to be null in entire deck UNTIL they get pushed to badges earned array aka they're payed for so therefore the reward will become active
 
+let badgeDeck = [];
+badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
 
-
+let backgroundImgs = [];
+let backgroundUrls = [
+  {
+    url: "./images/mountains.jpg",
+    points: 0,
+    description:
+      "Welcome to Trails: The Digital Reimagining. This starting photo is of the Swiss Alps, but every photo in gameplay is of a US State or National Park. Click Start button to begin playing",
+  },
+  {
+    url: "./parks/caddoLake.jpg",
+    points: 2,
+    description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas. This photo is worth 2 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/cathedralGorge.jpg",
+    points: 2,
+    description: `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires. This photo is worth 2 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/deadHorsePoint.jpg",
+    points: 2,
+    description: `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo is worth 2 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/eldorado.jpg",
+    points: 3,
+    description: `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California. This photo is worth 3 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/smokyMountains.jpg",
+    points: 5,
+    description: `This photo is worth 5 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/iaoValley.jpg",
+    points: 4,
+    description: `This photo is worth 4 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/kachemakBay.jpg",
+    points: 3,
+    description: `This photo is worth 3 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/paloDuro.jpg",
+    points: 3,
+    description: `This photo is worth 3 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/letchworth.jpg",
+    points: 2,
+    description: `This photo is worth 2 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/watkinsGlen.jpg",
+    points: 2,
+    description: `This photo is worth 2 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+  {
+    url: "./parks/acadia.avif",
+    points: 4,
+    description: `This photo is worth 4 points!`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+  },
+];
 
 //Object > Properties (key value pairs, methods)
 
@@ -330,7 +398,6 @@ function loadImgs() {
   }
   //console.log(areImgsLoaded);
 }
-loadImgs();
 
 //done
 function drawImgs() {
@@ -367,10 +434,6 @@ function draw(X, Y, x, y) {
   boardContext.strokeStyle = "white";
   boardContext.stroke();
 }
-//creating 5 sections on board with line drawings
-for (let i = 0; i < width; i += width / 5) {
-    draw(i, 75, i, width);
-}
 
 //done
 function drawSun() {
@@ -380,27 +443,26 @@ function drawSun() {
   boardContext.fillStyle = "yellow";
   boardContext.fill();
 }
-drawSun();
 
 //done
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
-      diceResults.innerHTML = "You get an acorn!";
-      currentHiker.resources[0].acorns++
+    diceResults.innerHTML = "You get an acorn!";
+    currentHiker.resources[0].acorns++;
     // return;
   } else if (diceNum === 2) {
-      diceResults.innerHTML = "You get a stone!";
-      currentHiker.resources[1].stones++
+    diceResults.innerHTML = "You get a stone!";
+    currentHiker.resources[1].stones++;
     // return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
-    currentHiker.resources[2].leaves++
+    currentHiker.resources[2].leaves++;
     // return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
-    clearBoard()
+    clearBoard();
     // return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
@@ -411,7 +473,7 @@ function rollDice() {
     console.log("figure out what bear means in this game");
     // return;
   }
-    return;
+  return;
 }
 
 //done
@@ -421,11 +483,8 @@ function drawHiker(hiker) {
   boardContext.fillRect(hiker.x, hiker.y, 20, 20);
   boardContext.strokeRect(hiker.x, hiker.y, 20, 20);
 }
-drawHiker(hiker1);
-drawHiker(hiker2);
 
-
-//done
+//done?
 function drawBackgroundImgs() {
   //console.log(currentHiker.photos)
   boardContext.drawImage(
@@ -435,7 +494,15 @@ function drawBackgroundImgs() {
     width,
     height
   );
-  updateInfo.innerText = backgroundUrls[currentHiker.photos].description
+
+  if (backgroundUrls[0]) {
+    updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+  } else {
+    updateInfo.innerText =
+      backgroundUrls[currentHiker.photos].description +
+      "\n" +
+      backgroundUrls[currentHiker.photos].playerTurn;
+  }
 }
 
 //not done
@@ -445,7 +512,7 @@ function activateCanteen() {
   //setting this to 2 for now
 }
 
-//not done
+//done
 function moveHiker(event) {
   let keyPressed = event.key;
 
@@ -478,33 +545,35 @@ function moveHiker(event) {
     drawHiker(currentHiker);
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
-      moveSun();
-      getBadgeCard()
+    moveSun();
+    getBadgeCard();
   }
-    gainResources();
+  gainResources();
+  stats.style.display = "block";
+  updateResourcesOnScreen();
 
-    // stats.innerText = JSON.stringify(currentHiker.resources)
-    console.log(currentHiker.resources)
-    for (let i = 0; i < currentHiker.resources.length; i++){
-        let currentResources = document.createElement('div')
-        currentResources.style.border = 'red'
-        let acorns = currentHiker.resource[i].acorns
-        let stones = currentHiker.resource[i].stones
-        let leaves = currentHiker.resource[i].leaves
-        currentResources.innerHTML = `Acorns: ${acorns},
-        Stones: ${stones},
-        Leaves: ${leaves}`
-        document.stats.appendChild(currentResources)
-    }
-
-    if (currentHiker.isComputer === true) {
-        compTurnFinished = true
-    }
+  if (currentHiker.isComputer === true) {
+    compTurnFinished = true;
+  }
 }
 //^make new string literal with all the properties
 //class display none
 //element.style.display = 'none'
 
+// not done but good enough for today
+function updateResourcesOnScreen() {
+  let currentResources = document.createElement("div");
+  currentResources.style.border = "red";
+  let acorns = currentHiker.resources[0].acorns;
+  let stones = currentHiker.resources[1].stones;
+  let leaves = currentHiker.resources[2].leaves;
+  currentResources.innerHTML = `Player ${currentHiker.player} stats: \n
+        Acorns: ${acorns},
+        Stones: ${stones},
+        Leaves: ${leaves}`;
+  stats.appendChild(currentResources);
+  //replaceChild?
+}
 
 //done
 function moveSun() {
@@ -523,14 +592,17 @@ function moveSun() {
 
 //done
 function whoseTurn() {
+  stats.style.display = "none";
   //function to find out which hikers turn it is
-    if (compTurnFinished && currentHiker === hiker1) {
-            currentHiker = hiker2
-    } else if (compTurnFinished && currentHiker === hiker2) {
-            currentHiker = hiker1
-    } else if (currentHiker === hiker1) {
-        currentHiker = hiker2
-    } else currentHiker = hiker1
+  if (compTurnFinished && currentHiker === hiker1) {
+    currentHiker = hiker2;
+  } else if (compTurnFinished && currentHiker === hiker2) {
+    currentHiker = hiker1;
+  } else if (currentHiker === hiker1) {
+    currentHiker = hiker2;
+  } else {
+    currentHiker = hiker1;
+  }
 }
 
 //done
@@ -551,11 +623,11 @@ function clearBoard() {
 //think this is done
 function gainResources() {
   if (currentHiker.x == 60) {
-    currentHiker.resources[1].stones++
+    currentHiker.resources[1].stones++;
   } else if (currentHiker.x == 200) {
-    currentHiker.resources[2].leaves++
+    currentHiker.resources[2].leaves++;
   } else if (currentHiker.x == 340) {
-    currentHiker.resources[0].acorns++
+    currentHiker.resources[0].acorns++;
   } else if (currentHiker.x == 480) {
     console.log("user rolls dice at bear spot");
   } else if (currentHiker.x == 620) {
@@ -569,40 +641,60 @@ function getBadgeCard() {
   if (
     currentHiker.x === 620 ||
     currentHiker.x === 60 ||
-    (diceResults.innerHTML = "You get a badge card!") || currentHiker.badgesEarned.contains('Astronomer')
+    (diceResults.innerHTML = "You get a badge card!") ||
+    currentHiker.badgesEarned.contains("Astronomer")
   ) {
-      let pickedCard = badgeDeck[Math.floor((Math.random() * 21))]
-   //give user random badge card (push to badgesInHand array property)
-      currentHiker.badgesInHand.push(pickedCard)
-      let pickedCardIndex = badgeDeck.indexOf(pickedCard)
-      badgeDeck.splice(pickedCardIndex, 1)
-          //take used badge card and take out from initial badge card deck
+    let pickedCard = badgeDeck[Math.floor(Math.random() * 21)];
+    //give user random badge card (push to badgesInHand array property)
+    currentHiker.badgesInHand.push(pickedCard);
+    let pickedCardIndex = badgeDeck.indexOf(pickedCard);
+    badgeDeck.splice(pickedCardIndex, 1);
+    //take used badge card and take out from initial badge card deck
   }
 }
 
-
 //not done
 function payForBadge() {
-    for (let i = 0; i < currentHiker.resources.length; i++){
-        
+    for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
+        console.log(currentHiker.badgesInHand[i]);
+        for (let j = 0; j < currentHiker.resources.length; j++) {
+            if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
+                console.log('same')
+            }
+        }
     }
-  //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
-    //
 
-    //or if player has astronomer, give badge for free
+  //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
+  //
+
+  //or if player has astronomer, give badge for free
 }
 
 //not done
 function calculateScore() {}
 
-
 //not done
-function runGame() {}
+function runGame() {
+  //creating 5 sections on board with line drawings
+  for (let i = 0; i < width; i += width / 5) {
+    draw(i, 75, i, width);
+  }
+  drawHiker(hiker1);
+  drawHiker(hiker2);
+  drawSun();
+  loadImgs();
+}
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 ///////////////Event Listeners/////////////////
 ///////////////////////////////////////////////
+
+startBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  runGame();
+  updateInfo.innerHTML = `It's player ${currentHiker.player}'s turn!`;
+});
 
 //done
 rollBtn.addEventListener("click", function (event) {
@@ -624,55 +716,57 @@ document.addEventListener("keydown", function (event) {
 
 //not done
 earnBadgeBtn.addEventListener("click", function (event) {
-    event.preventDefault()
-    payForBadge()
-})
+  event.preventDefault();
+  payForBadge();
+});
 
 //done
 badgeListBtn.addEventListener("click", function (event) {
-    event.preventDefault()
-
-    for (let i = 0; i < currentHiker.badgesInHand.length; i++){
-        let badgeInHand = document.createElement('div')
-        badgeInHand.style.border = 'red'
-        let name = currentHiker.badgesInHand[i].name
-        let rewardPoints = currentHiker.badgesInHand[i].rewardPoints
-        let cost = currentHiker.badgesInHand[i].cost
-        let costType = currentHiker.badgesInHand[i].costType
-        let badgeType = currentHiker.badgesInHand[i].badgeType
-        console.log(currentHiker.badgesInHand)
-        badgeInHand.innerHTML = `Name: ${name},
+  event.preventDefault();
+    
+  if (currentHiker.badgesInHand.length > 0) {
+    for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
+      let badgeInHand = document.createElement("div");
+      badgeInHand.style.border = "red";
+      let name = currentHiker.badgesInHand[i].name;
+      let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
+      let cost = currentHiker.badgesInHand[i].cost;
+      let costType = currentHiker.badgesInHand[i].costType;
+      let badgeType = currentHiker.badgesInHand[i].badgeType;
+      console.log(currentHiker.badgesInHand);
+      badgeInHand.innerHTML = `Name: ${name},
         Cost: ${cost},
         Reward Points: ${rewardPoints},
         Cost Type: ${costType},
-        Badge Type: ${badgeType}`
-        document.body.appendChild(badgeInHand)
+        Badge Type: ${badgeType}`;
+      badgeInHandList.appendChild(badgeInHand);
     }
+    badgeInHandList.style.display = 'block'
+  }
 
-
-    if (currentHiker.badgesEarned.length > 0) {
-        for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
-            let badgeEarned = document.createElement('div')
-            badgeEarned.style.border = 'red'
-            let name = currentHiker.badgesEarned[i].name
-            let rewardPoints = currentHiker.badgesEarned[i].rewardPoints
-            let cost = currentHiker.badgesEarned[i].cost
-            let costType = currentHiker.badgesEarned[i].costType
-            let badgeType = currentHiker.badgesEarned[i].badgeType
-            badgeEarned.innerHTML = `Name: ${name},
+  if (currentHiker.badgesEarned.length > 0) {
+    for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
+      let badgeEarned = document.createElement("div");
+      badgeEarned.style.border = "red";
+      let name = currentHiker.badgesEarned[i].name;
+      let rewardPoints = currentHiker.badgesEarned[i].rewardPoints;
+      let cost = currentHiker.badgesEarned[i].cost;
+      let costType = currentHiker.badgesEarned[i].costType;
+      let badgeType = currentHiker.badgesEarned[i].badgeType;
+      badgeEarned.innerHTML = `Name: ${name},
         Cost: ${cost},
         Reward Points: ${rewardPoints},
         Cost Type: ${costType},
-        Badge Type: ${badgeType}`
-            document.body.appendChild(badgeEarned)
-        }
+        Badge Type: ${badgeType}`;
+      document.body.appendChild(badgeEarned);
     }
-    //clear results shown onscreen at end of turn somehow but still store the values to be shown next time yplayer wants to know their stuff
-})
+    badgesEarnedList.style.display = 'block'
+  }
+  //clear results shown onscreen at end of turn somehow but still store the values to be shown next time yplayer wants to know their stuff
+});
 
 //done
-finishTurnBtn.addEventListener('click', function (event) {
-    event.preventDefault()
-    whoseTurn()
-})
-
+finishTurnBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  whoseTurn();
+});
