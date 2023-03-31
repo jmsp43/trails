@@ -511,7 +511,6 @@ function drawBackgroundImgs() {
   }
 }
 
-
 //not done
 function activateCanteen() {
   currentHiker.canteenActivated === true;
@@ -663,12 +662,42 @@ function getBadgeCard() {
 //not done
 function payForBadge() {
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
-    console.log(currentHiker.badgesInHand[i]);
-    for (let j = 0; j < currentHiker.resources.length; j++) {
-      if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
-        console.log("same");
-      }
-    }
+    let type = currentHiker.badgesInHand[i].costType;
+    console.log(type);
+    if (type === "acorns") {
+      if (
+        currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
+          currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
+          console.log('you earned your badge!')
+      }else console.log('sorry, you need more acorns to earn this badge.')
+    } else if (type === "stones") {
+      if (
+        currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
+          currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
+          console.log('you earned your badge!')
+      } else console.log('sorry, you need more stones to earn this badge.')
+    } else if (type === "leaves") {
+      if (
+        currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
+          currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
+          console.log('you earned your badge!')
+      } else console.log('sorry, you need more leaves to earn this badge.')
+    } else console.log("change the type just just one type bro");
+    //   for (let j = 0; j < currentHiker.resources.length; j++) {
+    //     console.log(currentHiker.resources[j])
+    //   if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
+    //     console.log("same");
+    //   }
+    // }
   }
 
   //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
@@ -691,17 +720,17 @@ function runGame() {
   drawSun();
   loadImgs();
 
-    //     boardContext.drawImage(
-    //     backgroundImgs[1],
-    //     0,
-    //     0,
-    //     width,
-    //     height
-    // );
-    // updateInfo.innerText =
-    // backgroundUrls[1].description +
-    // "\n" +
-    // backgroundUrls[1].playerTurn;
+  //     boardContext.drawImage(
+  //     backgroundImgs[1],
+  //     0,
+  //     0,
+  //     width,
+  //     height
+  // );
+  // updateInfo.innerText =
+  // backgroundUrls[1].description +
+  // "\n" +
+  // backgroundUrls[1].playerTurn;
 }
 
 ///////////////////////////////////////////////
@@ -711,8 +740,7 @@ function runGame() {
 
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    runGame();
-
+  runGame();
 });
 
 //done
@@ -743,6 +771,7 @@ earnBadgeBtn.addEventListener("click", function (event) {
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
 
+    console.log(currentHiker.badgesInHand)
   if (currentHiker.badgesInHand.length > 0) {
     for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
       let badgeInHand = document.createElement("div");
