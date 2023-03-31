@@ -1,8 +1,3 @@
-Based on this game: https://keymastergames.com/products/trails
-
-
-//make a landing page with rules and explanation of game
-
 
 Your dom project must meet these requirements:
 
@@ -42,6 +37,8 @@ A way to reset the board and play again
 CSS to give your game a personal and fun style
 Responsive mobile design
 
+
+
 needs to include:
 A summary of your project. (and any info about your game, if applicable)
 How to play your game.
@@ -50,8 +47,17 @@ How you built your game (a few paragraphs about your code)
 Any thank yous or acknowledgements (especially if one of your classmates helped you out!)
 
 
-
 //thank you to drew for the great idea of a landing page
 //thank you to kasper for all your canvas help
 //thank you to imani for general support
 //thank you to unsplash for having cool, free, downloadable photos for every category one could possibly want
+
+
+Welcome to my first full project for Per Scholas. It is based on a cute, portable, physical board game called Trails by KeyMaster Games (see here: https://keymastergames.com/products/trails), based on a larger KeyMaster game called Parks (https://keymastergames.com/products/parks). 
+
+I chose to make a digitally reimagined Trails as my project because I love playing the phyical version and wanted to test my newly acquired Javascript Canvas skills by recreating it in code. Playing interesting and niche board games is big part of my free time, and I wanted to bring the magic that I feel when playing them to the screen for others to enjoy. 
+
+
+
+
+

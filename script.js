@@ -40,8 +40,8 @@ let sunX = 70;
 let backgroundImgsLoaded = false;
 let compTurnFinished = false;
 
-badgeInHandList.style.display = 'none'
-badgesEarnedList.style.display = 'none'
+badgeInHandList.style.display = "none";
+badgesEarnedList.style.display = "none";
 stats.style.display = "none";
 ///////////////////////////////////////////////
 ///////////////Classes/////////////////
@@ -284,7 +284,13 @@ let backgroundUrls = [
     url: "./images/mountains.jpg",
     points: 0,
     description:
-      "Welcome to Trails: The Digital Reimagining. This starting photo is of the Swiss Alps, but every photo in gameplay is of a US State or National Park. Click Start button to begin playing",
+      "Welcome to Trails: The Digital Reimagining. This starting photo is of the Swiss Alps, but every photo in gameplay is of a US State or National Park.\n Click Start button to begin playing",
+  },
+  {
+    url: "./parks/startGameSmokyMountains.jpg",
+    points: 0,
+    description: `Use your left and right arrow keys. Hike the trail until the sun returns to its origin position.`,
+    playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/caddoLake.jpg",
@@ -505,6 +511,7 @@ function drawBackgroundImgs() {
   }
 }
 
+
 //not done
 function activateCanteen() {
   currentHiker.canteenActivated === true;
@@ -655,14 +662,14 @@ function getBadgeCard() {
 
 //not done
 function payForBadge() {
-    for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
-        console.log(currentHiker.badgesInHand[i]);
-        for (let j = 0; j < currentHiker.resources.length; j++) {
-            if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
-                console.log('same')
-            }
-        }
+  for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
+    console.log(currentHiker.badgesInHand[i]);
+    for (let j = 0; j < currentHiker.resources.length; j++) {
+      if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
+        console.log("same");
+      }
     }
+  }
 
   //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
   //
@@ -683,6 +690,18 @@ function runGame() {
   drawHiker(hiker2);
   drawSun();
   loadImgs();
+
+    //     boardContext.drawImage(
+    //     backgroundImgs[1],
+    //     0,
+    //     0,
+    //     width,
+    //     height
+    // );
+    // updateInfo.innerText =
+    // backgroundUrls[1].description +
+    // "\n" +
+    // backgroundUrls[1].playerTurn;
 }
 
 ///////////////////////////////////////////////
@@ -692,8 +711,8 @@ function runGame() {
 
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  runGame();
-  updateInfo.innerHTML = `It's player ${currentHiker.player}'s turn!`;
+    runGame();
+
 });
 
 //done
@@ -723,7 +742,7 @@ earnBadgeBtn.addEventListener("click", function (event) {
 //done
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    
+
   if (currentHiker.badgesInHand.length > 0) {
     for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
       let badgeInHand = document.createElement("div");
@@ -741,7 +760,7 @@ badgeListBtn.addEventListener("click", function (event) {
         Badge Type: ${badgeType}`;
       badgeInHandList.appendChild(badgeInHand);
     }
-    badgeInHandList.style.display = 'block'
+    badgeInHandList.style.display = "block";
   }
 
   if (currentHiker.badgesEarned.length > 0) {
@@ -758,9 +777,9 @@ badgeListBtn.addEventListener("click", function (event) {
         Reward Points: ${rewardPoints},
         Cost Type: ${costType},
         Badge Type: ${badgeType}`;
-      document.body.appendChild(badgeEarned);
+      badgesEarnedList.appendChild(badgeEarned);
     }
-    badgesEarnedList.style.display = 'block'
+    badgesEarnedList.style.display = "block";
   }
   //clear results shown onscreen at end of turn somehow but still store the values to be shown next time yplayer wants to know their stuff
 });
