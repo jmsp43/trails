@@ -7,7 +7,7 @@ const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
 const earnBadgeBtn = document.querySelector("#payForBadge");
 const diceResults = document.querySelector("#diceResults");
-const badgeListBtn = document.querySelector("#badgeListIcon");
+const badgeListBtn = document.querySelector("#badgeListBtn");
 const badgeInHandList = document.querySelector("#badgeInHandList");
 const badgesEarnedList = document.querySelector("#badgesEarnedList");
 const stats = document.querySelector("#stats");
@@ -659,7 +659,7 @@ function getBadgeCard() {
   }
 }
 
-//not done
+//not done but coming along nicely
 function payForBadge() {
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
@@ -692,16 +692,9 @@ function payForBadge() {
           console.log('you earned your badge!')
       } else console.log('sorry, you need more leaves to earn this badge.')
     } else console.log("change the type just just one type bro");
-    //   for (let j = 0; j < currentHiker.resources.length; j++) {
-    //     console.log(currentHiker.resources[j])
-    //   if (currentHiker.badgesInHand[i].costType === currentHiker.resources[j]) {
-    //     console.log("same");
-    //   }
-    // }
   }
 
   //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
-  //
 
   //or if player has astronomer, give badge for free
 }
@@ -816,5 +809,6 @@ badgeListBtn.addEventListener("click", function (event) {
 //done
 finishTurnBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  whoseTurn();
+    whoseTurn();
+    diceResults.innerHTML = ''
 });

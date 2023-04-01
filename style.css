@@ -2,11 +2,14 @@
 body{
     text-align: center;
     font-family: fantasy;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
+    background: #FF9914;
+background: radial-gradient(circle,#FFCA85 #FFAF47, #E74B7F);
+
 }
 
 #title{
-    color:chocolate
+    color:#A33B20
 }
 
 #updatesBox{
