@@ -19,6 +19,7 @@ const width = 700;
 const height = 500;
 board.width = width;
 board.height = height;
+
 //boardContext.imageSmoothingEnabled = false
 
 let areImgsLoaded = false;
@@ -62,15 +63,6 @@ class Hiker {
     this.isComputer = false;
     this.canteenActivated = false;
   }
-  gatherResources() {
-    //choose resource
-  }
-  takePhoto() {
-    //collect photo card
-  }
-  collectBadge() {
-    //collect badge card
-  }
 }
 
 let hiker1 = new Hiker(60, 200, 1, "gray");
@@ -100,7 +92,7 @@ const acornBadgeDeck = [
   {
     name: "The Navigator",
     cost: 4,
-    costType: "acorns/stones",
+    costType: "acorns",
     badgeType: "acorn",
     rewardPoints: 3,
     otherRewards: null,
@@ -118,7 +110,7 @@ const acornBadgeDeck = [
   {
     name: "The Cartographer",
     cost: 4,
-    costType: "acorns/leaves",
+    costType: "acorns",
     badgeType: "acorn",
     rewardPoints: 3,
     otherRewards: null,
@@ -127,7 +119,7 @@ const acornBadgeDeck = [
   {
     name: "The Photographer",
     cost: 5,
-    costType: "acorns/stones",
+    costType: "acorns",
     badgeType: "acorn",
     rewardPoints: 4,
     otherRewards: null,
@@ -165,7 +157,7 @@ const stoneBadgeDeck = [
   {
     name: "The Photographer",
     cost: 5,
-    costType: "stones/leaves",
+    costType: "stones",
     badgeType: "stone",
     rewardPoints: 4,
     otherRewards: null,
@@ -191,7 +183,7 @@ const stoneBadgeDeck = [
   {
     name: "The Cartographer",
     cost: 4,
-    costType: "stones/acorns",
+    costType: "stones",
     badgeType: "stone",
     rewardPoints: 3,
     otherRewards: null,
@@ -200,7 +192,7 @@ const stoneBadgeDeck = [
   {
     name: "The Navigator",
     cost: 4,
-    costType: "stones/leaves",
+    costType: "stones",
     badgeType: "stone",
     rewardPoints: 3,
     otherRewards: null,
@@ -230,7 +222,7 @@ const leafBadgeDeck = [
   {
     name: "The Photographer",
     cost: 5,
-    costType: "leaves/acorns",
+    costType: "leaves",
     badgeType: "leaf",
     rewardPoints: 4,
     otherRewards: null,
@@ -256,7 +248,7 @@ const leafBadgeDeck = [
   {
     name: "The Cartographer",
     cost: 4,
-    costType: "leaves/stones",
+    costType: "leaves",
     badgeType: "leaf",
     rewardPoints: 3,
     otherRewards: null,
@@ -265,15 +257,13 @@ const leafBadgeDeck = [
   {
     name: "The Navigator",
     cost: 4,
-    costType: "leaves/acorns",
+    costType: "leaves",
     badgeType: "leaf",
     rewardPoints: 3,
     otherRewards: null,
     //   otherRewards: currentHiker.resources[1].stones+=2
   },
 ];
-
-//otherRewards need to be null in entire deck UNTIL they get pushed to badges earned array aka they're payed for so therefore the reward will become active
 
 let badgeDeck = [];
 badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
@@ -360,8 +350,6 @@ let backgroundUrls = [
   },
 ];
 
-//Object > Properties (key value pairs, methods)
-
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
 ///////////////////////////////////////////////
@@ -402,7 +390,6 @@ function loadImgs() {
       }
     };
   }
-  //console.log(areImgsLoaded);
 }
 
 //done
@@ -492,7 +479,6 @@ function drawHiker(hiker) {
 
 //done?
 function drawBackgroundImgs() {
-  //console.log(currentHiker.photos)
   boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
     0,
@@ -562,9 +548,6 @@ function moveHiker(event) {
     compTurnFinished = true;
   }
 }
-//^make new string literal with all the properties
-//class display none
-//element.style.display = 'none'
 
 // not done but good enough for today
 function updateResourcesOnScreen() {
@@ -576,13 +559,15 @@ function updateResourcesOnScreen() {
   currentResources.innerHTML = `Player ${currentHiker.player} stats: \n
         Acorns: ${acorns},
         Stones: ${stones},
-        Leaves: ${leaves},`;
+        Leaves: ${leaves},
+        Points: ${currentHiker.victoryPoints}`;
   stats.appendChild(currentResources);
-  //replaceChild?
 }
 
+console.log(sunPosition)
 //done
 function moveSun() {
+    console.log(sunPosition)
   if (sunPosition <= 4) {
     sunPosition++;
     sunX += 140;
@@ -599,7 +584,6 @@ function moveSun() {
 //done
 function whoseTurn() {
   stats.style.display = "none";
-  //function to find out which hikers turn it is
   if (compTurnFinished && currentHiker === hiker1) {
     currentHiker = hiker2;
   } else if (compTurnFinished && currentHiker === hiker2) {
@@ -647,23 +631,19 @@ function getBadgeCard() {
   if (
     currentHiker.x === 620 ||
     currentHiker.x === 60 ||
-    (diceResults.innerHTML = "You get a badge card!") ||
-    currentHiker.badgesEarned.contains("Astronomer")
+      (diceResults.innerHTML = "You get a badge card!")
+    //   ||
+    // currentHiker.badgesEarned.includes("Astronomer")
   ) {
     let pickedCard = badgeDeck[Math.floor(Math.random() * badgeDeck.length)];
-    //give user random badge card (push to badgesInHand array property)
     currentHiker.badgesInHand.push(pickedCard);
     let pickedCardIndex = badgeDeck.indexOf(pickedCard);
     badgeDeck.splice(pickedCardIndex, 1);
-    //take used badge card and take out from initial badge card deck
     console.log(badgeDeck.length)
   }
 }
+
 console.log(badgeDeck.length)
-console.log(['splice', 'this', 'word'].splice(1, 1))
-//returns 'this'
-//not done but coming along nicely
-//not removing the correct badge from badges in hand, but pushing the correct one to badges earned???
 function payForBadge() {
     // let splicedBadge
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
@@ -675,13 +655,18 @@ function payForBadge() {
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
           currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
-          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
 
 
           currentHiker.badgesInHand.splice(i, 1);
-        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+
           console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
+        //   let gotReward  = false
+        //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
+        //       //if the one they just got was the astronomer then they get an additional badge for free
+        //gotReward === true
+        //   }
       }else console.log('sorry, you need more acorns to earn this badge.')
     } else if (type === "stones") {
       if (
@@ -689,11 +674,11 @@ function payForBadge() {
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
           currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
-          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
 
 
           currentHiker.badgesInHand.splice(i, 1);
-        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+
         console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
       } else console.log('sorry, you need more stones to earn this badge.')
@@ -703,15 +688,15 @@ function payForBadge() {
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
           currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
-          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
 
 
           currentHiker.badgesInHand.splice(i, 1);
-        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+
           console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
       } else console.log('sorry, you need more leaves to earn this badge.')
-    } else console.log("change the type to just one type bro");
+    } else console.log("why is this happening, i got rid of all the multiple-type cards");
   }
 
   //or if player has astronomer, give badge for free
@@ -722,10 +707,10 @@ function calculateScore() {
     if (sunPosition === 9) {
         if (hiker1.points > hiker2.points) {
             console.log('Hiker 1 wins!')
-        } else if (hiker2.points > hiker1.points) {
+        } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
             console.log('Hiker 2 wins!')
         } else {
-            console.log(hiker1.points + ' ' + hiker2.points)
+            console.log(hiker1.victoryPoints + ' ' + hiker2.victoryPoints)
             console.log('either it is a tie or an error')
         }
     }
@@ -743,17 +728,6 @@ function runGame() {
   loadImgs();
 
     calculateScore()
-  //     boardContext.drawImage(
-  //     backgroundImgs[1],
-  //     0,
-  //     0,
-  //     width,
-  //     height
-  // );
-  // updateInfo.innerText =
-  // backgroundUrls[1].description +
-  // "\n" +
-  // backgroundUrls[1].playerTurn;
 }
 
 ///////////////////////////////////////////////
@@ -790,11 +764,10 @@ earnBadgeBtn.addEventListener("click", function (event) {
   payForBadge();
 });
 
-// let clicked = false
+
 //done
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
-// clicked = true
 
     if (currentHiker.badgesInHand.length > 0) {
         console.log(currentHiker.badgesInHand)
@@ -836,7 +809,6 @@ badgeListBtn.addEventListener("click", function (event) {
     }
     badgesEarnedList.style.display = "block";
   }
-    // badgeListBtn.disabled = true
 });
 
 //done
@@ -847,5 +819,5 @@ finishTurnBtn.addEventListener("click", function (event) {
     badgeInHandList.innerHTML = ''
     badgesEarnedList.innerHTML = ''
     stats.innerHTML = ''
-    calculateScore();
+    //calculateScore();
 });
