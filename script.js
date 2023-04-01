@@ -576,7 +576,7 @@ function updateResourcesOnScreen() {
   currentResources.innerHTML = `Player ${currentHiker.player} stats: \n
         Acorns: ${acorns},
         Stones: ${stones},
-        Leaves: ${leaves}`;
+        Leaves: ${leaves},`;
   stats.appendChild(currentResources);
   //replaceChild?
 }
@@ -650,27 +650,37 @@ function getBadgeCard() {
     (diceResults.innerHTML = "You get a badge card!") ||
     currentHiker.badgesEarned.contains("Astronomer")
   ) {
-    let pickedCard = badgeDeck[Math.floor(Math.random() * 21)];
+    let pickedCard = badgeDeck[Math.floor(Math.random() * badgeDeck.length)];
     //give user random badge card (push to badgesInHand array property)
     currentHiker.badgesInHand.push(pickedCard);
     let pickedCardIndex = badgeDeck.indexOf(pickedCard);
     badgeDeck.splice(pickedCardIndex, 1);
     //take used badge card and take out from initial badge card deck
+    console.log(badgeDeck.length)
   }
 }
-
+console.log(badgeDeck.length)
+console.log(['splice', 'this', 'word'].splice(1, 1))
+//returns 'this'
 //not done but coming along nicely
+//not removing the correct badge from badges in hand, but pushing the correct one to badges earned???
 function payForBadge() {
+    // let splicedBadge
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
-    console.log(type);
+      console.log(currentHiker.badgesInHand[i].cost)
     if (type === "acorns") {
       if (
         currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
           currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
+          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+
+
+          currentHiker.badgesInHand.splice(i, 1);
+        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+          console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
       }else console.log('sorry, you need more acorns to earn this badge.')
     } else if (type === "stones") {
@@ -678,8 +688,13 @@ function payForBadge() {
         currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
           currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
+          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+
+
+          currentHiker.badgesInHand.splice(i, 1);
+        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+        console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
       } else console.log('sorry, you need more stones to earn this badge.')
     } else if (type === "leaves") {
@@ -687,20 +702,34 @@ function payForBadge() {
         currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
       ) {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], 1);
           currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
+          currentHiker.points += currentHiker.badgesInHand[i].rewardPoints
+
+
+          currentHiker.badgesInHand.splice(i, 1);
+        //   splicedBadge = currentHiker.badgesInHand.splice(currentHiker.badgesInHand[i], -1);
+          console.log(currentHiker.badgesInHand)
           console.log('you earned your badge!')
       } else console.log('sorry, you need more leaves to earn this badge.')
-    } else console.log("change the type just just one type bro");
+    } else console.log("change the type to just one type bro");
   }
-
-  //(push to badges earned, pop from badges inHand, and decrement resources accordingly, and give whatever additional reward earned by paying for badge)
 
   //or if player has astronomer, give badge for free
 }
 
 //not done
-function calculateScore() {}
+function calculateScore() {
+    if (sunPosition === 9) {
+        if (hiker1.points > hiker2.points) {
+            console.log('Hiker 1 wins!')
+        } else if (hiker2.points > hiker1.points) {
+            console.log('Hiker 2 wins!')
+        } else {
+            console.log(hiker1.points + ' ' + hiker2.points)
+            console.log('either it is a tie or an error')
+        }
+    }
+}
 
 //not done
 function runGame() {
@@ -713,6 +742,7 @@ function runGame() {
   drawSun();
   loadImgs();
 
+    calculateScore()
   //     boardContext.drawImage(
   //     backgroundImgs[1],
   //     0,
@@ -760,22 +790,25 @@ earnBadgeBtn.addEventListener("click", function (event) {
   payForBadge();
 });
 
+// let clicked = false
 //done
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
+// clicked = true
 
-    console.log(currentHiker.badgesInHand)
-  if (currentHiker.badgesInHand.length > 0) {
+    if (currentHiker.badgesInHand.length > 0) {
+        console.log(currentHiker.badgesInHand)
+        console.log(currentHiker.badgesEarned)
     for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
       let badgeInHand = document.createElement("div");
-      badgeInHand.style.border = "red";
+        badgeInHand.style.border = "red";
+        console.log(currentHiker.badgesInHand[i])
       let name = currentHiker.badgesInHand[i].name;
       let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
       let cost = currentHiker.badgesInHand[i].cost;
       let costType = currentHiker.badgesInHand[i].costType;
       let badgeType = currentHiker.badgesInHand[i].badgeType;
-      console.log(currentHiker.badgesInHand);
-      badgeInHand.innerHTML = `Name: ${name},
+      badgeInHand.innerHTML = `Badges In Your Hand: \n Name: ${name},
         Cost: ${cost},
         Reward Points: ${rewardPoints},
         Cost Type: ${costType},
@@ -794,7 +827,7 @@ badgeListBtn.addEventListener("click", function (event) {
       let cost = currentHiker.badgesEarned[i].cost;
       let costType = currentHiker.badgesEarned[i].costType;
       let badgeType = currentHiker.badgesEarned[i].badgeType;
-      badgeEarned.innerHTML = `Name: ${name},
+      badgeEarned.innerHTML = `Badges Earned: \n Name: ${name},
         Cost: ${cost},
         Reward Points: ${rewardPoints},
         Cost Type: ${costType},
@@ -803,7 +836,7 @@ badgeListBtn.addEventListener("click", function (event) {
     }
     badgesEarnedList.style.display = "block";
   }
-  //clear results shown onscreen at end of turn somehow but still store the values to be shown next time yplayer wants to know their stuff
+    // badgeListBtn.disabled = true
 });
 
 //done
@@ -811,4 +844,8 @@ finishTurnBtn.addEventListener("click", function (event) {
   event.preventDefault();
     whoseTurn();
     diceResults.innerHTML = ''
+    badgeInHandList.innerHTML = ''
+    badgesEarnedList.innerHTML = ''
+    stats.innerHTML = ''
+    calculateScore();
 });
