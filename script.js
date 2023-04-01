@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////
 const board = document.querySelector("#gameCanvas");
 const startBtn = document.querySelector("#startBtn");
+const rulesBtn = document.querySelector('#rulesBtn')
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
 const earnBadgeBtn = document.querySelector("#payForBadge");
@@ -271,16 +272,10 @@ badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
 let backgroundImgs = [];
 let backgroundUrls = [
   {
-    url: "./images/mountains.jpg",
+    url: "./parks/yosemite.jpg",
     points: 0,
     description:
-      "Welcome to Trails: The Digital Reimagining. This starting photo is of the Swiss Alps, but every photo in gameplay is of a US State or National Park.\n Click Start button to begin playing",
-  },
-  {
-    url: "./parks/startGameSmokyMountains.jpg",
-    points: 0,
-    description: `Use your left and right arrow keys. Hike the trail until the sun returns to its origin position.`,
-    playerTurn: `It's player ${currentHiker.player}'s turn!`,
+      "Welcome to Trails: The Digital Reimagining. Every photo in gameplay is of a US State or National Park (including this one! Yosemite National Park in California).\nUse your left and right arrow keys. Hike the trail until the sun returns to its origin position.\nClick Start button to begin playing",
   },
   {
     url: "./parks/caddoLake.jpg",
@@ -493,7 +488,8 @@ function drawBackgroundImgs() {
     updateInfo.innerText =
       backgroundUrls[currentHiker.photos].description +
       "\n" +
-      backgroundUrls[currentHiker.photos].playerTurn;
+        backgroundUrls[currentHiker.photos].playerTurn;
+      currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points
   }
 }
 

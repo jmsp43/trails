@@ -31,4 +31,28 @@ button{
     margin-top: 5px;
 }
 
+a{
+    text-decoration: none;
+    border: 2px solid black;
+    border-radius: 5px 5px 5px;
+    background-color:chocolate;
+    color: black;
+    font-size: small;
+    padding: 3px;
+}
+
+#rulesDiv{
+    margin-bottom: 5px;
+    /* position: sticky; */
+
+}
+
+h4{
+    margin-top:10px;
+    margin-bottom:2px;
+}
+button:hover, a:hover{
+    cursor: pointer;
+}
+
 
