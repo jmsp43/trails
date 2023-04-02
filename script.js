@@ -17,6 +17,8 @@ const finishTurnBtn = document.querySelector("#finishedTurn");
 const badgesInHandBox = document.querySelector('#badgesInHandBox')
 const badgesEarnedBox = document.querySelector('#badgesEarnedBox')
 const restartBtn = document.querySelector('#restartBtn')
+const purchaseResults = document.createElement('p')
+const badgeBox = document.querySelector('#badgeBox')
 
 const boardContext = board.getContext("2d");
 const width = 700;
@@ -682,59 +684,131 @@ function getBadgeCard() {
   }
 }
 
-console.log(badgeDeck.length)
+function updateBadges(){
+    if (currentHiker.badgesInHand.length > 0) {
+        for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
+          let badgeInHand = document.createElement("div");
+            badgeInHand.style.border = "red";
+          let name = currentHiker.badgesInHand[i].name;
+          let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
+          let cost = currentHiker.badgesInHand[i].cost;
+          let costType = currentHiker.badgesInHand[i].costType;
+            let badgeType = currentHiker.badgesInHand[i].badgeType;
+
+
+            badgeInHand.innerHTML = ''
+
+
+          badgeInHand.innerHTML = `Name: ${name}, \n
+            Cost: ${cost}, \n
+            Reward Points: ${rewardPoints}, \n
+            Cost Type: ${costType}, \n
+            Badge Type: ${badgeType}`;
+            badgeInHand.style.backgroundColor = 'antiquewhite'
+            badgeInHand.style.borderRadius = '15px'
+            badgeInHand.style.padding = '5px'
+            badgeInHand.style.margin = '5px'
+          badgeInHandList.appendChild(badgeInHand);
+        }
+            badgesInHandBox.style.display = 'block'
+        badgeInHandList.style.display = "block";
+      }
+    
+      if (currentHiker.badgesEarned.length > 0) {
+        for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
+          let badgeEarned = document.createElement("div");
+          badgeEarned.style.border = "red";
+          let name = currentHiker.badgesEarned[i].name;
+          let rewardPoints = currentHiker.badgesEarned[i].rewardPoints;
+          let cost = currentHiker.badgesEarned[i].cost;
+          let costType = currentHiker.badgesEarned[i].costType;
+            let badgeType = currentHiker.badgesEarned[i].badgeType;
+            
+badgeEarned.innerHTML = ''
+
+
+          badgeEarned.innerHTML = `Name: ${name}, \n
+            Cost: ${cost}, \n
+            Reward Points: ${rewardPoints}, \n
+            Cost Type: ${costType}, \n
+            Badge Type: ${badgeType}`;
+            badgeEarned.style.backgroundColor = 'antiquewhite'
+            badgeEarned.style.borderRadius = '15px'
+            badgeEarned.style.padding = '5px'
+            badgeEarned.style.margin = '5px'
+          badgesEarnedList.appendChild(badgeEarned);
+        }
+          badgesEarnedBox.style.display = 'block'
+        badgesEarnedList.style.display = "block";
+      }
+}
+
+
 function payForBadge() {
-    // let splicedBadge
+
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
       console.log(currentHiker.badgesInHand[i].cost)
     if (type === "acorns") {
-      if (
-        currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
-      ) {
-        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
-          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+        if (
+            currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
+        ) {
+            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+            currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
+            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+            updateResourcesOnScreen()
 
-
-          currentHiker.badgesInHand.splice(i, 1);
-
-          console.log(currentHiker.badgesInHand)
-          console.log('you earned your badge!')
-        //   let gotReward  = false
-        //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
-        //       //if the one they just got was the astronomer then they get an additional badge for free
-        //gotReward === true
-        //   }
-      }else console.log('sorry, you need more acorns to earn this badge.')
+            currentHiker.badgesInHand.splice(i, 1);
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'you earned your badge!'
+            badgeBox.appendChild(purchaseResults)
+            //   let gotReward  = false
+            //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
+            //       //if the one they just got was the astronomer then they get an additional badge for free
+            //gotReward === true
+            //   }
+        } else {
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'Sorry, you need more acornss to earn this badge.'
+            badgeBox.appendChild(purchaseResults)
+        }
     } else if (type === "stones") {
-      if (
-        currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
-      ) {
-        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
-          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+        if (
+            currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
+        ) {
+            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+            currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
+            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+            updateResourcesOnScreen()
 
-
-          currentHiker.badgesInHand.splice(i, 1);
-
-        console.log(currentHiker.badgesInHand)
-          console.log('you earned your badge!')
-      } else console.log('sorry, you need more stones to earn this badge.')
+            currentHiker.badgesInHand.splice(i, 1);
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'you earned your badge!'
+            badgeBox.appendChild(purchaseResults)
+        } else {
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'Sorry, you need more stones to earn this badge.'
+            badgeBox.appendChild(purchaseResults)
+        }
     } else if (type === "leaves") {
-      if (
-        currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
-      ) {
-        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-          currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
-          currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+        if (
+            currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
+        ) {
+            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+            currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
+            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
+            updateResourcesOnScreen()
 
+            currentHiker.badgesInHand.splice(i, 1);
 
-          currentHiker.badgesInHand.splice(i, 1);
-
-          console.log(currentHiker.badgesInHand)
-          console.log('you earned your badge!')
-      } else console.log('sorry, you need more leaves to earn this badge.')
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'you earned your badge!'
+            badgeBox.appendChild(purchaseResults)
+        } else {
+            purchaseResults.style.display = 'block'
+            purchaseResults.innerHTML = 'Sorry, you need more leaves to earn this badge.'
+            badgeBox.appendChild(purchaseResults)
+        }
     } else console.log("why is this happening, i got rid of all the multiple-type cards");
   }
 
@@ -801,63 +875,16 @@ document.addEventListener("keydown", function (event) {
 //not done
 earnBadgeBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  payForBadge();
+    payForBadge();
 });
+
+
+
 
 //done
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
-
-    if (currentHiker.badgesInHand.length > 0) {
-        console.log(currentHiker.badgesInHand)
-        console.log(currentHiker.badgesEarned)
-    for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
-      let badgeInHand = document.createElement("div");
-        badgeInHand.style.border = "red";
-        console.log(currentHiker.badgesInHand[i])
-      let name = currentHiker.badgesInHand[i].name;
-      let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
-      let cost = currentHiker.badgesInHand[i].cost;
-      let costType = currentHiker.badgesInHand[i].costType;
-      let badgeType = currentHiker.badgesInHand[i].badgeType;
-      badgeInHand.innerHTML = `Name: ${name}, \n
-        Cost: ${cost}, \n
-        Reward Points: ${rewardPoints}, \n
-        Cost Type: ${costType}, \n
-        Badge Type: ${badgeType}`;
-        badgeInHand.style.backgroundColor = 'antiquewhite'
-        badgeInHand.style.borderRadius = '15px'
-        badgeInHand.style.padding = '5px'
-        badgeInHand.style.margin = '5px'
-      badgeInHandList.appendChild(badgeInHand);
-    }
-        badgesInHandBox.style.display = 'block'
-    badgeInHandList.style.display = "block";
-  }
-
-  if (currentHiker.badgesEarned.length > 0) {
-    for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
-      let badgeEarned = document.createElement("div");
-      badgeEarned.style.border = "red";
-      let name = currentHiker.badgesEarned[i].name;
-      let rewardPoints = currentHiker.badgesEarned[i].rewardPoints;
-      let cost = currentHiker.badgesEarned[i].cost;
-      let costType = currentHiker.badgesEarned[i].costType;
-      let badgeType = currentHiker.badgesEarned[i].badgeType;
-      badgeEarned.innerHTML = `Name: ${name}, \n
-        Cost: ${cost}, \n
-        Reward Points: ${rewardPoints}, \n
-        Cost Type: ${costType}, \n
-        Badge Type: ${badgeType}`;
-        badgeEarned.style.backgroundColor = 'antiquewhite'
-        badgeEarned.style.borderRadius = '15px'
-        badgeEarned.style.padding = '5px'
-        badgeEarned.style.margin = '5px'
-      badgesEarnedList.appendChild(badgeEarned);
-    }
-      badgesEarnedBox.style.display = 'block'
-    badgesEarnedList.style.display = "block";
-  }
+    updateBadges()
     badgeListBtn.style.display = 'none'
 });
 
@@ -876,4 +903,7 @@ finishTurnBtn.addEventListener("click", function (event) {
     stats.innerHTML = ''
     //calculateScore();
     badgeListBtn.style.display = 'block'
+    badgesInHandBox.style.display = 'none'
+    badgesEarnedBox.style.display = 'none'
+    purchaseResults.style.display = 'none'
 });
