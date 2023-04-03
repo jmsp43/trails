@@ -472,6 +472,7 @@ function rollDice() {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
     clearBoard();
+    drawBackgroundImgs()
     // return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
@@ -536,6 +537,9 @@ function drawHiker(hiker) {
 // }
 
 // not done
+//try:
+// switch case each photo and break 
+//if condition is met
 function drawBackgroundImgs() {
   //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
 
@@ -592,15 +596,36 @@ function moveHiker(event) {
 
   //wrap entire following in an if and call moveSun if thats true
   if (currentHiker.canteenActivated === true) {
-    if (keyPressed === left) {
+    console.log('canteen activated')
+    if (keyPressed === 'ArrowLeft') {
       //&& goingRight === false
       dx = -140 * extraSteps;
       currentHiker.x += dx;
+      clearBoard();
+      drawHiker(currentHiker);
     }
-    if (keyPressed === right) {
+    if (keyPressed === 'ArrowRight') {
       //&& goingLeft === false
       dx = 140 * extraSteps;
       currentHiker.x += dx;
+      clearBoard();
+      drawHiker(currentHiker);
+    }
+    if (currentHiker.x === 620 || currentHiker.x === 60) {
+      moveSun();
+      getBadgeCard();
+    }
+    if (currentHiker.x === 620) {
+      currentHiker.photos++;
+      drawBackgroundImgs();
+    }
+    gainResources();
+    stats.innerHTML = "";
+    stats.style.display = "block";
+    updateResourcesOnScreen();
+    console.log(sunPosition)
+    if (currentHiker.isComputer === true) {
+      compTurnFinished = true;
     }
     return;
   }
