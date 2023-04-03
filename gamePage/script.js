@@ -46,6 +46,8 @@ let extraSteps = 0;
 let sunX = 70;
 let backgroundImgsLoaded = false;
 let compTurnFinished = false;
+let currentResources = document.createElement("div");
+
 
 badgeInHandList.style.display = "none";
 badgesEarnedList.style.display = "none";
@@ -279,73 +281,73 @@ badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
 let backgroundImgs = [];
 let backgroundUrls = [
   {
-    url: "./parks/yosemite.jpg",
+    url: "../parks/yosemite.jpg",
     points: 0,
     description:
       "Welcome to Trails: The Digital Reimagining. Every photo in gameplay is of a US State or National Park (including this one! Yosemite National Park in California).\nUse your left and right arrow keys. Hike the trail until the sun returns to its origin position.\nClick Start button to begin playing",
   },
   {
-    url: "./parks/caddoLake.jpg",
+    url: "../parks/caddoLake.jpg",
     points: 2,
     description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas. This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/cathedralGorge.jpg",
+    url: "../parks/cathedralGorge.jpg",
     points: 2,
     description: `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires. This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/deadHorsePoint.jpg",
+    url: "../parks/deadHorsePoint.jpg",
     points: 2,
     description: `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/eldorado.jpg",
+    url: "../parks/eldorado.jpg",
     points: 3,
     description: `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/smokyMountains.jpg",
+    url: "../parks/smokyMountains.jpg",
     points: 5,
     description: `It's no surprise that the Great Smoky Mountains are the most visited National Park in the US, with it's fresh "smoky" air (which is actually created by the millions of plants giving off organic compounds that create a blueish vapor!) and FREE entry. This photo is worth 5 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/iaoValley.jpg",
+    url: "../parks/iaoValley.jpg",
     points: 4,
     description: `Iao Valley is a lush, stream-cut valley in West Maui, Hawaii, located in dense rainforest with an extinct volcano as it's peak. In 1972, this island oasis was designated a National Natural Landmark, and as such this photo is worth 4 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/kachemakBay.jpg",
+    url: "../parks/kachemakBay.jpg",
     points: 3,
     description: `Kachemak Bay State Park is a whopping 400,000 acres and the only designated state park in Alaska. With no road access, albeit it is a harder visit than most, but the incredible biodiversity of this critical habitat area makes up for the hard journey. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/paloDuro.jpg",
+    url: "../parks/paloDuro.jpg",
     points: 3,
     description: `As the second largest canyon system in the United States, Palo Duro is 120 miles long with a maximum width of 20 miles. Pictured here is a particularly famous rock formation lovingly referred to as The Lighthouse. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/letchworth.jpg",
+    url: "../parks/letchworth.jpg",
     points: 2,
     description: `Located in Western New York State 60 miles south of Buffalo is the hidden treasure of Letchworth State Park, known for it's 3 large waterfalls that flow into a deep gorge beneath that winds through the park. It's no wonder this place is called the Grand Canyon of the East! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/watkinsGlen.jpg",
+    url: "../parks/watkinsGlen.jpg",
     points: 2,
     description: `In the Finger Lakes region of New York State hides the geological and historical wonder that is Watkins Glen State Park. Cut through by a glacier in the last ice age, this very narrow gorge is even climbable from May to November! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
-    url: "./parks/acadia.avif",
+    url: "../parks/acadia.avif",
     points: 4,
     description: `Along Maine's beautiful coast lies Acadia National Park, housing the highest mountains on the Atlantic coast, cobble beaches, granite domes, and more. Acadia boasts rich bioversity, crisp air and water, and abundance human history dating back to over 10,000 years ago with the Wabanaki people. This photo is worth 4 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
@@ -404,22 +406,22 @@ function loadImgs() {
 function drawImgs() {
   let x;
   for (let i = 0; i < imgs.length; i++) {
-    if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/stone.png") {
+    if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/stone.png") {
       x = 40;
     } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/leaf.png"
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/leaf.png"
     ) {
       x = 180;
     } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/acorn.png"
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/acorn.png"
     ) {
       x = 320;
     } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/dice.png"
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/dice.png"
     ) {
       x = 460;
     } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/images/camera.png"
+      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/camera.png"
     ) {
       x = 600;
     }
@@ -634,7 +636,6 @@ function moveHiker(event) {
   }
 }
 
-let currentResources = document.createElement("div");
 
 // not done but good enough for today
 function updateResourcesOnScreen() {

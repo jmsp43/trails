@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trails</title>
+    <link href = 'style.css' rel = 'stylesheet'>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</head>
+<body>
+    
+    <div id = 'title'><h1><i class="fa fa-solid fa-tree"></i>Digital Trails<i class="fa fa-solid fa-leaf"></i></h1></div>
+    <section id = 'updatesBox'>
+        <div id = 'updatesInfo'>
+            This is where game updates will go
+        </div>
+    </section>
+    <button id = 'startBtn'>Start Hiking</button>
+    </canvas>
+    <div class = 'buttons'>
+        <button id = 'rollDiceBtn'>Roll Dice</button>
+        <button id = 'canteenBtn'>Activate Canteen</button>
+        <button id = 'payForBadge'>Earn Badge</button>
+        <button id = 'finishedTurn'>Finish Turn</button>
+    </div>
+    <div id = 'diceResults'></div>
+    <div id = 'badgeBox'>
+        <button id = 'badgeListBtn'>View Badges <i class="fa fa-solid fa-clipboard"></i> </button>
+        <div id = 'badgesInHandBox'><h3>Badges In Your Hand:</h3>
+            <div id = 'badgeInHandList'> </div>
+        </div>
+        <div id = 'badgesEarnedBox'><h3>Badges Earned:</h3>
+            <div id = 'badgesEarnedList'> </div>
+        </div>
+        <button id = 'restartBtn'>Restart Game</button>
+    </div>
+    <div id = 'statsIcon'>
+        <!-- <i class = 'fa fa-solid fa-question'></i> -->
+        <div id = 'stats'></div>
+    </div>
+    <div id = 'rulesDiv'>
+        <h4>Need a refresher on the rules?</h4>
+        <a id = 'rulesBtn' href= './landingPage/land.html' target="_blank">Rules</a>
+    </div>
+    
+    <canvas id = 'gameCanvas'>
+    <script src = 'script.js'></script>
+</body>
+</html>
