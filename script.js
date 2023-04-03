@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////
 const board = document.querySelector("#gameCanvas");
 const startBtn = document.querySelector("#startBtn");
-const rulesBtn = document.querySelector('#rulesBtn')
+const rulesBtn = document.querySelector("#rulesBtn");
 const rollBtn = document.querySelector("#rollDiceBtn");
 const canteenBtn = document.querySelector("#canteenBtn");
 const earnBadgeBtn = document.querySelector("#payForBadge");
@@ -14,11 +14,11 @@ const badgesEarnedList = document.querySelector("#badgesEarnedList");
 const stats = document.querySelector("#stats");
 const updateInfo = document.querySelector("#updatesInfo");
 const finishTurnBtn = document.querySelector("#finishedTurn");
-const badgesInHandBox = document.querySelector('#badgesInHandBox')
-const badgesEarnedBox = document.querySelector('#badgesEarnedBox')
-const restartBtn = document.querySelector('#restartBtn')
-const purchaseResults = document.createElement('p')
-const badgeBox = document.querySelector('#badgeBox')
+const badgesInHandBox = document.querySelector("#badgesInHandBox");
+const badgesEarnedBox = document.querySelector("#badgesEarnedBox");
+const restartBtn = document.querySelector("#restartBtn");
+const purchaseResults = document.createElement("p");
+const badgeBox = document.querySelector("#badgeBox");
 
 const boardContext = board.getContext("2d");
 const width = 700;
@@ -50,8 +50,8 @@ let compTurnFinished = false;
 badgeInHandList.style.display = "none";
 badgesEarnedList.style.display = "none";
 stats.style.display = "none";
-badgesEarnedBox.style.display = 'none'
-badgesInHandBox.style.display = 'none'
+badgesEarnedBox.style.display = "none";
+badgesInHandBox.style.display = "none";
 ///////////////////////////////////////////////
 ///////////////Classes/////////////////
 ///////////////////////////////////////////////
@@ -311,46 +311,47 @@ let backgroundUrls = [
   {
     url: "./parks/smokyMountains.jpg",
     points: 5,
-    description: `This photo is worth 5 points!`,
+    description: `It's no surprise that the Great Smoky Mountains are the most visited National Park in the US, with it's fresh "smoky" air (which is actually created by the millions of plants giving off organic compounds that create a blueish vapor!) and FREE entry. This photo is worth 5 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/iaoValley.jpg",
     points: 4,
-    description: `This photo is worth 4 points!`,
+    description: `Iao Valley is a lush, stream-cut valley in West Maui, Hawaii, located in dense rainforest with an extinct volcano as it's peak. In 1972, this island oasis was designated a National Natural Landmark, and as such this photo is worth 4 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/kachemakBay.jpg",
     points: 3,
-    description: `This photo is worth 3 points!`,
+    description: `Kachemak Bay State Park is a whopping 400,000 acres and the only designated state park in Alaska. With no road access, albeit it is a harder visit than most, but the incredible biodiversity of this critical habitat area makes up for the hard journey. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/paloDuro.jpg",
     points: 3,
-    description: `This photo is worth 3 points!`,
+    description: `As the second largest canyon system in the United States, Palo Duro is 120 miles long with a maximum width of 20 miles. Pictured here is a particularly famous rock formation lovingly referred to as The Lighthouse. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/letchworth.jpg",
     points: 2,
-    description: `This photo is worth 2 points!`,
+    description: `Located in Western New York State 60 miles south of Buffalo is the hidden treasure of Letchworth State Park, known for it's 3 large waterfalls that flow into a deep gorge beneath that winds through the park. It's no wonder this place is called the Grand Canyon of the East! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/watkinsGlen.jpg",
     points: 2,
-    description: `This photo is worth 2 points!`,
+    description: `In the Finger Lakes region of New York State hides the geological and historical wonder that is Watkins Glen State Park. Cut through by a glacier in the last ice age, this very narrow gorge is even climbable from May to November! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     url: "./parks/acadia.avif",
     points: 4,
-    description: `This photo is worth 4 points!`,
+    description: `Along Maine's beautiful coast lies Acadia National Park, housing the highest mountains on the Atlantic coast, cobble beaches, granite domes, and more. Acadia boasts rich bioversity, crisp air and water, and abundance human history dating back to over 10,000 years ago with the Wabanaki people. This photo is worth 4 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
 ];
+console.log(backgroundUrls[11].points);
 
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
@@ -367,8 +368,13 @@ function loadBackgroundImgs() {
       backgroundImgs.push(img);
       count++;
       if (count >= backgroundUrls.length) {
-        backgroundImgsLoaded = true;
-        drawBackgroundImgs();
+          backgroundImgsLoaded = true;
+        //   if (backgroundUrls[0]) {
+        //       drawStartingBackground()
+        //   } else {
+        //       drawBackgroundImgs();
+        //   }
+          drawBackgroundImgs()
       }
     };
   }
@@ -444,21 +450,21 @@ function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
     diceResults.innerHTML = "You get an acorn!";
-      currentHiker.resources[0].acorns++;
-      stats.innerHTML = ''
-      updateResourcesOnScreen()
+    currentHiker.resources[0].acorns++;
+    stats.innerHTML = "";
+    updateResourcesOnScreen();
     // return;
   } else if (diceNum === 2) {
     diceResults.innerHTML = "You get a stone!";
-      currentHiker.resources[1].stones++;
-      stats.innerHTML = ''
-      updateResourcesOnScreen()
+    currentHiker.resources[1].stones++;
+    stats.innerHTML = "";
+    updateResourcesOnScreen();
     // return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
-      currentHiker.resources[2].leaves++;
-      stats.innerHTML = ''
-      updateResourcesOnScreen()
+    currentHiker.resources[2].leaves++;
+    stats.innerHTML = "";
+    updateResourcesOnScreen();
     // return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
@@ -470,40 +476,45 @@ function rollDice() {
     getBadgeCard();
     // return;
   } else {
-      diceResults.innerHTML = "You encountered a bear!"
-      let bearResults = document.createElement('p')
-      if ((Math.round(Math.random() + 1)) === 1) {
-          console.log('You barely escaped with your life!')
-          if (currentHiker.resources[0].acorns > 0) {
-              currentHiker.resources[0].acorns--
-              bearResults.innerHTML = 'You barely escaped with your life! You lost an acorn in the process.'
-              diceResults.appendChild(bearResults)
-              stats.innerHTML = ''
-              updateResourcesOnScreen()
-          }
-          else if (currentHiker.resources[2].leaves > 0) {
-              currentHiker.resources[2].leaves--
-              bearResults.innerHTML = 'You barely escaped with your life! You lost a leaf in the process.'
-              diceResults.appendChild(bearResults)
-              stats.innerHTML = ''
-              updateResourcesOnScreen()
-          } else if (currentHiker.resources[1].stones > 0) {
-              currentHiker.resources[1].stones--
-              bearResults.innerHTML = 'You barely escaped with your life! You lost a stone in the process.'
-              diceResults.appendChild(bearResults)
-              stats.innerHTML = ''
-              updateResourcesOnScreen()
-          } else {
-            diceResults.appendChild(bearResults)
-              bearResults.innerHTML = 'Game over, you had no resources to distract the angry bear.'
-              //end game
-          }
-          
+    diceResults.innerHTML = "You encountered a bear!";
+    let bearResults = document.createElement("p");
+    if (Math.round(Math.random() + 1) === 1) {
+      console.log("You barely escaped with your life!");
+      if (currentHiker.resources[0].acorns > 0) {
+        currentHiker.resources[0].acorns--;
+        bearResults.innerHTML =
+          "You barely escaped with your life! You lost an acorn in the process.";
+        diceResults.appendChild(bearResults);
+        stats.innerHTML = "";
+        updateResourcesOnScreen();
+      } else if (currentHiker.resources[2].leaves > 0) {
+        currentHiker.resources[2].leaves--;
+        bearResults.innerHTML =
+          "You barely escaped with your life! You lost a leaf in the process.";
+        diceResults.appendChild(bearResults);
+        stats.innerHTML = "";
+        updateResourcesOnScreen();
+      } else if (currentHiker.resources[1].stones > 0) {
+        currentHiker.resources[1].stones--;
+        bearResults.innerHTML =
+          "You barely escaped with your life! You lost a stone in the process.";
+        diceResults.appendChild(bearResults);
+        stats.innerHTML = "";
+        updateResourcesOnScreen();
       } else {
-        diceResults.appendChild(bearResults)
-          bearResults.innerHTML = 'It was a friendly bear, you even got a photo out of it!'
-          currentHiker.photos++
+        diceResults.appendChild(bearResults);
+        bearResults.innerHTML =
+          "Game over, you had no resources to distract the angry bear.";
+        //end game
       }
+    } else {
+      diceResults.appendChild(bearResults);
+      bearResults.innerHTML =
+        "It was a friendly bear, you even got a photo out of it!";
+        currentHiker.photos++;
+        clearBoard()
+    //   drawBackgroundImgs();
+    }
   }
   return;
 }
@@ -516,25 +527,54 @@ function drawHiker(hiker) {
   boardContext.strokeRect(hiker.x, hiker.y, 20, 20);
 }
 
+// function drawStartingBackground() {
+//       //   //before game start
+//       boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
+//       updateInfo.innerText = backgroundUrls[0].description;
+// }
+
 // not done
 function drawBackgroundImgs() {
-  boardContext.drawImage(
-    backgroundImgs[currentHiker.photos],
-    0,
-    0,
-    width,
-    height
-  );
+  //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
 
-  if (backgroundUrls[0]) {
-    updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
-  } else {
-    updateInfo.innerText =
-      backgroundUrls[currentHiker.photos].description +
-      "\n" +
-        backgroundUrls[currentHiker.photos].playerTurn;
-      currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points
-  }
+//   //   //before game start
+//     boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
+//     updateInfo.innerText = backgroundUrls[0].description;
+
+  //on start game
+//   let usedPhotoUrls = [];
+//   for (let i = 1; i < backgroundUrls.length; i++) {
+//     boardContext.drawImage(backgroundImgs[i], 0, 0, width, height);
+
+//       //i know i need to put a break somewhere to stop this loop but struggling on the logic for where
+      
+//     updateInfo.innerText =
+//       backgroundUrls[i].description + "\n" + backgroundUrls[i].playerTurn;
+
+//     currentHiker.victoryPoints += backgroundUrls[i].points;
+
+//     usedPhotoUrls.push(backgroundUrls[i]);
+
+//     backgroundUrls.splice(i, 1);
+//   }
+
+    boardContext.drawImage(
+      backgroundImgs[currentHiker.photos],
+      0,
+      0,
+      width,
+      height
+    );
+
+    if (backgroundUrls[0]) {
+      updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+    } else {
+      updateInfo.innerText =
+        backgroundUrls[currentHiker.photos].description +
+        "\n" +
+          backgroundUrls[currentHiker.photos].playerTurn;
+        currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points
+    }
 }
 
 //not done
@@ -580,8 +620,12 @@ function moveHiker(event) {
     moveSun();
     getBadgeCard();
   }
-    gainResources();
-    stats.innerHTML = ''
+  if (currentHiker.x === 620) {
+    currentHiker.photos++;
+    drawBackgroundImgs();
+  }
+  gainResources();
+  stats.innerHTML = "";
   stats.style.display = "block";
   updateResourcesOnScreen();
 
@@ -590,9 +634,11 @@ function moveHiker(event) {
   }
 }
 
+let currentResources = document.createElement("div");
+
 // not done but good enough for today
 function updateResourcesOnScreen() {
-  let currentResources = document.createElement("div");
+
   currentResources.style.border = "red";
   let acorns = currentHiker.resources[0].acorns;
   let stones = currentHiker.resources[1].stones;
@@ -605,10 +651,10 @@ function updateResourcesOnScreen() {
   stats.appendChild(currentResources);
 }
 
-console.log(sunPosition)
+console.log(sunPosition);
 //done
 function moveSun() {
-    console.log(sunPosition)
+  console.log(sunPosition);
   if (sunPosition <= 4) {
     sunPosition++;
     sunX += 140;
@@ -672,7 +718,7 @@ function getBadgeCard() {
   if (
     currentHiker.x === 620 ||
     currentHiker.x === 60 ||
-      (diceResults.innerHTML = "You get a badge card!")
+    (diceResults.innerHTML = "You get a badge card!")
     //   ||
     // currentHiker.badgesEarned.includes("Astronomer")
   ) {
@@ -680,136 +726,137 @@ function getBadgeCard() {
     currentHiker.badgesInHand.push(pickedCard);
     let pickedCardIndex = badgeDeck.indexOf(pickedCard);
     badgeDeck.splice(pickedCardIndex, 1);
-    console.log(badgeDeck.length)
+    console.log(badgeDeck.length);
   }
 }
 
-function updateBadges(){
-    if (currentHiker.badgesInHand.length > 0) {
-        for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
-          let badgeInHand = document.createElement("div");
-            badgeInHand.style.border = "red";
-          let name = currentHiker.badgesInHand[i].name;
-          let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
-          let cost = currentHiker.badgesInHand[i].cost;
-          let costType = currentHiker.badgesInHand[i].costType;
-            let badgeType = currentHiker.badgesInHand[i].badgeType;
+function updateBadges() {
+  if (currentHiker.badgesInHand.length > 0) {
+    for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
+      let badgeInHand = document.createElement("div");
+      badgeInHand.style.border = "red";
+      let name = currentHiker.badgesInHand[i].name;
+      let rewardPoints = currentHiker.badgesInHand[i].rewardPoints;
+      let cost = currentHiker.badgesInHand[i].cost;
+      let costType = currentHiker.badgesInHand[i].costType;
+      let badgeType = currentHiker.badgesInHand[i].badgeType;
 
+      badgeInHand.innerHTML = "";
 
-            badgeInHand.innerHTML = ''
-
-
-          badgeInHand.innerHTML = `Name: ${name}, \n
+      badgeInHand.innerHTML = `Name: ${name}, \n
             Cost: ${cost}, \n
             Reward Points: ${rewardPoints}, \n
             Cost Type: ${costType}, \n
             Badge Type: ${badgeType}`;
-            badgeInHand.style.backgroundColor = 'antiquewhite'
-            badgeInHand.style.borderRadius = '15px'
-            badgeInHand.style.padding = '5px'
-            badgeInHand.style.margin = '5px'
-          badgeInHandList.appendChild(badgeInHand);
-        }
-            badgesInHandBox.style.display = 'block'
-        badgeInHandList.style.display = "block";
-      }
-    
-      if (currentHiker.badgesEarned.length > 0) {
-        for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
-          let badgeEarned = document.createElement("div");
-          badgeEarned.style.border = "red";
-          let name = currentHiker.badgesEarned[i].name;
-          let rewardPoints = currentHiker.badgesEarned[i].rewardPoints;
-          let cost = currentHiker.badgesEarned[i].cost;
-          let costType = currentHiker.badgesEarned[i].costType;
-            let badgeType = currentHiker.badgesEarned[i].badgeType;
-            
-badgeEarned.innerHTML = ''
+      badgeInHand.style.backgroundColor = "antiquewhite";
+      badgeInHand.style.borderRadius = "15px";
+      badgeInHand.style.padding = "5px";
+      badgeInHand.style.margin = "5px";
+      badgeInHandList.appendChild(badgeInHand);
+    }
+    badgesInHandBox.style.display = "block";
+    badgeInHandList.style.display = "block";
+  }
 
+  if (currentHiker.badgesEarned.length > 0) {
+    for (let i = 0; i < currentHiker.badgesEarned.length; i++) {
+      let badgeEarned = document.createElement("div");
+      badgeEarned.style.border = "red";
+      let name = currentHiker.badgesEarned[i].name;
+      let rewardPoints = currentHiker.badgesEarned[i].rewardPoints;
+      let cost = currentHiker.badgesEarned[i].cost;
+      let costType = currentHiker.badgesEarned[i].costType;
+      let badgeType = currentHiker.badgesEarned[i].badgeType;
 
-          badgeEarned.innerHTML = `Name: ${name}, \n
+      badgeEarned.innerHTML = "";
+
+      badgeEarned.innerHTML = `Name: ${name}, \n
             Cost: ${cost}, \n
             Reward Points: ${rewardPoints}, \n
             Cost Type: ${costType}, \n
             Badge Type: ${badgeType}`;
-            badgeEarned.style.backgroundColor = 'antiquewhite'
-            badgeEarned.style.borderRadius = '15px'
-            badgeEarned.style.padding = '5px'
-            badgeEarned.style.margin = '5px'
-          badgesEarnedList.appendChild(badgeEarned);
-        }
-          badgesEarnedBox.style.display = 'block'
-        badgesEarnedList.style.display = "block";
-      }
+      badgeEarned.style.backgroundColor = "antiquewhite";
+      badgeEarned.style.borderRadius = "15px";
+      badgeEarned.style.padding = "5px";
+      badgeEarned.style.margin = "5px";
+      badgesEarnedList.appendChild(badgeEarned);
+    }
+    badgesEarnedBox.style.display = "block";
+    badgesEarnedList.style.display = "block";
+  }
 }
 
-
 function payForBadge() {
-
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
-      console.log(currentHiker.badgesInHand[i].cost)
+    console.log(currentHiker.badgesInHand[i].cost);
     if (type === "acorns") {
-        if (
-            currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
-        ) {
-            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-            currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost
-            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
-            updateResourcesOnScreen()
+      if (
+        currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+        currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost;
+        currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
+        //updateResourcesOnScreen();
 
-            currentHiker.badgesInHand.splice(i, 1);
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'you earned your badge!'
-            badgeBox.appendChild(purchaseResults)
-            //   let gotReward  = false
-            //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
-            //       //if the one they just got was the astronomer then they get an additional badge for free
-            //gotReward === true
-            //   }
-        } else {
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'Sorry, you need more acornss to earn this badge.'
-            badgeBox.appendChild(purchaseResults)
-        }
+        currentHiker.badgesInHand.splice(i, 1);
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML = "you earned your badge!";
+        badgeBox.appendChild(purchaseResults);
+        //   let gotReward  = false
+        //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
+        //       //if the one they just got was the astronomer then they get an additional badge for free
+        //gotReward === true
+        //   }
+      } else {
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML =
+          "Sorry, you need more acorns to earn this badge.";
+        badgeBox.appendChild(purchaseResults);
+      }
     } else if (type === "stones") {
-        if (
-            currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
-        ) {
-            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-            currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost
-            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
-            updateResourcesOnScreen()
+      if (
+        currentHiker.resources[1].stones >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+        currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost;
+        currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
+        //updateResourcesOnScreen();
 
-            currentHiker.badgesInHand.splice(i, 1);
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'you earned your badge!'
-            badgeBox.appendChild(purchaseResults)
-        } else {
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'Sorry, you need more stones to earn this badge.'
-            badgeBox.appendChild(purchaseResults)
-        }
+        currentHiker.badgesInHand.splice(i, 1);
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML = "you earned your badge!";
+        badgeBox.appendChild(purchaseResults);
+      } else {
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML =
+          "Sorry, you need more stones to earn this badge.";
+        badgeBox.appendChild(purchaseResults);
+      }
     } else if (type === "leaves") {
-        if (
-            currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
-        ) {
-            currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
-            currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost
-            currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints
-            updateResourcesOnScreen()
+      if (
+        currentHiker.resources[2].leaves >= currentHiker.badgesInHand[i].cost
+      ) {
+        currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
+        currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost;
+        currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
+        //updateResourcesOnScreen();
 
-            currentHiker.badgesInHand.splice(i, 1);
+        currentHiker.badgesInHand.splice(i, 1);
 
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'you earned your badge!'
-            badgeBox.appendChild(purchaseResults)
-        } else {
-            purchaseResults.style.display = 'block'
-            purchaseResults.innerHTML = 'Sorry, you need more leaves to earn this badge.'
-            badgeBox.appendChild(purchaseResults)
-        }
-    } else console.log("why is this happening, i got rid of all the multiple-type cards");
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML = "you earned your badge!";
+        badgeBox.appendChild(purchaseResults);
+      } else {
+        purchaseResults.style.display = "block";
+        purchaseResults.innerHTML =
+          "Sorry, you need more leaves to earn this badge.";
+        badgeBox.appendChild(purchaseResults);
+      }
+    } else
+      console.log(
+        "why is this happening, i got rid of all the multiple-type cards"
+      );
   }
 
   //or if player has astronomer, give badge for free
@@ -817,16 +864,16 @@ function payForBadge() {
 
 //not done
 function calculateScore() {
-    if (sunPosition === 9) {
-        if (hiker1.points > hiker2.points) {
-            console.log('Hiker 1 wins!')
-        } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
-            console.log('Hiker 2 wins!')
-        } else {
-            console.log(hiker1.victoryPoints + ' ' + hiker2.victoryPoints)
-            console.log('either it is a tie or an error')
-        }
+  if (sunPosition === 9) {
+    if (hiker1.points > hiker2.points) {
+      console.log("Hiker 1 wins!");
+    } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
+      console.log("Hiker 2 wins!");
+    } else {
+      console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
+      console.log("either it is a tie or an error");
     }
+  }
 }
 
 //not done
@@ -840,7 +887,7 @@ function runGame() {
   drawSun();
   loadImgs();
 
-    calculateScore()
+  //calculateScore();
 }
 
 ///////////////////////////////////////////////
@@ -850,8 +897,8 @@ function runGame() {
 
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    runGame();
-    startBtn.style.display = 'none'
+  runGame();
+  startBtn.style.display = "none";
 });
 
 //done
@@ -876,34 +923,36 @@ document.addEventListener("keydown", function (event) {
 earnBadgeBtn.addEventListener("click", function (event) {
   event.preventDefault();
     payForBadge();
+    badgeInHandList.innerHTML = ''
+    badgesEarnedList.innerHTML = ''
+    updateBadges()
+    currentResources.innerHTML = ''
+    updateResourcesOnScreen()
 });
-
-
-
 
 //done
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    updateBadges()
-    badgeListBtn.style.display = 'none'
+  updateBadges();
+  badgeListBtn.style.display = "none";
 });
 
-restartBtn.addEventListener('click', function (event) {
-    event.preventDefault()
-    location.reload()
-})
+restartBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  location.reload();
+});
 
 //done
 finishTurnBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    whoseTurn();
-    diceResults.innerHTML = ''
-    badgeInHandList.innerHTML = ''
-    badgesEarnedList.innerHTML = ''
-    stats.innerHTML = ''
-    //calculateScore();
-    badgeListBtn.style.display = 'block'
-    badgesInHandBox.style.display = 'none'
-    badgesEarnedBox.style.display = 'none'
-    purchaseResults.style.display = 'none'
+  whoseTurn();
+  diceResults.innerHTML = "";
+  badgeInHandList.innerHTML = "";
+  badgesEarnedList.innerHTML = "";
+  stats.innerHTML = "";
+  //calculateScore();
+  badgeListBtn.style.display = "block";
+  badgesInHandBox.style.display = "none";
+  badgesEarnedBox.style.display = "none";
+  purchaseResults.style.display = "none";
 });
