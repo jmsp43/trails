@@ -351,7 +351,7 @@ let backgroundUrls = [
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
 ];
-console.log(backgroundUrls[11].points);
+//console.log(backgroundUrls[11].points);
 
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
@@ -628,7 +628,7 @@ function moveHiker(event) {
   stats.innerHTML = "";
   stats.style.display = "block";
   updateResourcesOnScreen();
-
+  console.log(sunPosition)
   if (currentHiker.isComputer === true) {
     compTurnFinished = true;
   }
@@ -651,10 +651,10 @@ function updateResourcesOnScreen() {
   stats.appendChild(currentResources);
 }
 
-console.log(sunPosition);
+
 //done
 function moveSun() {
-  console.log(sunPosition);
+  //console.log(sunPosition);
   if (sunPosition <= 4) {
     sunPosition++;
     sunX += 140;
@@ -705,8 +705,8 @@ function gainResources() {
     currentHiker.resources[2].leaves++;
   } else if (currentHiker.x == 340) {
     currentHiker.resources[0].acorns++;
-  } else if (currentHiker.x == 480) {
-    console.log("user rolls dice at bear spot");
+//   } else if (currentHiker.x == 480) {
+//     console.log("user rolls dice at bear spot");
   } else if (currentHiker.x == 620) {
     currentHiker.photos++;
     clearBoard();
@@ -726,7 +726,7 @@ function getBadgeCard() {
     currentHiker.badgesInHand.push(pickedCard);
     let pickedCardIndex = badgeDeck.indexOf(pickedCard);
     badgeDeck.splice(pickedCardIndex, 1);
-    console.log(badgeDeck.length);
+    //console.log(badgeDeck.length);
   }
 }
 
@@ -789,7 +789,7 @@ function updateBadges() {
 function payForBadge() {
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
-    console.log(currentHiker.badgesInHand[i].cost);
+    //console.log(currentHiker.badgesInHand[i].cost);
     if (type === "acorns") {
       if (
         currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
