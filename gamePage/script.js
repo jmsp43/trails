@@ -1,6 +1,8 @@
 ///////////////////////////////////////////////
 ///////////////Global Variables/////////////////
 ///////////////////////////////////////////////
+let gameOver = false
+
 const board = document.querySelector("#gameCanvas");
 const startBtn = document.querySelector("#startBtn");
 const rulesBtn = document.querySelector("#rulesBtn");
@@ -557,14 +559,15 @@ function drawBackgroundImgs() {
   //     backgroundUrls.splice(i, 1);
   //   }
 
-  boardContext.drawImage(
+      boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
     0,
     0,
     width,
     height
   );
-
+  if (gameOver === false) {
+  console.log('drawing imgs and updating text')
   if (backgroundUrls[0]) {
     updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
   } else {
@@ -574,6 +577,8 @@ function drawBackgroundImgs() {
       backgroundUrls[currentHiker.photos].playerTurn;
     currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
   }
+}
+
 }
 
 
@@ -598,13 +603,14 @@ function moveHiker(event) {
       clearBoard();
       drawHiker(currentHiker);
     }
-    if (currentHiker.x === 620 || currentHiker.x === 60) {
-      moveSun();
-      getBadgeCard();
-    }
+
     if (currentHiker.x === 620) {
       currentHiker.photos++;
       drawBackgroundImgs();
+    }
+    if (currentHiker.x === 620 || currentHiker.x === 60) {
+      moveSun();
+      getBadgeCard();
     }
     gainResources();
     stats.innerHTML = "";
@@ -631,13 +637,14 @@ function moveHiker(event) {
     clearBoard();
     drawHiker(currentHiker);
   }
-  if (currentHiker.x === 620 || currentHiker.x === 60) {
-    moveSun();
-    getBadgeCard();
-  }
+
   if (currentHiker.x === 620) {
     currentHiker.photos++;
     drawBackgroundImgs();
+  }
+  if (currentHiker.x === 620 || currentHiker.x === 60) {
+    moveSun();
+    getBadgeCard();
   }
   gainResources();
   stats.innerHTML = "";
@@ -909,19 +916,27 @@ function runGame() {
 //done
 function endGame() {
   //trigger end game
+
   calculateScore();
   document.body.style.backgroundColor = '#E74B7F'
   if (calculateScore() === hiker1) {
     console.log('hiker 1 wins')
-    updateInfo.innerHTML = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+
+    updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+      gameOver = true
+    console.log('game has ended, updating text')
   } else if (calculateScore() === hiker2) {
     console.log('hiker 2 wins')
-    updateInfo.innerHTML = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    console.log('game has ended, updating text')
+      gameOver = true
   } else {
     console.log('either a tie or functionality issue')
     console.log(hiker1.victoryPoints)
     console.log(hiker2.victoryPoints)
-    updateInfo.innerHTML = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+    updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`
+    console.log('game has ended, updating text');
+    gameOver = true
   }
 }
 
