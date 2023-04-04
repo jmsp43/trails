@@ -30,13 +30,15 @@ board.height = height;
 
 let areImgsLoaded = false;
 let imgs = [];
-let imgUrls = [
-  "./images/stone.png",
-  "./images/leaf.png",
-  "./images/acorn.png",
-  "./images/dice.png",
-  "./images/camera.png",
-];
+// let imgUrls = [
+//   "./images/stone.png",
+//   "./images/leaf.png",
+//   "./images/acorn.png",
+//   "./images/dice.png",
+//   "./images/camera.png",
+// ];
+
+let imgUrls = [{name: 'stone', url: "./images/stone.png"}, {name:'leaf', url: './images/leaf.png'}, {name: 'acorn', url:   "./images/acorn.png"}, {name: 'dice', url:  "./images/dice.png" }, {name: 'camera', url: "./images/camera.png"}]
 
 let dx = 140;
 let sunPosition = 0;
@@ -387,9 +389,11 @@ function loadImgs() {
   let count = 0;
   for (let i = 0; i < imgUrls.length; i++) {
     const img = new Image();
-    img.src = imgUrls[i];
+    img.src = imgUrls[i].url;
+    img.name = imgUrls[i].name
     //will only run when the img loads
     img.onload = () => {
+      console.log(img.src)
       imgs.push(img);
       count++;
       if (count >= imgUrls.length) {
@@ -405,15 +409,15 @@ function loadImgs() {
 function drawImgs() {
   let x = 100;
   for (let i = 0; i < imgs.length; i++) {
-    if (i === 0) {
+    if (imgs[i].name === 'stone') {
       x = 40;
-    } else if (i === 1) {
+    } else if (imgs[i].name === 'leaf') {
       x = 180;
-    } else if (i === 2) {
+    } else if (imgs[i].name === 'acorn') {
       x = 320;
-    } else if (i === 3) {
+    } else if (imgs[i].name === 'dice') {
       x = 460;
-    } else if (i=== 4) {
+    } else if (imgs[i].name === 'camera') {
       x = 600;
     }
     boardContext.drawImage(imgs[i], x, 400, 70, 70);
@@ -462,8 +466,8 @@ function rollDice() {
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
-    clearBoard();
     drawBackgroundImgs();
+    clearBoard();
     // return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
