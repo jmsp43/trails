@@ -38,6 +38,9 @@ let imgUrls = [
   { name: "camera", url: "./images/camera.png" },
 ];
 
+let usedImgs = [];
+let needsPhotoUpdate = false;
+
 let dx = 140;
 let sunPosition = 0;
 const goingLeft = dx === -140;
@@ -365,7 +368,34 @@ let backgroundUrls = [
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
 ];
-//console.log(backgroundUrls[11].points);
+
+// function addCorrectPoints() {
+//   if (backgroundImgs[currentHiker.photos].place === 'caddo lake') {
+//     currentHiker.victoryPoints+= 2
+//   } else if (backgroundImgs[currentHiker.photos].place === 'cathedral gorge') {
+//     currentHiker.victoryPoints+= 2
+//   } else if (backgroundImgs[currentHiker.photos].place === 'dead horse point') {
+//     currentHiker.victoryPoints+= 2
+//   } else if (backgroundImgs[currentHiker.photos].place === 'eldorado') {
+//     currentHiker.victoryPoints+= 3
+//   } else if (backgroundImgs[currentHiker.photos].place === 'smoky mountains') {
+//     currentHiker.victoryPoints+= 5
+//   } else if (backgroundImgs[currentHiker.photos].place === 'iao valley') {
+//     currentHiker.victoryPoints+= 4
+//   } else if (backgroundImgs[currentHiker.photos].place === 'kachemak bay') {
+//     currentHiker.victoryPoints+= 3
+//   } else if (backgroundImgs[currentHiker.photos].place === 'palo duro') {
+//     currentHiker.victoryPoints+= 3
+//   } else if (backgroundImgs[currentHiker.photos].place === 'letchworth') {
+//     currentHiker.victoryPoints+= 2
+//   } else if (backgroundImgs[currentHiker.photos].place === 'watkins glen') {
+//     currentHiker.victoryPoints+= 2
+//   } else if (backgroundImgs[currentHiker.photos].place === 'acadia') {
+//     currentHiker.victoryPoints+= 4
+//   }
+// }
+
+
 
 ///////////////////////////////////////////////
 ///////////////Functions/////////////////
@@ -378,18 +408,13 @@ function loadBackgroundImgs() {
     const img = new Image();
     img.src = backgroundUrls[i].url;
     img.place = backgroundUrls[i].name;
+    img.points = backgroundUrls[i].points;
     //will only run when the img loads
     backgroundImgs.push(img);
     img.onload = () => {
-
       count++;
       if (count >= backgroundUrls.length) {
         backgroundImgsLoaded = true;
-        //   if (backgroundUrls[0]) {
-        //       drawStartingBackground()
-        //   } else {
-        //       drawBackgroundImgs();
-        //   }
         drawBackgroundImgs();
       }
     };
@@ -406,7 +431,6 @@ function loadImgs() {
     img.icon = imgUrls[i].name;
     //will only run when the img loads
     img.onload = () => {
-      console.log(img.src);
       imgs.push(img);
       count++;
       if (count >= imgUrls.length) {
@@ -463,29 +487,25 @@ function rollDice() {
     currentHiker.resources[0].acorns++;
     stats.innerHTML = "";
     updateResourcesOnScreen();
-    // return;
   } else if (diceNum === 2) {
     diceResults.innerHTML = "You get a stone!";
     currentHiker.resources[1].stones++;
     stats.innerHTML = "";
     updateResourcesOnScreen();
-    // return;
   } else if (diceNum === 3) {
     diceResults.innerHTML = "You get a leaf!";
     currentHiker.resources[2].leaves++;
     stats.innerHTML = "";
     updateResourcesOnScreen();
-    // return;
   } else if (diceNum === 4) {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
-    drawBackgroundImgs();
+    needsPhotoUpdate = true;
     clearBoard();
-    // return;
+    updateResourcesOnScreen();
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
     getBadgeCard();
-    // return;
   } else {
     diceResults.innerHTML = "You encountered a bear!";
     let bearResults = document.createElement("p");
@@ -516,6 +536,7 @@ function rollDice() {
         diceResults.appendChild(bearResults);
         bearResults.innerHTML =
           "Game over, you had no resources to distract the angry bear.";
+        endGame();
         //end game
       }
     } else {
@@ -523,66 +544,51 @@ function rollDice() {
       bearResults.innerHTML =
         "It was a friendly bear, you even got a photo out of it!";
       currentHiker.photos++;
+      needsPhotoUpdate = true;
       clearBoard();
-      //   drawBackgroundImgs();
+      updateResourcesOnScreen();
     }
   }
-  return;
 }
-
-// console.log(backgroundImgs[0]);
-// let yosemiteObj = backgroundImgs.find((img) => img.place === "yosemite");
-// // let yosemiteIndex = backgroundImgs.findIndex(yosemiteObj)
-// console.log(yosemiteObj);
-// console.log(yosemiteIndex)
 
 //done
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
-  boardContext.strokeStyle = "chartreuse";
+  boardContext.strokeStyle = "black";
   boardContext.fillRect(hiker.x, hiker.y, 20, 20);
   boardContext.strokeRect(hiker.x, hiker.y, 20, 20);
 }
 
-// function drawStartingBackground() {
-//       //   //before game start
-//       boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
-//       updateInfo.innerText = backgroundUrls[0].description;
-// }
-
-let usedImgs = []
-let needsPhotoUpdate = false
 
 // not done at all
 function drawBackgroundImgs() {
-  //try:
-  // switch case each photo and break
-  //if condition is met
+  if (gameOver === false && needsPhotoUpdate === true) {
+    updatePhotoCaptionAndPoints();
+  } else {
+    boardContext.drawImage(
+      backgroundImgs[currentHiker.photos],
+      0,
+      0,
+      width,
+      height
+    );
+    updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+  }
 
-  //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
-
-  //   //   //before game start
-  //     boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
-  //     updateInfo.innerText = backgroundUrls[0].description;
-
-  //on start game
-  //   let usedPhotoUrls = [];
-  //   for (let i = 1; i < backgroundUrls.length; i++) {
-  //     boardContext.drawImage(backgroundImgs[i], 0, 0, width, height);
-
-  //       //i know i need to put a break somewhere to stop this loop but struggling on the logic for where
-
-  //     updateInfo.innerText =
-  //       backgroundUrls[i].description + "\n" + backgroundUrls[i].playerTurn;
-
-  //     currentHiker.victoryPoints += backgroundUrls[i].points;
-
-  //     usedPhotoUrls.push(backgroundUrls[i]);
-
-  //     backgroundUrls.splice(i, 1);
-  //   }
+}
 
 
+// function addRandomPoints() {
+//   let randomPoints = (Math.round(Math.random() * 5) + 1)
+//   console.log(currentHiker.victoryPoints)
+//   currentHiker.victoryPoints += randomPoints
+//   console.log(currentHiker.victoryPoints)
+// }
+
+
+
+function updatePhotoCaptionAndPoints() {
+  console.log('update photo func is running')
   boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
     0,
@@ -590,30 +596,20 @@ function drawBackgroundImgs() {
     width,
     height
   );
-  updateInfo.innerText =
-    backgroundUrls[currentHiker.photos].description
-  
-  if (gameOver === false && needsPhotoUpdate === true) {
-    updatePhotoCaptionAndPoints()
-  }
-}
-
-function updatePhotoCaptionAndPoints(){
-  if (currentHiker.x === 620) {
-    currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos])
+    currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos]);
     updateInfo.innerText =
       backgroundUrls[currentHiker.photos].description +
       "\n" +
       backgroundUrls[currentHiker.photos].playerTurn;
-    currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
-    backgroundUrls.splice(backgroundImgs[currentHiker.photos], 1)
-    backgroundImgs.splice(backgroundImgs[currentHiker.photos], 1)
-    console.log(backgroundImgs)
-    console.log(backgroundUrls)
-    needsPhotoUpdate = false
+    currentHiker.victoryPoints +=3
+  // addRandomPoints()
+    // addCorrectPoints()
+    // currentHiker.victoryPoints += backgroundImgs[currentHiker.photos].points;
+    backgroundUrls.splice(backgroundImgs[currentHiker.photos], 1);
+    backgroundImgs.splice(backgroundImgs[currentHiker.photos], 1);
+    needsPhotoUpdate = false;
+    updateResourcesOnScreen()
   }
-}
-
 
 //done
 function moveHiker(event) {
@@ -639,7 +635,7 @@ function moveHiker(event) {
 
     if (currentHiker.x === 620) {
       currentHiker.photos++;
-      needsPhotoUpdate = true
+      needsPhotoUpdate = true;
       drawBackgroundImgs();
     }
     if (currentHiker.x === 620 || currentHiker.x === 60) {
@@ -674,7 +670,7 @@ function moveHiker(event) {
 
   if (currentHiker.x === 620) {
     currentHiker.photos++;
-    needsPhotoUpdate = true
+    needsPhotoUpdate = true;
     drawBackgroundImgs();
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
@@ -952,12 +948,12 @@ function runGame() {
 function endGame() {
   //trigger end game
 
+  gameOver = true;
   calculateScore();
   document.body.style.backgroundColor = "#E74B7F";
   stats.innerHTML = "";
   if (calculateScore() === hiker1) {
     console.log("hiker 1 wins");
-
     updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
     gameOver = true;
     console.log("game has ended, updating text");
@@ -967,12 +963,11 @@ function endGame() {
     console.log("game has ended, updating text");
     gameOver = true;
   } else {
-    console.log("either a tie or functionality issue");
     console.log(hiker1.victoryPoints);
     console.log(hiker2.victoryPoints);
     updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
     console.log("game has ended, updating text");
-    gameOver = true;
+
   }
 }
 

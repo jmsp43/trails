@@ -2,11 +2,6 @@
 
 A README.mdfile with explanations of the technologies used, the approach taken, a link to your live site, installation instructions, unsolved problems, etc.
 
-Stretch Goals (Not Mandatory):
-Recommended Features
-A way to reset the board and play again
-CSS to give your game a personal and fun style
-Responsive mobile design
 
 <!-- &nbsp; creates an empty line &ensp; creates two empty lines -->
 
@@ -46,18 +41,17 @@ Then came the difficult part: actually making my vision come to life. I knew tha
 
 <h2>Achievements</h2>
 
+- I was able to accomplish some stretch goals, mainly a way to reset the board and play again, 
+responsive design, and aesthtically pleasing CSS and color palette (courtesy of cooler.io color generator).
 
 
 
 
-
-
-<h2>Challenges</h2>
+<h2>Challenges/Unsolved Issues</h2>
 
 - loading the resource and background images. Lots of pathway issues and having to configure and reconfigure how to make them show up when I wanted them to and how i wanted them to.
 
-
-
+-Drawing Background images as if the players drew them as a card was much more challenging than expected. Despite days of trying, I was unable to make this feature fully functional.
 
 
 
