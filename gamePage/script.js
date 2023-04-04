@@ -38,7 +38,13 @@ let imgs = [];
 //   "./images/camera.png",
 // ];
 
-let imgUrls = [{name: 'stone', url: "./images/stone.png"}, {name:'leaf', url: './images/leaf.png'}, {name: 'acorn', url:   "./images/acorn.png"}, {name: 'dice', url:  "./images/dice.png" }, {name: 'camera', url: "./images/camera.png"}]
+let imgUrls = [
+  { name: "stone", url: "./images/stone.png" },
+  { name: "leaf", url: "./images/leaf.png" },
+  { name: "acorn", url: "./images/acorn.png" },
+  { name: "dice", url: "./images/dice.png" },
+  { name: "camera", url: "./images/camera.png" },
+];
 
 let dx = 140;
 let sunPosition = 0;
@@ -390,10 +396,10 @@ function loadImgs() {
   for (let i = 0; i < imgUrls.length; i++) {
     const img = new Image();
     img.src = imgUrls[i].url;
-    img.name = imgUrls[i].name
+    img.name = imgUrls[i].name;
     //will only run when the img loads
     img.onload = () => {
-      console.log(img.src)
+      console.log(img.src);
       imgs.push(img);
       count++;
       if (count >= imgUrls.length) {
@@ -409,15 +415,15 @@ function loadImgs() {
 function drawImgs() {
   let x = 100;
   for (let i = 0; i < imgs.length; i++) {
-    if (imgs[i].name === 'stone') {
+    if (imgs[i].name === "stone") {
       x = 40;
-    } else if (imgs[i].name === 'leaf') {
+    } else if (imgs[i].name === "leaf") {
       x = 180;
-    } else if (imgs[i].name === 'acorn') {
+    } else if (imgs[i].name === "acorn") {
       x = 320;
-    } else if (imgs[i].name === 'dice') {
+    } else if (imgs[i].name === "dice") {
       x = 460;
-    } else if (imgs[i].name === 'camera') {
+    } else if (imgs[i].name === "camera") {
       x = 600;
     }
     boardContext.drawImage(imgs[i], x, 400, 70, 70);
@@ -654,6 +660,7 @@ function moveHiker(event) {
   if (currentHiker.isComputer === true) {
     compTurnFinished = true;
   }
+  //calculateScore()
 }
 
 // not done but good enough for today
@@ -683,6 +690,9 @@ function moveSun() {
     sunPosition++;
     sunX -= 140;
     clearBoard();
+  }
+  if (sunPosition >= 10) {
+    endGame()
   }
 }
 
@@ -882,17 +892,18 @@ function payForBadge() {
 
 //not done
 function calculateScore() {
-  if (sunPosition === 9) {
     if (hiker1.points > hiker2.points) {
-      console.log("Hiker 1 wins!");
+      //console.log(hiker1)
+      return hiker1;
     } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
-      console.log("Hiker 2 wins!");
+      //console.log(hiker2)
+      return hiker2;
     } else {
       console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
       console.log("either it is a tie or an error");
     }
   }
-}
+
 
 //not done
 function runGame() {
@@ -906,6 +917,19 @@ function runGame() {
   loadImgs();
 
   //calculateScore();
+}
+
+function endGame() {
+  //trigger end game
+  clearBoard();
+  calculateScore();
+  if (calculateScore() === hiker1) {
+    updateInfo.innerHTML = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+  } else if (calculateScore() === hiker2) {
+    updateInfo.innerHTML = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+  } else {
+    updateInfo.innerHTML = `It's either a tie or a functionality issue. Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+  }
 }
 
 ///////////////////////////////////////////////

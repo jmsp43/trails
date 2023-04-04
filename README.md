@@ -84,6 +84,7 @@ Then came the difficult part: actually making my vision come to life. I knew tha
 
 <h2>Challenges</h2>
 
+- loading the resource and background images. Lots of pathway issues and having to configure and reconfigure how to make them show up when I wanted them to and how i wanted them to.
 
 
 
@@ -94,4 +95,4 @@ Then came the difficult part: actually making my vision come to life. I knew tha
 
 - Adding a function that computerizes a player so someone can play by themselves without being both hikers.
 
--
+- Adding ability of players to pick which badge they want to earn on that turn (giving them the opportunity to save up resources for a specific badge)
