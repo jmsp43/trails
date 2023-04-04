@@ -66,6 +66,7 @@ class Hiker {
     this.color = color;
     this.resources = [{ acorns: 1 }, { stones: 1 }, { leaves: 1 }];
     this.photos = 0;
+    this.photoCollection = [];
     this.victoryPoints = 0;
     this.badgesInHand = [];
     this.badgesEarned = [];
@@ -549,6 +550,9 @@ function drawHiker(hiker) {
 //       updateInfo.innerText = backgroundUrls[0].description;
 // }
 
+let usedImgs = []
+let needsPhotoUpdate = false
+
 // not done at all
 function drawBackgroundImgs() {
   //try:
@@ -578,48 +582,6 @@ function drawBackgroundImgs() {
   //     backgroundUrls.splice(i, 1);
   //   }
 
-  for (let i = 0; i < backgroundUrls.length; i++) {
-    if (backgroundUrls[i].name === "yosemite") {
-      console.log("yosemite")
-      break;
-    } else if (backgroundUrls[i].name === "caddo lake") {
-      console.log("caddo lake pic");
-      break;
-    } else if (backgroundUrls[i].name === "cathedral gorge") {
-      console.log("cathedral gorge pic");
-      break
-    } else if (backgroundUrls[i].name === "dead horse point") {
-      console.log("dead horse point pic");
-      break
-    } else if (backgroundUrls[i].name === "eldorado") {
-      console.log("eldorado pic");
-      break
-    } else if (backgroundUrls[i].name === "emerald bay") {
-      console.log("emerald bay pic");
-      break
-    } else if (backgroundUrls[i].name === "iao valley") {
-      console.log("iao valley pic");
-      break
-    } else if (backgroundUrls[i].name === "kachemak bay") {
-      console.log("kachemak bay pic");
-      break
-    } else if (backgroundUrls[i].name === "letchworth") {
-      console.log("letchworth pic");
-      break
-    } else if (backgroundUrls[i].name === "palo duro") {
-      console.log("palo duro pic");
-      break
-    } else if (backgroundUrls[i].name === "smok mountains") {
-      console.log("smoky mountains pic");
-      break
-    } else if (backgroundUrls[i].name === "watkins glen") {
-      console.log("watkins glen pic");
-      break
-    } else if (backgroundUrls[i].name === "acadia") {
-      console.log("acadia pic");
-      break
-    }
-  }
 
   boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
@@ -628,20 +590,30 @@ function drawBackgroundImgs() {
     width,
     height
   );
-  if (gameOver === false) {
-    console.log("drawing imgs and updating text");
-    if (backgroundUrls[0]) {
-      updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
-    } else {
-      updateInfo.innerText =
-        backgroundUrls[currentHiker.photos].description +
-        "\n" +
-        backgroundUrls[currentHiker.photos].playerTurn;
-      currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
-      console.log(currentHiker.victoryPoints)
-    }
+  updateInfo.innerText =
+    backgroundUrls[currentHiker.photos].description
+  
+  if (gameOver === false && needsPhotoUpdate === true) {
+    updatePhotoCaptionAndPoints()
   }
 }
+
+function updatePhotoCaptionAndPoints(){
+  if (currentHiker.x === 620) {
+    currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos])
+    updateInfo.innerText =
+      backgroundUrls[currentHiker.photos].description +
+      "\n" +
+      backgroundUrls[currentHiker.photos].playerTurn;
+    currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
+    backgroundUrls.splice(backgroundImgs[currentHiker.photos], 1)
+    backgroundImgs.splice(backgroundImgs[currentHiker.photos], 1)
+    console.log(backgroundImgs)
+    console.log(backgroundUrls)
+    needsPhotoUpdate = false
+  }
+}
+
 
 //done
 function moveHiker(event) {
@@ -667,6 +639,7 @@ function moveHiker(event) {
 
     if (currentHiker.x === 620) {
       currentHiker.photos++;
+      needsPhotoUpdate = true
       drawBackgroundImgs();
     }
     if (currentHiker.x === 620 || currentHiker.x === 60) {
@@ -701,6 +674,7 @@ function moveHiker(event) {
 
   if (currentHiker.x === 620) {
     currentHiker.photos++;
+    needsPhotoUpdate = true
     drawBackgroundImgs();
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
@@ -711,7 +685,6 @@ function moveHiker(event) {
   stats.innerHTML = "";
   stats.style.display = "block";
   updateResourcesOnScreen();
-  console.log(sunPosition);
   if (currentHiker.isComputer === true) {
     compTurnFinished = true;
   }
@@ -769,6 +742,7 @@ function clearBoard() {
   //redraw everything
   //clearRect deletes while fill rect only draws
   boardContext.clearRect(0, 0, width, height);
+  // needsPhotoUpdate = false
   drawBackgroundImgs();
   for (let i = 0; i < width; i += width / 5) {
     draw(i, 75, i, width);
