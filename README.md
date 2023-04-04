@@ -37,11 +37,12 @@ Recommended Features
 A way to reset the board and play again
 CSS to give your game a personal and fun style
 Responsive mobile design
+<!-- 
 
-
-
+<ins></ins> underlines. &nbsp; creates an empty line &ensp; creates two empty lines -->
 
 //thank you to imani for general support
+//thank you to ashley, joshua, amari, and yonas for help with bug fixes and general tips!
 
 <h1>Play Here!<h1>
 https://jmsp43.github.io/trails/

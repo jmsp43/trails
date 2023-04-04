@@ -919,6 +919,7 @@ function endGame() {
 
   calculateScore();
   document.body.style.backgroundColor = '#E74B7F'
+  stats.innerHTML = "";
   if (calculateScore() === hiker1) {
     console.log('hiker 1 wins')
 
