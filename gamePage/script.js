@@ -527,11 +527,13 @@ function drawHiker(hiker) {
 //       updateInfo.innerText = backgroundUrls[0].description;
 // }
 
-// not done
+// not done at all
+function drawBackgroundImgs() {
+
 //try:
 // switch case each photo and break
 //if condition is met
-function drawBackgroundImgs() {
+
   //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
 
   //   //   //before game start
@@ -647,7 +649,7 @@ function moveHiker(event) {
   }
 }
 
-// not done but good enough for today
+//done
 function updateResourcesOnScreen() {
   currentResources.style.border = "red";
   let acorns = currentHiker.resources[0].acorns;
@@ -675,7 +677,7 @@ function moveSun() {
     sunX -= 140;
     clearBoard();
   }
-  if (sunPosition >= 10) {
+  if (sunPosition > 9) {
     endGame()
   }
 }
@@ -709,7 +711,7 @@ function clearBoard() {
   drawImgs();
 }
 
-//think this is done
+//done
 function gainResources() {
   if (currentHiker.x == 60) {
     currentHiker.resources[1].stones++;
@@ -725,7 +727,7 @@ function gainResources() {
   }
 }
 
-//think this is done
+//done
 function getBadgeCard() {
   if (
     currentHiker.x === 620 ||
@@ -742,6 +744,7 @@ function getBadgeCard() {
   }
 }
 
+//done
 function updateBadges() {
   if (currentHiker.badgesInHand.length > 0) {
     for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
@@ -798,6 +801,7 @@ function updateBadges() {
   }
 }
 
+//done
 function payForBadge() {
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
@@ -876,20 +880,21 @@ function payForBadge() {
 
 //not done
 function calculateScore() {
-    if (hiker1.points > hiker2.points) {
-      //console.log(hiker1)
+    if (hiker1.victoryPoints > hiker2.victoryPoints) {
+      console.log(hiker1)
       return hiker1;
     } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
-      //console.log(hiker2)
+      console.log(hiker2)
       return hiker2;
     } else {
+      console.log(hiker1.victoryPoints > hiker2.victoryPoints)
+      //prints true if hiker1 should have won
       console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
-      console.log("either it is a tie or an error");
+      console.log("tie or error");
     }
-  }
+}
 
-
-//not done
+//done
 function runGame() {
   //creating 5 sections on board with line drawings
   for (let i = 0; i < width; i += width / 5) {
@@ -901,17 +906,24 @@ function runGame() {
   loadImgs();
 }
 
+//done
 function endGame() {
   //trigger end game
-  clearBoard();
   calculateScore();
+  document.body.style.backgroundColor = '#E74B7F'
   if (calculateScore() === hiker1) {
-    updateInfo.innerHTML = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    console.log('hiker 1 wins')
+    updateInfo.textContent = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
   } else if (calculateScore() === hiker2) {
-    updateInfo.innerHTML = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    console.log('hiker 2 wins')
+    updateInfo.textContent = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
   } else {
-    updateInfo.innerHTML = `It's either a tie or a functionality issue. Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+    console.log('either a tie or functionality issue')
+    console.log(hiker1.victoryPoints)
+    console.log(hiker2.victoryPoints)
+    updateInfo.textContent = `It's either a tie or a functionality issue. Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
   }
+  //textContent works, innerHTML did not display. Was referencing the entire div
 }
 
 ///////////////////////////////////////////////
@@ -975,7 +987,6 @@ finishTurnBtn.addEventListener("click", function (event) {
   badgeInHandList.innerHTML = "";
   badgesEarnedList.innerHTML = "";
   stats.innerHTML = "";
-  //calculateScore();
   badgeListBtn.style.display = "block";
   badgesInHandBox.style.display = "none";
   badgesEarnedBox.style.display = "none";
