@@ -913,17 +913,16 @@ function endGame() {
   document.body.style.backgroundColor = '#E74B7F'
   if (calculateScore() === hiker1) {
     console.log('hiker 1 wins')
-    updateInfo.textContent = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    updateInfo.innerHTML = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
   } else if (calculateScore() === hiker2) {
     console.log('hiker 2 wins')
-    updateInfo.textContent = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    updateInfo.innerHTML = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
   } else {
     console.log('either a tie or functionality issue')
     console.log(hiker1.victoryPoints)
     console.log(hiker2.victoryPoints)
-    updateInfo.textContent = `It's either a tie or a functionality issue. Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+    updateInfo.innerHTML = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
   }
-  //textContent works, innerHTML did not display. Was referencing the entire div
 }
 
 ///////////////////////////////////////////////
