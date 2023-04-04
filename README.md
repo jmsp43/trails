@@ -5,6 +5,7 @@ Built with HTML, CSS and JavaScript (must be visual and use the DOM not the Cons
 Hosted on Github pages
 Commits to Github every day
 A README.mdfile with explanations of the technologies used, the approach taken, a link to your live site, installation instructions, unsolved problems, etc. Here is a great guide on how to write a readme
+
 If you build a story:
 Must have two Classes and one instance of each class
 
@@ -42,8 +43,12 @@ Responsive mobile design
 
 //thank you to imani for general support
 
+<h1>Play Here!<h1>
+https://jmsp43.github.io/trails/
 
-A summary of your project. (and any info about your game, if applicable)
+<h2>Summary and Info about Trials</h2>
+
+
 
 
 Welcome to my first full project for Per Scholas. It is based on a cute, portable, physical board game called Trails by KeyMaster Games (see here: https://keymastergames.com/products/trails), based on a larger KeyMaster game called Parks (https://keymastergames.com/products/parks). The aim of the game is to inspire folks to get out and enjoy the natural splendor of our fanastic national and state parks.
@@ -51,7 +56,7 @@ Welcome to my first full project for Per Scholas. It is based on a cute, portabl
 I chose to make a digitally reimagined Trails as my project because I love playing the phyical version and wanted to test my newly acquired Javascript Canvas skills by recreating it in code. Playing interesting and niche board games is big part of my free time, and I wanted to bring the magic that I feel when playing them to the screen for others to enjoy. 
 
 
-How to play your game.
+<h2>How to Play</h2>
 
 As described on my landing page (that my classmate Drew Scott gave me the excellent idea of having in the first place!), two players are hiking along a park trail, collecting resources, photos (from Unsplash.com), and badges along the way, all the while increasing their victory points. The hiker with the most points when the sun returns to its original position at the trail head (the first game tile) wins!
 
@@ -60,13 +65,33 @@ To move along the game board, players use the left and right arrow keys, and to 
 Each photo is accompanied by a caption that is automatically updated in the DOM, featuring a fun fact or two about the location pictured (thanks to Wikipedia for the free, public information about these gorgeous parks!). All locales in the game are State or National Parks in the US, and building this game further inspired me to plan future trips to these awe-inspiring sites (though I have been lucky enough to visit Letchworth State Park and Great Smoky Mountains National Park so far!)
 
 
-What Technologies you used (in this case HTML, CSS, and JavaScript).
-How you built your game (a few paragraphs about your code)
+<h2>Technologies & How I Built My Game</h2>
 
+<h4>HTML, HTML Canvas, CSS, JavaScript, JS Context API</h4>
 
-Building this digitally reimagined Trails was daunting because it is my first project using the Canvas API, which according the MDN "provides a means for drawing graphics" via JavaScript and the canvas element in your HTML file. I started by getting the bare-bones of the site written in my HTML and CSS files, deciding what absolutely needed to visually be there (like the title, the canvas itself, a start button, etc.) Then, I pseudocoded in my script file the most important base functionality of the game (for example, moving the hiker tokens, the sun moving along with them, and hikers being able to collect and earn badges).
+Building this digitally reimagined Trails was daunting because it is my first project using HTML Canvas and the Context API, which according to MDN "provides a means for drawing graphics" via JavaScript and the canvas element in your HTML file. I started by getting the bare-bones of the site written in my HTML and CSS files, deciding what absolutely needed to visually be there (like the title, the canvas itself, a start button, etc.) Then, I pseudocoded in my script file the most important base functionality of the game (for example, moving the hiker tokens, the sun moving along with them, and hikers being able to collect and earn badges).
 
 Then came the difficult part: actually making my vision come to life. I knew that I wanted my hikers to move seamlessly onscreen (appear in the next place and disappear in the previous) and to load my resource images to the bottom of the canvas screen (to set them each in their own tile to represent what a hiker gets by landing there) but implementing those were harder than expected. With the help of my Assistant Instructor Kasper (and new Assistant Instructor Dylan), I was able to come to the conclusion of needing a function that clears the board and redraws everything, every time a hiker moves, or recieves a new photo (i.e., a new background image is drawn). 
 
 
+<h2>Achievements</h2>
 
+
+
+
+
+
+
+<h2>Challenges</h2>
+
+
+
+
+
+
+
+<h2>Future Features</h2>
+
+- Adding a function that computerizes a player so someone can play by themselves without being both hikers.
+
+-

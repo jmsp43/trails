@@ -31,9 +31,9 @@ board.height = height;
 let areImgsLoaded = false;
 let imgs = [];
 let imgUrls = [
-  "./images/acorn.png",
   "./images/stone.png",
   "./images/leaf.png",
+  "./images/acorn.png",
   "./images/dice.png",
   "./images/camera.png",
 ];
@@ -47,7 +47,6 @@ let sunX = 70;
 let backgroundImgsLoaded = false;
 let compTurnFinished = false;
 let currentResources = document.createElement("div");
-
 
 badgeInHandList.style.display = "none";
 badgesEarnedList.style.display = "none";
@@ -370,13 +369,13 @@ function loadBackgroundImgs() {
       backgroundImgs.push(img);
       count++;
       if (count >= backgroundUrls.length) {
-          backgroundImgsLoaded = true;
+        backgroundImgsLoaded = true;
         //   if (backgroundUrls[0]) {
         //       drawStartingBackground()
         //   } else {
         //       drawBackgroundImgs();
         //   }
-          drawBackgroundImgs()
+        drawBackgroundImgs();
       }
     };
   }
@@ -404,25 +403,17 @@ function loadImgs() {
 
 //done
 function drawImgs() {
-  let x;
+  let x = 100;
   for (let i = 0; i < imgs.length; i++) {
-    if (imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/stone.png") {
+    if (i === 0) {
       x = 40;
-    } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/leaf.png"
-    ) {
+    } else if (i === 1) {
       x = 180;
-    } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/acorn.png"
-    ) {
+    } else if (i === 2) {
       x = 320;
-    } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/dice.png"
-    ) {
+    } else if (i === 3) {
       x = 460;
-    } else if (
-      imgs[i].src === "http://127.0.0.1:5500/Week6/trails/gamePage/images/camera.png"
-    ) {
+    } else if (i=== 4) {
       x = 600;
     }
     boardContext.drawImage(imgs[i], x, 400, 70, 70);
@@ -472,7 +463,7 @@ function rollDice() {
     diceResults.innerHTML = "You get a photo!";
     currentHiker.photos++;
     clearBoard();
-    drawBackgroundImgs()
+    drawBackgroundImgs();
     // return;
   } else if (diceNum === 5) {
     diceResults.innerHTML = "You get a badge card!";
@@ -514,9 +505,9 @@ function rollDice() {
       diceResults.appendChild(bearResults);
       bearResults.innerHTML =
         "It was a friendly bear, you even got a photo out of it!";
-        currentHiker.photos++;
-        clearBoard()
-    //   drawBackgroundImgs();
+      currentHiker.photos++;
+      clearBoard();
+      //   drawBackgroundImgs();
     }
   }
   return;
@@ -538,49 +529,49 @@ function drawHiker(hiker) {
 
 // not done
 //try:
-// switch case each photo and break 
+// switch case each photo and break
 //if condition is met
 function drawBackgroundImgs() {
   //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
 
-//   //   //before game start
-//     boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
-//     updateInfo.innerText = backgroundUrls[0].description;
+  //   //   //before game start
+  //     boardContext.drawImage(backgroundImgs[0], 0, 0, width, height);
+  //     updateInfo.innerText = backgroundUrls[0].description;
 
   //on start game
-//   let usedPhotoUrls = [];
-//   for (let i = 1; i < backgroundUrls.length; i++) {
-//     boardContext.drawImage(backgroundImgs[i], 0, 0, width, height);
+  //   let usedPhotoUrls = [];
+  //   for (let i = 1; i < backgroundUrls.length; i++) {
+  //     boardContext.drawImage(backgroundImgs[i], 0, 0, width, height);
 
-//       //i know i need to put a break somewhere to stop this loop but struggling on the logic for where
-      
-//     updateInfo.innerText =
-//       backgroundUrls[i].description + "\n" + backgroundUrls[i].playerTurn;
+  //       //i know i need to put a break somewhere to stop this loop but struggling on the logic for where
 
-//     currentHiker.victoryPoints += backgroundUrls[i].points;
+  //     updateInfo.innerText =
+  //       backgroundUrls[i].description + "\n" + backgroundUrls[i].playerTurn;
 
-//     usedPhotoUrls.push(backgroundUrls[i]);
+  //     currentHiker.victoryPoints += backgroundUrls[i].points;
 
-//     backgroundUrls.splice(i, 1);
-//   }
+  //     usedPhotoUrls.push(backgroundUrls[i]);
 
-    boardContext.drawImage(
-      backgroundImgs[currentHiker.photos],
-      0,
-      0,
-      width,
-      height
-    );
+  //     backgroundUrls.splice(i, 1);
+  //   }
 
-    if (backgroundUrls[0]) {
-      updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
-    } else {
-      updateInfo.innerText =
-        backgroundUrls[currentHiker.photos].description +
-        "\n" +
-          backgroundUrls[currentHiker.photos].playerTurn;
-        currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points
-    }
+  boardContext.drawImage(
+    backgroundImgs[currentHiker.photos],
+    0,
+    0,
+    width,
+    height
+  );
+
+  if (backgroundUrls[0]) {
+    updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+  } else {
+    updateInfo.innerText =
+      backgroundUrls[currentHiker.photos].description +
+      "\n" +
+      backgroundUrls[currentHiker.photos].playerTurn;
+    currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
+  }
 }
 
 //not done
@@ -596,15 +587,15 @@ function moveHiker(event) {
 
   //wrap entire following in an if and call moveSun if thats true
   if (currentHiker.canteenActivated === true) {
-    console.log('canteen activated')
-    if (keyPressed === 'ArrowLeft') {
+    console.log("canteen activated");
+    if (keyPressed === "ArrowLeft") {
       //&& goingRight === false
       dx = -140 * extraSteps;
       currentHiker.x += dx;
       clearBoard();
       drawHiker(currentHiker);
     }
-    if (keyPressed === 'ArrowRight') {
+    if (keyPressed === "ArrowRight") {
       //&& goingLeft === false
       dx = 140 * extraSteps;
       currentHiker.x += dx;
@@ -623,7 +614,7 @@ function moveHiker(event) {
     stats.innerHTML = "";
     stats.style.display = "block";
     updateResourcesOnScreen();
-    console.log(sunPosition)
+    console.log(sunPosition);
     if (currentHiker.isComputer === true) {
       compTurnFinished = true;
     }
@@ -655,16 +646,14 @@ function moveHiker(event) {
   stats.innerHTML = "";
   stats.style.display = "block";
   updateResourcesOnScreen();
-  console.log(sunPosition)
+  console.log(sunPosition);
   if (currentHiker.isComputer === true) {
     compTurnFinished = true;
   }
 }
 
-
 // not done but good enough for today
 function updateResourcesOnScreen() {
-
   currentResources.style.border = "red";
   let acorns = currentHiker.resources[0].acorns;
   let stones = currentHiker.resources[1].stones;
@@ -676,7 +665,6 @@ function updateResourcesOnScreen() {
         Points: ${currentHiker.victoryPoints}`;
   stats.appendChild(currentResources);
 }
-
 
 //done
 function moveSun() {
@@ -731,8 +719,8 @@ function gainResources() {
     currentHiker.resources[2].leaves++;
   } else if (currentHiker.x == 340) {
     currentHiker.resources[0].acorns++;
-//   } else if (currentHiker.x == 480) {
-//     console.log("user rolls dice at bear spot");
+    //   } else if (currentHiker.x == 480) {
+    //     console.log("user rolls dice at bear spot");
   } else if (currentHiker.x == 620) {
     currentHiker.photos++;
     clearBoard();
@@ -948,12 +936,12 @@ document.addEventListener("keydown", function (event) {
 //not done
 earnBadgeBtn.addEventListener("click", function (event) {
   event.preventDefault();
-    payForBadge();
-    badgeInHandList.innerHTML = ''
-    badgesEarnedList.innerHTML = ''
-    updateBadges()
-    currentResources.innerHTML = ''
-    updateResourcesOnScreen()
+  payForBadge();
+  badgeInHandList.innerHTML = "";
+  badgesEarnedList.innerHTML = "";
+  updateBadges();
+  currentResources.innerHTML = "";
+  updateResourcesOnScreen();
 });
 
 //done
