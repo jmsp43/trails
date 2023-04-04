@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////
 ///////////////Global Variables/////////////////
 ///////////////////////////////////////////////
-let gameOver = false
+let gameOver = false;
 
 const board = document.querySelector("#gameCanvas");
 const startBtn = document.querySelector("#startBtn");
@@ -280,72 +280,84 @@ badgeDeck = badgeDeck.concat(acornBadgeDeck, stoneBadgeDeck, leafBadgeDeck);
 let backgroundImgs = [];
 let backgroundUrls = [
   {
+    name: "yosemite",
     url: "../parks/yosemite.jpg",
     points: 0,
     description:
       "Welcome to Trails: The Digital Reimagining. Every photo in gameplay is of a US State or National Park (including this one! Yosemite National Park in California).\nUse your left and right arrow keys. Hike the trail until the sun returns to its origin position.\nClick Start button to begin playing",
   },
   {
+    name: "caddo lake",
     url: "../parks/caddoLake.jpg",
     points: 2,
     description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas. This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "cathedral gorge",
     url: "../parks/cathedralGorge.jpg",
     points: 2,
     description: `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires. This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "dead horse point",
     url: "../parks/deadHorsePoint.jpg",
     points: 2,
     description: `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "eldorado",
     url: "../parks/eldorado.jpg",
     points: 3,
     description: `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "smoky mountains",
     url: "../parks/smokyMountains.jpg",
     points: 5,
     description: `It's no surprise that the Great Smoky Mountains are the most visited National Park in the US, with it's fresh "smoky" air (which is actually created by the millions of plants giving off organic compounds that create a blueish vapor!) and FREE entry. This photo is worth 5 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "iao valley",
     url: "../parks/iaoValley.jpg",
     points: 4,
     description: `Iao Valley is a lush, stream-cut valley in West Maui, Hawaii, located in dense rainforest with an extinct volcano as it's peak. In 1972, this island oasis was designated a National Natural Landmark, and as such this photo is worth 4 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "kachemak bay",
     url: "../parks/kachemakBay.jpg",
     points: 3,
     description: `Kachemak Bay State Park is a whopping 400,000 acres and the only designated state park in Alaska. With no road access, albeit it is a harder visit than most, but the incredible biodiversity of this critical habitat area makes up for the hard journey. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "palo duro",
     url: "../parks/paloDuro.jpg",
     points: 3,
     description: `As the second largest canyon system in the United States, Palo Duro is 120 miles long with a maximum width of 20 miles. Pictured here is a particularly famous rock formation lovingly referred to as The Lighthouse. This photo is worth 3 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "letchworth",
     url: "../parks/letchworth.jpg",
     points: 2,
     description: `Located in Western New York State 60 miles south of Buffalo is the hidden treasure of Letchworth State Park, known for it's 3 large waterfalls that flow into a deep gorge beneath that winds through the park. It's no wonder this place is called the Grand Canyon of the East! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "watkins glen",
     url: "../parks/watkinsGlen.jpg",
     points: 2,
     description: `In the Finger Lakes region of New York State hides the geological and historical wonder that is Watkins Glen State Park. Cut through by a glacier in the last ice age, this very narrow gorge is even climbable from May to November! This photo is worth 2 points!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
+    name: "acadia",
     url: "../parks/acadia.avif",
     points: 4,
     description: `Along Maine's beautiful coast lies Acadia National Park, housing the highest mountains on the Atlantic coast, cobble beaches, granite domes, and more. Acadia boasts rich bioversity, crisp air and water, and abundance human history dating back to over 10,000 years ago with the Wabanaki people. This photo is worth 4 points!`,
@@ -364,9 +376,11 @@ function loadBackgroundImgs() {
   for (let i = 0; i < backgroundUrls.length; i++) {
     const img = new Image();
     img.src = backgroundUrls[i].url;
+    img.place = backgroundUrls[i].name;
     //will only run when the img loads
+    backgroundImgs.push(img);
     img.onload = () => {
-      backgroundImgs.push(img);
+
       count++;
       if (count >= backgroundUrls.length) {
         backgroundImgsLoaded = true;
@@ -388,7 +402,7 @@ function loadImgs() {
   for (let i = 0; i < imgUrls.length; i++) {
     const img = new Image();
     img.src = imgUrls[i].url;
-    img.name = imgUrls[i].name;
+    img.icon = imgUrls[i].name;
     //will only run when the img loads
     img.onload = () => {
       console.log(img.src);
@@ -407,15 +421,15 @@ function loadImgs() {
 function drawImgs() {
   let x = 100;
   for (let i = 0; i < imgs.length; i++) {
-    if (imgs[i].name === "stone") {
+    if (imgs[i].icon === "stone") {
       x = 40;
-    } else if (imgs[i].name === "leaf") {
+    } else if (imgs[i].icon === "leaf") {
       x = 180;
-    } else if (imgs[i].name === "acorn") {
+    } else if (imgs[i].icon === "acorn") {
       x = 320;
-    } else if (imgs[i].name === "dice") {
+    } else if (imgs[i].icon === "dice") {
       x = 460;
-    } else if (imgs[i].name === "camera") {
+    } else if (imgs[i].icon === "camera") {
       x = 600;
     }
     boardContext.drawImage(imgs[i], x, 400, 70, 70);
@@ -515,6 +529,12 @@ function rollDice() {
   return;
 }
 
+// console.log(backgroundImgs[0]);
+// let yosemiteObj = backgroundImgs.find((img) => img.place === "yosemite");
+// // let yosemiteIndex = backgroundImgs.findIndex(yosemiteObj)
+// console.log(yosemiteObj);
+// console.log(yosemiteIndex)
+
 //done
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
@@ -531,10 +551,9 @@ function drawHiker(hiker) {
 
 // not done at all
 function drawBackgroundImgs() {
-
-//try:
-// switch case each photo and break
-//if condition is met
+  //try:
+  // switch case each photo and break
+  //if condition is met
 
   //don't want to use a for loop bc i don't want to loop through entire array at once, i just want to loop through until finding a photo that has not been used yet.
 
@@ -559,7 +578,50 @@ function drawBackgroundImgs() {
   //     backgroundUrls.splice(i, 1);
   //   }
 
-      boardContext.drawImage(
+  for (let i = 0; i < backgroundUrls.length; i++) {
+    if (backgroundUrls[i].name === "yosemite") {
+      console.log("yosemite")
+      break;
+    } else if (backgroundUrls[i].name === "caddo lake") {
+      console.log("caddo lake pic");
+      break;
+    } else if (backgroundUrls[i].name === "cathedral gorge") {
+      console.log("cathedral gorge pic");
+      break
+    } else if (backgroundUrls[i].name === "dead horse point") {
+      console.log("dead horse point pic");
+      break
+    } else if (backgroundUrls[i].name === "eldorado") {
+      console.log("eldorado pic");
+      break
+    } else if (backgroundUrls[i].name === "emerald bay") {
+      console.log("emerald bay pic");
+      break
+    } else if (backgroundUrls[i].name === "iao valley") {
+      console.log("iao valley pic");
+      break
+    } else if (backgroundUrls[i].name === "kachemak bay") {
+      console.log("kachemak bay pic");
+      break
+    } else if (backgroundUrls[i].name === "letchworth") {
+      console.log("letchworth pic");
+      break
+    } else if (backgroundUrls[i].name === "palo duro") {
+      console.log("palo duro pic");
+      break
+    } else if (backgroundUrls[i].name === "smok mountains") {
+      console.log("smoky mountains pic");
+      break
+    } else if (backgroundUrls[i].name === "watkins glen") {
+      console.log("watkins glen pic");
+      break
+    } else if (backgroundUrls[i].name === "acadia") {
+      console.log("acadia pic");
+      break
+    }
+  }
+
+  boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
     0,
     0,
@@ -567,20 +629,19 @@ function drawBackgroundImgs() {
     height
   );
   if (gameOver === false) {
-  console.log('drawing imgs and updating text')
-  if (backgroundUrls[0]) {
-    updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
-  } else {
-    updateInfo.innerText =
-      backgroundUrls[currentHiker.photos].description +
-      "\n" +
-      backgroundUrls[currentHiker.photos].playerTurn;
-    currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
+    console.log("drawing imgs and updating text");
+    if (backgroundUrls[0]) {
+      updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+    } else {
+      updateInfo.innerText =
+        backgroundUrls[currentHiker.photos].description +
+        "\n" +
+        backgroundUrls[currentHiker.photos].playerTurn;
+      currentHiker.victoryPoints += backgroundUrls[currentHiker.photos].points;
+      console.log(currentHiker.victoryPoints)
+    }
   }
 }
-
-}
-
 
 //done
 function moveHiker(event) {
@@ -685,7 +746,7 @@ function moveSun() {
     clearBoard();
   }
   if (sunPosition > 9) {
-    endGame()
+    endGame();
   }
 }
 
@@ -887,18 +948,18 @@ function payForBadge() {
 
 //not done
 function calculateScore() {
-    if (hiker1.victoryPoints > hiker2.victoryPoints) {
-      console.log(hiker1)
-      return hiker1;
-    } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
-      console.log(hiker2)
-      return hiker2;
-    } else {
-      console.log(hiker1.victoryPoints > hiker2.victoryPoints)
-      //prints true if hiker1 should have won
-      console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
-      console.log("tie or error");
-    }
+  if (hiker1.victoryPoints > hiker2.victoryPoints) {
+    console.log(hiker1);
+    return hiker1;
+  } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
+    console.log(hiker2);
+    return hiker2;
+  } else {
+    console.log(hiker1.victoryPoints > hiker2.victoryPoints);
+    //prints true if hiker1 should have won
+    console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
+    console.log("tie or error");
+  }
 }
 
 //done
@@ -918,26 +979,26 @@ function endGame() {
   //trigger end game
 
   calculateScore();
-  document.body.style.backgroundColor = '#E74B7F'
+  document.body.style.backgroundColor = "#E74B7F";
   stats.innerHTML = "";
   if (calculateScore() === hiker1) {
-    console.log('hiker 1 wins')
+    console.log("hiker 1 wins");
 
     updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
-      gameOver = true
-    console.log('game has ended, updating text')
+    gameOver = true;
+    console.log("game has ended, updating text");
   } else if (calculateScore() === hiker2) {
-    console.log('hiker 2 wins')
+    console.log("hiker 2 wins");
     updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
-    console.log('game has ended, updating text')
-      gameOver = true
+    console.log("game has ended, updating text");
+    gameOver = true;
   } else {
-    console.log('either a tie or functionality issue')
-    console.log(hiker1.victoryPoints)
-    console.log(hiker2.victoryPoints)
-    updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`
-    console.log('game has ended, updating text');
-    gameOver = true
+    console.log("either a tie or functionality issue");
+    console.log(hiker1.victoryPoints);
+    console.log(hiker2.victoryPoints);
+    updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+    console.log("game has ended, updating text");
+    gameOver = true;
   }
 }
 
@@ -961,8 +1022,8 @@ rollBtn.addEventListener("click", function (event) {
 //done
 canteenBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  currentHiker.canteenActivated = true
-  console.log(currentHiker.canteenActivated)
+  currentHiker.canteenActivated = true;
+  console.log(currentHiker.canteenActivated);
 });
 
 //done
