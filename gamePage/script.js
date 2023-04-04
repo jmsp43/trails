@@ -26,18 +26,8 @@ const height = 500;
 board.width = width;
 board.height = height;
 
-//boardContext.imageSmoothingEnabled = false
-
 let areImgsLoaded = false;
 let imgs = [];
-// let imgUrls = [
-//   "./images/stone.png",
-//   "./images/leaf.png",
-//   "./images/acorn.png",
-//   "./images/dice.png",
-//   "./images/camera.png",
-// ];
-
 let imgUrls = [
   { name: "stone", url: "./images/stone.png" },
   { name: "leaf", url: "./images/leaf.png" },
@@ -584,12 +574,6 @@ function drawBackgroundImgs() {
   }
 }
 
-//not done
-function activateCanteen() {
-  currentHiker.canteenActivated === true;
-  extraSteps = 2;
-  //setting this to 2 for now
-}
 
 //done
 function moveHiker(event) {
@@ -600,14 +584,14 @@ function moveHiker(event) {
     console.log("canteen activated");
     if (keyPressed === "ArrowLeft") {
       //&& goingRight === false
-      dx = -140 * extraSteps;
+      dx = -280;
       currentHiker.x += dx;
       clearBoard();
       drawHiker(currentHiker);
     }
     if (keyPressed === "ArrowRight") {
       //&& goingLeft === false
-      dx = 140 * extraSteps;
+      dx = 280;
       currentHiker.x += dx;
       clearBoard();
       drawHiker(currentHiker);
@@ -628,6 +612,7 @@ function moveHiker(event) {
     if (currentHiker.isComputer === true) {
       compTurnFinished = true;
     }
+    currentHiker.canteenActivated = false;
     return;
   }
   if (keyPressed === "ArrowLeft") {
@@ -660,7 +645,6 @@ function moveHiker(event) {
   if (currentHiker.isComputer === true) {
     compTurnFinished = true;
   }
-  //calculateScore()
 }
 
 // not done but good enough for today
@@ -915,8 +899,6 @@ function runGame() {
   drawHiker(hiker2);
   drawSun();
   loadImgs();
-
-  //calculateScore();
 }
 
 function endGame() {
@@ -952,7 +934,8 @@ rollBtn.addEventListener("click", function (event) {
 //done
 canteenBtn.addEventListener("click", function (event) {
   event.preventDefault();
-  activateCanteen();
+  currentHiker.canteenActivated = true
+  console.log(currentHiker.canteenActivated)
 });
 
 //done
