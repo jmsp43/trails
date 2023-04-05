@@ -82,7 +82,6 @@ let hiker1 = new Hiker(60, 200, 1, "gray");
 let hiker2 = new Hiker(60, 300, 2, "black");
 hiker2.isComputer = true;
 let currentHiker = hiker1;
-//acorn, stone, leaf
 
 const acornBadgeDeck = [
   {
@@ -408,7 +407,7 @@ let backgroundUrls = [
 ///////////////Functions/////////////////
 ///////////////////////////////////////////////
 
-//done
+
 function loadBackgroundImgs() {
   let count = 0;
   for (let i = 0; i < backgroundUrls.length; i++) {
@@ -430,7 +429,7 @@ function loadBackgroundImgs() {
 loadBackgroundImgs();
 
 
-//done
+
 function loadImgs() {
   let count = 0;
   for (let i = 0; i < imgUrls.length; i++) {
@@ -450,7 +449,7 @@ function loadImgs() {
   }
 }
 
-//done
+
 function drawImgs() {
   let x = 100;
   for (let i = 0; i < imgs.length; i++) {
@@ -469,7 +468,7 @@ function drawImgs() {
   }
 }
 
-//done
+
 function draw(X, Y, x, y) {
   boardContext.beginPath();
   boardContext.moveTo(X, Y);
@@ -478,7 +477,7 @@ function draw(X, Y, x, y) {
   boardContext.stroke();
 }
 
-//done
+
 function drawSun() {
   boardContext.beginPath();
   boardContext.arc(sunX, 75, 20, 3.15, 2 * Math.PI);
@@ -487,7 +486,7 @@ function drawSun() {
   boardContext.fill();
 }
 
-//done
+
 function rollDice() {
   let diceNum = Math.floor(Math.random() * 6) + 1;
   if (diceNum === 1) {
@@ -545,7 +544,6 @@ function rollDice() {
         bearResults.innerHTML =
           "Game over, you had no resources to distract the angry bear.";
         endGame();
-        //end game
       }
     } else {
       diceResults.appendChild(bearResults);
@@ -559,7 +557,7 @@ function rollDice() {
   }
 }
 
-//done
+
 function drawHiker(hiker) {
   boardContext.fillStyle = hiker.color;
   boardContext.strokeStyle = "black";
@@ -568,7 +566,6 @@ function drawHiker(hiker) {
 }
 
 
-// not done at all
 function drawBackgroundImgs() {
   if (gameOver === false && needsPhotoUpdate === true) {
     updatePhotoCaptionAndPoints();
@@ -586,15 +583,6 @@ function drawBackgroundImgs() {
 }
 
 
-// function addRandomPoints() {
-//   let randomPoints = (Math.round(Math.random() * 5) + 1)
-//   console.log(currentHiker.victoryPoints)
-//   currentHiker.victoryPoints += randomPoints
-//   console.log(currentHiker.victoryPoints)
-// }
-
-
-
 function updatePhotoCaptionAndPoints() {
   console.log('update photo func is running')
   currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos]);
@@ -610,45 +598,36 @@ function updatePhotoCaptionAndPoints() {
       "\n" +
       backgroundUrls[currentHiker.photos].playerTurn;
     currentHiker.victoryPoints +=3
-  // addRandomPoints()
-    // addCorrectPoints()
-    // currentHiker.victoryPoints += backgroundImgs[currentHiker.photos].points;
     backgroundUrls.splice(backgroundImgs[currentHiker.photos], 1);
     backgroundImgs.splice(backgroundImgs[currentHiker.photos], 1);
     needsPhotoUpdate = false;
     updateResourcesOnScreen()
-  }
+}
 
-//done
+
 function moveHiker(event) {
   let keyPressed = event.key;
 
-  //wrap entire following in an if and call moveSun if thats true
   if (currentHiker.canteenActivated === true) {
     console.log("canteen activated");
     if (keyPressed === "ArrowLeft") {
-      //&& goingRight === false
       dx = -280;
       currentHiker.x += dx;
       clearBoard();
       drawHiker(currentHiker);
     }
     if (keyPressed === "ArrowRight") {
-      //&& goingLeft === false
       dx = 280;
       currentHiker.x += dx;
       clearBoard();
       drawHiker(currentHiker);
     }
 
-
-
     if (currentHiker.x === 620) {
       currentHiker.photos++;
       needsPhotoUpdate = true;
       clearBoard()
       updateResourcesOnScreen()
-      // drawBackgroundImgs();
     }
     if (currentHiker.x === 620 || currentHiker.x === 60) {
       moveSun();
@@ -665,14 +644,12 @@ function moveHiker(event) {
     return;
   }
   if (keyPressed === "ArrowLeft") {
-    //&& goingRight === false
     dx = -140;
     currentHiker.x += dx;
     clearBoard();
     drawHiker(currentHiker);
   }
   if (keyPressed === "ArrowRight") {
-    //&& goingLeft === false
     dx = 140;
     currentHiker.x += dx;
     clearBoard();
@@ -684,7 +661,6 @@ function moveHiker(event) {
     needsPhotoUpdate = true;
     clearBoard()
     updateResourcesOnScreen()
-    // drawBackgroundImgs();
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
     moveSun();
@@ -699,7 +675,7 @@ function moveHiker(event) {
   }
 }
 
-//done
+
 function updateResourcesOnScreen() {
   let acorns = currentHiker.resources[0].acorns;
   let stones = currentHiker.resources[1].stones;
@@ -712,15 +688,14 @@ function updateResourcesOnScreen() {
   stats.appendChild(currentResources);
 }
 
-//done
+
 function moveSun() {
-  //console.log(sunPosition);
   if (sunPosition <= 4) {
     sunPosition++;
     sunX += 140;
     clearBoard();
   }
-  //trying to make it go backwards
+
   if (sunPosition >= 5) {
     sunPosition++;
     sunX -= 140;
@@ -731,7 +706,7 @@ function moveSun() {
   }
 }
 
-//done
+
 function whoseTurn() {
   stats.style.display = "none";
   if (compTurnFinished && currentHiker === hiker1) {
@@ -745,12 +720,11 @@ function whoseTurn() {
   }
 }
 
-//done
+
 function clearBoard() {
   //redraw everything
   //clearRect deletes while fill rect only draws
   boardContext.clearRect(0, 0, width, height);
-  // needsPhotoUpdate = false
   drawBackgroundImgs();
   for (let i = 0; i < width; i += width / 5) {
     draw(i, 75, i, width);
@@ -761,7 +735,7 @@ function clearBoard() {
   drawImgs();
 }
 
-//done
+
 function gainResources() {
   if (currentHiker.x == 60) {
     currentHiker.resources[1].stones++;
@@ -769,32 +743,27 @@ function gainResources() {
     currentHiker.resources[2].leaves++;
   } else if (currentHiker.x == 340) {
     currentHiker.resources[0].acorns++;
-    //   } else if (currentHiker.x == 480) {
-    //     console.log("user rolls dice at bear spot");
   } else if (currentHiker.x == 620) {
     currentHiker.photos++;
     clearBoard();
   }
 }
 
-//done
+
 function getBadgeCard() {
   if (
     currentHiker.x === 620 ||
     currentHiker.x === 60 ||
     (diceResults.innerHTML = "You get a badge card!")
-    //   ||
-    // currentHiker.badgesEarned.includes("Astronomer")
   ) {
     let pickedCard = badgeDeck[Math.floor(Math.random() * badgeDeck.length)];
     currentHiker.badgesInHand.push(pickedCard);
     let pickedCardIndex = badgeDeck.indexOf(pickedCard);
     badgeDeck.splice(pickedCardIndex, 1);
-    //console.log(badgeDeck.length);
   }
 }
 
-//done
+
 function updateBadges() {
   if (currentHiker.badgesInHand.length > 0) {
     for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
@@ -851,11 +820,10 @@ function updateBadges() {
   }
 }
 
-//done
+
 function payForBadge() {
   for (let i = 0; i < currentHiker.badgesInHand.length; i++) {
     let type = currentHiker.badgesInHand[i].costType;
-    //console.log(currentHiker.badgesInHand[i].cost);
     if (type === "acorns") {
       if (
         currentHiker.resources[0].acorns >= currentHiker.badgesInHand[i].cost
@@ -863,17 +831,12 @@ function payForBadge() {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
         currentHiker.resources[0].acorns -= currentHiker.badgesInHand[i].cost;
         currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
-        //updateResourcesOnScreen();
 
         currentHiker.badgesInHand.splice(i, 1);
         purchaseResults.style.display = "block";
         purchaseResults.innerHTML = "you earned your badge!";
         badgeBox.appendChild(purchaseResults);
-        //   let gotReward  = false
-        //   if (currentHiker.badgesEarned.includes('Astronomer') && gotReward === false) {
-        //       //if the one they just got was the astronomer then they get an additional badge for free
-        //gotReward === true
-        //   }
+
       } else {
         purchaseResults.style.display = "block";
         purchaseResults.innerHTML =
@@ -887,7 +850,6 @@ function payForBadge() {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
         currentHiker.resources[1].stones -= currentHiker.badgesInHand[i].cost;
         currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
-        //updateResourcesOnScreen();
 
         currentHiker.badgesInHand.splice(i, 1);
         purchaseResults.style.display = "block";
@@ -906,7 +868,6 @@ function payForBadge() {
         currentHiker.badgesEarned.push(currentHiker.badgesInHand[i]);
         currentHiker.resources[2].leaves -= currentHiker.badgesInHand[i].cost;
         currentHiker.victoryPoints += currentHiker.badgesInHand[i].rewardPoints;
-        //updateResourcesOnScreen();
 
         currentHiker.badgesInHand.splice(i, 1);
 
@@ -925,26 +886,20 @@ function payForBadge() {
       );
   }
 
-  //or if player has astronomer, give badge for free
 }
 
-//not done
-function calculateScore() {
+
+function whoWon() {
   if (hiker1.victoryPoints > hiker2.victoryPoints) {
     console.log(hiker1);
     return hiker1;
   } else if (hiker2.victoryPoints > hiker1.victoryPoints) {
     console.log(hiker2);
     return hiker2;
-  } else {
-    console.log(hiker1.victoryPoints > hiker2.victoryPoints);
-    //prints true if hiker1 should have won
-    console.log(hiker1.victoryPoints + " " + hiker2.victoryPoints);
-    console.log("tie or error");
   }
 }
 
-//done
+
 function runGame() {
   //creating 5 sections on board with line drawings
   for (let i = 0; i < width; i += width / 5) {
@@ -956,32 +911,25 @@ function runGame() {
   loadImgs();
 }
 
-//done
+
 function endGame() {
   //trigger end game
 
   // gameOver = true;
-  calculateScore();
+  whoWon();
   document.body.style.backgroundColor = "#E74B7F";
   stats.innerHTML = "";
-  if (calculateScore() === hiker1) {
+  if (whoWon() === hiker1) {
     updateInfo.innerText = ''
-    console.log("hiker 1 wins");
     updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
     gameOver = true;
-    console.log("game has ended, updating text");
-  } else if (calculateScore() === hiker2) {
+  } else if (whoWon() === hiker2) {
     updateInfo.innerText = ''
-    console.log("hiker 2 wins");
     updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
-    console.log("game has ended, updating text");
     gameOver = true;
   } else {
     updateInfo.innerText = ''
-    console.log(hiker1.victoryPoints);
-    console.log(hiker2.victoryPoints);
     updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
-    console.log("game has ended, updating text");
     gameOver = true
   }
 }
@@ -991,32 +939,32 @@ function endGame() {
 ///////////////Event Listeners/////////////////
 ///////////////////////////////////////////////
 
+
 startBtn.addEventListener("click", function (event) {
   event.preventDefault();
   runGame();
   startBtn.style.display = "none";
 });
 
-//done
+
 rollBtn.addEventListener("click", function (event) {
   event.preventDefault();
   rollDice();
 });
 
-//done
+
 canteenBtn.addEventListener("click", function (event) {
   event.preventDefault();
   currentHiker.canteenActivated = true;
-  console.log(currentHiker.canteenActivated);
 });
 
-//done
+
 document.addEventListener("keydown", function (event) {
   event.preventDefault();
   moveHiker(event);
 });
 
-//not done
+
 earnBadgeBtn.addEventListener("click", function (event) {
   event.preventDefault();
   payForBadge();
@@ -1027,19 +975,20 @@ earnBadgeBtn.addEventListener("click", function (event) {
   updateResourcesOnScreen();
 });
 
-//done
+
 badgeListBtn.addEventListener("click", function (event) {
   event.preventDefault();
   updateBadges();
   badgeListBtn.style.display = "none";
 });
 
+
 restartBtn.addEventListener("click", function (event) {
   event.preventDefault();
   location.reload();
 });
 
-//done
+
 finishTurnBtn.addEventListener("click", function (event) {
   event.preventDefault();
   whoseTurn();
