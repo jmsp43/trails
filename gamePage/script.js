@@ -917,7 +917,7 @@ function endGame() {
 
   // gameOver = true;
   whoWon();
-  document.body.style.backgroundColor = "#E74B7F";
+  document.body.style.backgroundColor = "#F96F5D";
   stats.innerHTML = "";
   if (whoWon() === hiker1) {
     updateInfo.innerText = ''
