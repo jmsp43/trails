@@ -294,107 +294,114 @@ let backgroundUrls = [
     name: "caddo lake",
     url: "../parks/caddoLake.jpg",
     points: 2,
-    description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas. This photo is worth 2 points!`,
+    description: `Caddo Lake State Park: A treasure of East Texas, this state park is home to a national wildlife refuge with a sprawling maze of bayou and one of the only natural lakes in Texas.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "cathedral gorge",
     url: "../parks/cathedralGorge.jpg",
     points: 2,
-    description: `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires. This photo is worth 2 points!`,
+    description: `Cathedral Gorge State Park in Nevada is a huge geologic preserve featuring a dramatic landscape of eroded soft bentonite clay formed into columns and spires.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "dead horse point",
     url: "../parks/deadHorsePoint.jpg",
     points: 2,
-    description: `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo is worth 2 points!`,
+    description: `With scarce water and extreme temperatures, Dead Horse Point State Park in Utah is sure to have earned its name. Despite that, the gorgeous overlook of the Colorado River and Canyonlands National Park make this photo worth the trip.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "eldorado",
     url: "../parks/eldorado.jpg",
     points: 3,
-    description: `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California. This photo is worth 3 points!`,
+    description: `It's hard to beat the view from the high altitude trail of Eldorado National Forest, located in the central Sierra Nevada mountain range, in eastern California.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "smoky mountains",
     url: "../parks/smokyMountains.jpg",
     points: 5,
-    description: `It's no surprise that the Great Smoky Mountains are the most visited National Park in the US, with it's fresh "smoky" air (which is actually created by the millions of plants giving off organic compounds that create a blueish vapor!) and FREE entry. This photo is worth 5 points!`,
+    description: `It's no surprise that the Great Smoky Mountains are the most visited National Park in the US, with it's fresh "smoky" air (which is actually created by the millions of plants giving off organic compounds that create a blueish vapor!) and FREE entry.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "iao valley",
     url: "../parks/iaoValley.jpg",
     points: 4,
-    description: `Iao Valley is a lush, stream-cut valley in West Maui, Hawaii, located in dense rainforest with an extinct volcano as it's peak. In 1972, this island oasis was designated a National Natural Landmark, and as such this photo is worth 4 points!`,
+    description: `Iao Valley is a lush, stream-cut valley in West Maui, Hawaii, located in dense rainforest with an extinct volcano as it's peak. In 1972, this island oasis was designated a National Natural Landmark.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "kachemak bay",
     url: "../parks/kachemakBay.jpg",
     points: 3,
-    description: `Kachemak Bay State Park is a whopping 400,000 acres and the only designated state park in Alaska. With no road access, albeit it is a harder visit than most, but the incredible biodiversity of this critical habitat area makes up for the hard journey. This photo is worth 3 points!`,
+    description: `Kachemak Bay State Park is a whopping 400,000 acres and the only designated state park in Alaska. With no road access, albeit it is a harder visit than most, but the incredible biodiversity of this critical habitat area makes up for the hard journey.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "palo duro",
     url: "../parks/paloDuro.jpg",
     points: 3,
-    description: `As the second largest canyon system in the United States, Palo Duro is 120 miles long with a maximum width of 20 miles. Pictured here is a particularly famous rock formation lovingly referred to as The Lighthouse. This photo is worth 3 points!`,
+    description: `As the second largest canyon system in the United States, Palo Duro is 120 miles long with a maximum width of 20 miles. Pictured here is a particularly famous rock formation lovingly referred to as The Lighthouse.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "letchworth",
     url: "../parks/letchworth.jpg",
     points: 2,
-    description: `Located in Western New York State 60 miles south of Buffalo is the hidden treasure of Letchworth State Park, known for it's 3 large waterfalls that flow into a deep gorge beneath that winds through the park. It's no wonder this place is called the Grand Canyon of the East! This photo is worth 2 points!`,
+    description: `Located in Western New York State 60 miles south of Buffalo is the hidden treasure of Letchworth State Park, known for it's 3 large waterfalls that flow into a deep gorge beneath that winds through the park. It's no wonder this place is called the Grand Canyon of the East!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "watkins glen",
     url: "../parks/watkinsGlen.jpg",
     points: 2,
-    description: `In the Finger Lakes region of New York State hides the geological and historical wonder that is Watkins Glen State Park. Cut through by a glacier in the last ice age, this very narrow gorge is even climbable from May to November! This photo is worth 2 points!`,
+    description: `In the Finger Lakes region of New York State hides the geological and historical wonder that is Watkins Glen State Park. Cut through by a glacier in the last ice age, this very narrow gorge is even climbable from May to November!`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
   {
     name: "acadia",
     url: "../parks/acadia.avif",
     points: 4,
-    description: `Along Maine's beautiful coast lies Acadia National Park, housing the highest mountains on the Atlantic coast, cobble beaches, granite domes, and more. Acadia boasts rich bioversity, crisp air and water, and abundance human history dating back to over 10,000 years ago with the Wabanaki people. This photo is worth 4 points!`,
+    description: `Along Maine's beautiful coast lies Acadia National Park, housing the highest mountains on the Atlantic coast, cobble beaches, granite domes, and more. Acadia boasts rich bioversity, crisp air and water, and abundance human history dating back to over 10,000 years ago with the Wabanaki people.`,
     playerTurn: `It's player ${currentHiker.player}'s turn!`,
   },
+  {
+    name: 'badlands',
+    url: '../parks/badlands.jpg',
+    points: null,
+    description: '',
+  playerTurn: `It's player ${currentHiker.player}'s turn!`
+  },
+  {
+    name: 'capitol reef',
+    url: '../parks/capitolReef.jpg',
+    points: null,
+    description: '',
+  playerTurn: `It's player ${currentHiker.player}'s turn!`
+  },
+  {
+    name: 'yoho',
+    url: '../parks/yoho.jpg',
+    points: null,
+    description: '',
+  playerTurn: `It's player ${currentHiker.player}'s turn!`
+  },
+  {
+    name: 'mirror lake',
+    url: '../parks/mirrorLake.jpg',
+    points: null,
+    description: '',
+  playerTurn: `It's player ${currentHiker.player}'s turn!`
+  },  {
+    name: 'zion',
+    url: '../parks/zion.jpg',
+    points: null,
+    description: '',
+  playerTurn: `It's player ${currentHiker.player}'s turn!`
+  }
 ];
-
-// function addCorrectPoints() {
-//   if (backgroundImgs[currentHiker.photos].place === 'caddo lake') {
-//     currentHiker.victoryPoints+= 2
-//   } else if (backgroundImgs[currentHiker.photos].place === 'cathedral gorge') {
-//     currentHiker.victoryPoints+= 2
-//   } else if (backgroundImgs[currentHiker.photos].place === 'dead horse point') {
-//     currentHiker.victoryPoints+= 2
-//   } else if (backgroundImgs[currentHiker.photos].place === 'eldorado') {
-//     currentHiker.victoryPoints+= 3
-//   } else if (backgroundImgs[currentHiker.photos].place === 'smoky mountains') {
-//     currentHiker.victoryPoints+= 5
-//   } else if (backgroundImgs[currentHiker.photos].place === 'iao valley') {
-//     currentHiker.victoryPoints+= 4
-//   } else if (backgroundImgs[currentHiker.photos].place === 'kachemak bay') {
-//     currentHiker.victoryPoints+= 3
-//   } else if (backgroundImgs[currentHiker.photos].place === 'palo duro') {
-//     currentHiker.victoryPoints+= 3
-//   } else if (backgroundImgs[currentHiker.photos].place === 'letchworth') {
-//     currentHiker.victoryPoints+= 2
-//   } else if (backgroundImgs[currentHiker.photos].place === 'watkins glen') {
-//     currentHiker.victoryPoints+= 2
-//   } else if (backgroundImgs[currentHiker.photos].place === 'acadia') {
-//     currentHiker.victoryPoints+= 4
-//   }
-// }
-
 
 
 ///////////////////////////////////////////////
@@ -421,6 +428,7 @@ function loadBackgroundImgs() {
   }
 }
 loadBackgroundImgs();
+
 
 //done
 function loadImgs() {
@@ -589,6 +597,7 @@ function drawBackgroundImgs() {
 
 function updatePhotoCaptionAndPoints() {
   console.log('update photo func is running')
+  currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos]);
   boardContext.drawImage(
     backgroundImgs[currentHiker.photos],
     0,
@@ -596,7 +605,6 @@ function updatePhotoCaptionAndPoints() {
     width,
     height
   );
-    currentHiker.photoCollection.push(backgroundImgs[currentHiker.photos]);
     updateInfo.innerText =
       backgroundUrls[currentHiker.photos].description +
       "\n" +
@@ -633,10 +641,14 @@ function moveHiker(event) {
       drawHiker(currentHiker);
     }
 
+
+
     if (currentHiker.x === 620) {
       currentHiker.photos++;
       needsPhotoUpdate = true;
-      drawBackgroundImgs();
+      clearBoard()
+      updateResourcesOnScreen()
+      // drawBackgroundImgs();
     }
     if (currentHiker.x === 620 || currentHiker.x === 60) {
       moveSun();
@@ -646,7 +658,6 @@ function moveHiker(event) {
     stats.innerHTML = "";
     stats.style.display = "block";
     updateResourcesOnScreen();
-    console.log(sunPosition);
     if (currentHiker.isComputer === true) {
       compTurnFinished = true;
     }
@@ -671,7 +682,9 @@ function moveHiker(event) {
   if (currentHiker.x === 620) {
     currentHiker.photos++;
     needsPhotoUpdate = true;
-    drawBackgroundImgs();
+    clearBoard()
+    updateResourcesOnScreen()
+    // drawBackgroundImgs();
   }
   if (currentHiker.x === 620 || currentHiker.x === 60) {
     moveSun();
@@ -688,7 +701,6 @@ function moveHiker(event) {
 
 //done
 function updateResourcesOnScreen() {
-  currentResources.style.border = "red";
   let acorns = currentHiker.resources[0].acorns;
   let stones = currentHiker.resources[1].stones;
   let leaves = currentHiker.resources[2].leaves;
@@ -948,26 +960,29 @@ function runGame() {
 function endGame() {
   //trigger end game
 
-  gameOver = true;
+  // gameOver = true;
   calculateScore();
   document.body.style.backgroundColor = "#E74B7F";
   stats.innerHTML = "";
   if (calculateScore() === hiker1) {
+    updateInfo.innerText = ''
     console.log("hiker 1 wins");
     updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
     gameOver = true;
     console.log("game has ended, updating text");
   } else if (calculateScore() === hiker2) {
+    updateInfo.innerText = ''
     console.log("hiker 2 wins");
     updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
     console.log("game has ended, updating text");
     gameOver = true;
   } else {
+    updateInfo.innerText = ''
     console.log(hiker1.victoryPoints);
     console.log(hiker2.victoryPoints);
     updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
     console.log("game has ended, updating text");
-
+    gameOver = true
   }
 }
 
