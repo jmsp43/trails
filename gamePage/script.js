@@ -370,34 +370,34 @@ let backgroundUrls = [
     name: 'badlands',
     url: '../parks/badlands.jpg',
     points: null,
-    description: '',
+    description: 'Badlands National Park in southwestern South Dakota is nearly 250,000 acres of sharply eroded buttes and pinnacles,along with the United States largest undisturbed mixed grass prairie. It is managed by the Oglala Lakota tribe in addition to the National Park Service.',
   playerTurn: `It's player ${currentHiker.player}'s turn!`
   },
   {
     name: 'capitol reef',
     url: '../parks/capitolReef.jpg',
     points: null,
-    description: '',
+    description: 'Located in south-central Utah in the heart of red rock country, Capitol Reef National Park is a hidden treasure filled with cliffs, canyons, domes, and bridges in the Waterpocket Fold, a geologic monocline (a wrinkle on the earth) extending almost 100 miles.',
   playerTurn: `It's player ${currentHiker.player}'s turn!`
   },
   {
     name: 'yoho',
     url: '../parks/yoho.jpg',
     points: null,
-    description: '',
+    description: 'Yoho National Park is located within the Rocky Mountains along the Continental Divide of the Americas, where glaciers and waterfalls cling to towering peaks. Ancient marine life and geological wonder are huge draws to this park.',
   playerTurn: `It's player ${currentHiker.player}'s turn!`
   },
   {
     name: 'mirror lake',
     url: '../parks/mirrorLake.jpg',
     points: null,
-    description: '',
+    description: 'Mirror Lake State Park in Wisconsin offers a smaller, less secluded experiece than some of these other parks, but instead extends the opportunity to dive into a 20+ feet deep, glassy, clear blue fresh water lake surrounded by sandstone bluffs.',
   playerTurn: `It's player ${currentHiker.player}'s turn!`
   },  {
     name: 'zion',
     url: '../parks/zion.jpg',
     points: null,
-    description: '',
+    description: 'Zion National Park is located in southern Utah near the city of Springdale, not far from Las Vegas, Salt Lake City, or St. George. Averaging 2,000 feet deep, Zion Canyon offers hiking opportunities along its floor in the 20 to 30 foot wide area known as The Narrows and the challenging area known as The Subway.',
   playerTurn: `It's player ${currentHiker.player}'s turn!`
   }
 ];
