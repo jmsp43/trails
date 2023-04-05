@@ -21,6 +21,11 @@ const badgesEarnedBox = document.querySelector("#badgesEarnedBox");
 const restartBtn = document.querySelector("#restartBtn");
 const purchaseResults = document.createElement("p");
 const badgeBox = document.querySelector("#badgeBox");
+const updatesBox = document.querySelector('#updatesBox')
+const win = document.querySelector('#winner')
+win.style.display = 'none'
+
+
 
 const boardContext = board.getContext("2d");
 const width = 700;
@@ -567,10 +572,20 @@ function drawHiker(hiker) {
 
 
 function drawBackgroundImgs() {
-  if (gameOver === false && needsPhotoUpdate === true) {
-    updatePhotoCaptionAndPoints();
-  } else {
-    boardContext.drawImage(
+  // if (gameOver === false && needsPhotoUpdate === true) {
+  //   updatePhotoCaptionAndPoints();
+  // } else {
+  //   boardContext.drawImage(
+  //     backgroundImgs[currentHiker.photos],
+  //     0,
+  //     0,
+  //     width,
+  //     height
+  //   );
+  //   updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
+  // }
+
+      boardContext.drawImage(
       backgroundImgs[currentHiker.photos],
       0,
       0,
@@ -578,7 +593,9 @@ function drawBackgroundImgs() {
       height
     );
     updateInfo.innerText = backgroundUrls[currentHiker.photos].description;
-  }
+    if (gameOver === false && needsPhotoUpdate === true) {
+    updatePhotoCaptionAndPoints();
+  } 
 
 }
 
@@ -915,22 +932,28 @@ function runGame() {
 function endGame() {
   //trigger end game
 
-  // gameOver = true;
+  gameOver = true;
   whoWon();
   document.body.style.backgroundColor = "#F96F5D";
   stats.innerHTML = "";
+  win.style.display = 'block'
   if (whoWon() === hiker1) {
-    updateInfo.innerText = ''
-    updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
-    gameOver = true;
+    //updateInfo.innerText = ''
+    //updateInfo.innerText = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    win.innerHTML = `Player 1 wins with ${hiker1.victoryPoints} points! Player 2 loses with ${hiker2.victoryPoints} points. I hope ya'll enjoyed the trails!`
+    updatesBox.appendChild(win)
+    //gameOver = true;
   } else if (whoWon() === hiker2) {
-    updateInfo.innerText = ''
-    updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
-    gameOver = true;
+    //updateInfo.innerText = ''
+    //updateInfo.innerText = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`;
+    win.innerHTML = `Player 2 wins with ${hiker2.victoryPoints} points! Player 1 loses with ${hiker1.victoryPoints} points. I hope ya'll enjoyed the trails!`
+    updatesBox.appendChild(win)
+    //gameOver = true;
   } else {
-    updateInfo.innerText = ''
-    updateInfo.innerText = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
-    gameOver = true
+    //updateInfo.innerText = ''
+    win.innerHTML = `It's a tie! Player 1 has ${hiker1.victoryPoints} points and player 2 has ${hiker2.victoryPoints} points.`;
+    updatesBox.appendChild(win)
+    //gameOver = true
   }
 }
 
